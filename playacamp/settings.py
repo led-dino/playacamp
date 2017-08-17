@@ -117,7 +117,7 @@ USE_TZ = True
 
 
 # Update database configuration with $DATABASE_URL.
-db_from_env = dj_database_url.config(conn_max_age=500)
+db_from_env = dj_database_url.config(conn_max_age=500)  # pylint: disable=invalid-name
 DATABASES['default'].update(db_from_env)
 DATABASES['default']['TEST'] = {
     'NAME': DATABASES['default']['NAME'],
@@ -144,4 +144,3 @@ STATICFILES_DIRS = (
 # Simplified static file serving.
 # https://warehouse.python.org/project/whitenoise/
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-
