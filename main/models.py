@@ -9,8 +9,7 @@ class Team(models.Model):
 
     @property
     def leads(self):
-        return Team.objects.all()
-        #return self.members.filter(teammembership__is_lead=True).all()
+        return self.members.filter(teammembership__is_lead=True).all()
 
     def __str__(self):
         return self.name
