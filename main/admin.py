@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Team, TeamMembership
+from .models import FoodRestriction, Team, TeamMembership, UserProfile
 
 @admin.register(TeamMembership)
 class TeamMembershipAdmin(admin.ModelAdmin):
@@ -16,3 +16,13 @@ class TeamMembershipInline(admin.TabularInline):
 class TeamAdmin(admin.ModelAdmin):
     list_display = ('name', 'description')
     inlines = (TeamMembershipInline,)
+
+
+@admin.register(UserProfile)
+class UserProfileAdmin(admin.ModelAdmin):
+    pass
+
+
+@admin.register(FoodRestriction)
+class FoodRestrictionAdmin(admin.ModelAdmin):
+    pass
