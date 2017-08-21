@@ -144,3 +144,6 @@ STATICFILES_DIRS = (
 # Simplified static file serving.
 # https://warehouse.python.org/project/whitenoise/
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+MEDIA_ROOT = '/tmp/playacamp'
+MEDIA_URL = 'http://localhost:5000/media/'

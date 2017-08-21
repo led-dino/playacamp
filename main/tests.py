@@ -2,7 +2,7 @@ from django.contrib.auth.models import AnonymousUser, User
 from django.test import TestCase, RequestFactory
 
 from .views import index
-from .models import Team, TeamMembership
+from .models import Team, TeamMembership, UserProfile, FoodRestriction
 
 class SimpleTest(TestCase):
     def setUp(self):
@@ -38,3 +38,25 @@ class TeamTest(TestCase):
 
         self.assertEqual(set(team.members.all()), {alice, bob})
         self.assertEqual(list(team.leads), [alice])
+
+
+class UserProfileTest(TestCase):
+    def test_details(self):
+        alice = User.objects.create_user('alice', 'alice@foobar.com', 'passwd')
+        alice.save()
+
+        profile = UserProfile(user=alice,
+                              biography='Just a small-town girl...',
+                              playa_name='Yoshi')
+        profile.save()
+
+        self.assertEqual(alice.profile, profile)
+        self.assertEqual(set(alice.profile.food_restrictions.all()), set())
+
+        vegan = FoodRestriction(name='Vegan', description='No animal products.')
+        vegan.save()
+
+        alice.profile.food_restrictions.add(vegan)
+        alice.save()
+
+        self.assertEqual(set(alice.profile.food_restrictions.all()), {vegan})
