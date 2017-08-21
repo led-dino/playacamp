@@ -4,6 +4,7 @@ gunicorn==19.6.0
 psycopg2==2.6.2
 whitenoise==3.3.0
 pylint==1.7.2
+pylint-django==0.7.2
 flake8==3.4.1
 Pillow==4.2.1
 boto==2.48.0
