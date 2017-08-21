@@ -34,4 +34,4 @@ class UserProfile(models.Model):
     profile_picture = models.ImageField(upload_to='profile_pictures', null=True, blank=True)
     biography = models.TextField(blank=True)
     playa_name = models.CharField(max_length=64, blank=True, null=True)
-    food_restrictions = models.ManyToManyField(FoodRestriction)
+    food_restrictions = models.ManyToManyField(FoodRestriction, blank=True)

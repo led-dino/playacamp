@@ -6,3 +6,6 @@ whitenoise==3.3.0
 pylint==1.7.2
 flake8==3.4.1
 Pillow==4.2.1
+boto==2.48.0
+django-storages==1.6.5
+botocore==1.6.3
