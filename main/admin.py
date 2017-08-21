@@ -1,6 +1,16 @@
 from django.contrib import admin
 
-from .models import FoodRestriction, Team, TeamMembership, UserProfile
+from .models import (AttendanceProfile,
+                     FoodRestriction,
+                     HousingGroup,
+                     Job,
+                     JobAssignment,
+                     Skill,
+                     Team,
+                     TeamMembership,
+                     TransportationMethod,
+                     UserProfile)
+
 
 @admin.register(TeamMembership)
 class TeamMembershipAdmin(admin.ModelAdmin):
@@ -25,4 +35,34 @@ class UserProfileAdmin(admin.ModelAdmin):
 
 @admin.register(FoodRestriction)
 class FoodRestrictionAdmin(admin.ModelAdmin):
+    pass
+
+
+@admin.register(AttendanceProfile)
+class AttendanceProfileAdmin(admin.ModelAdmin):
+    pass
+
+
+@admin.register(HousingGroup)
+class HousingGroupAdmin(admin.ModelAdmin):
+    pass
+
+
+@admin.register(TransportationMethod)
+class TransportationMethodAdmin(admin.ModelAdmin):
+    pass
+
+
+@admin.register(Job)
+class JobAdmin(admin.ModelAdmin):
+    pass
+
+
+@admin.register(JobAssignment)
+class JobAssignmentAdmin(admin.ModelAdmin):
+    pass
+
+
+@admin.register(Skill)
+class SkillAdmin(admin.ModelAdmin):
     pass
