@@ -1,0 +1,62 @@
+<html>
+  <head>
+<style>
+#profile-pic img {
+  height: 300px;
+  border-radius: 50%;
+}
+</style>
+  </head>
+  <body>
+    <div id="profile-pic">
+      <img src="{{ profile.profile_pic_url }}" />
+    </div>
+    <h1>
+      {% firstof profile.user.get_full_name profile.user.get_username %}
+      {% if profile.playa_name %}
+      ({{ profile.playa_name }})
+      {% endif %}
+    </h1>
+    <div id="profile-info">
+      <div id="details">
+        {% if profile.zipcode %}
+        <div id="zipcode">
+          {{ profile.get_city_and_state }} ({{ profile.get_timezone_offset }})
+        </div>
+        {% endif %}
+
+        {% if profile.user.email %}
+        <div id="email">
+          <a href="mailto:{{ profile.user.email }}">{{ profile.user.email }}</a>
+        </div>
+        {% endif %}
+
+        {% if profile.phone_number %}
+        <div id="phone-number">
+          <a href="tel:{{ profile.formatted_phone_number }}">{{ profile.formatted_phone_number }}</a>
+        </div>
+        {% endif %}
+
+        {% if profile.years_on_playa %}
+        <div id="years_on_playa">
+          Years on Playa: {{ profile.years_on_playa }}
+        </div>
+        {% endif %}
+      </div>
+      <div id="bio">
+        {{ profile.biography }}
+      </div>
+    </div>
+    <!--
+    user = models.OneToOneField(User, primary_key=True, related_name='profile')
+    profile_picture = models.ImageField(upload_to='profile_pictures', null=True, blank=True)
+    phone_number = models.CharField(max_length=11, null=True, blank=True)
+    zipcode = models.CharField(max_length=5, null=True, blank=True)
+    biography = models.TextField(blank=True)
+    playa_name = models.CharField(max_length=64, blank=True, null=True)
+    food_restrictions = models.ManyToManyField(FoodRestriction, blank=True)
+    skills = models.ManyToManyField(Skill, blank=True)
+    years_on_playa = models.IntegerField(blank=True, null=True)
+    -->
+  </body>
+</html>

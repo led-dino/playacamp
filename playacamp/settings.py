@@ -154,3 +154,6 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 MEDIAFILES_LOCATION = 'media'
 MEDIA_URL = "https://%s/%s/" % (AWS_S3_CUSTOM_DOMAIN, MEDIAFILES_LOCATION)
 DEFAULT_FILE_STORAGE = 'playacamp.custom_storages.MediaStorage'
+
+LOGIN_URL = "/login"
+LOGIN_REDIRECT_URL = "/profile/me"
