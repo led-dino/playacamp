@@ -5,6 +5,35 @@
   height: 300px;
   border-radius: 50%;
 }
+
+.skill {
+  margin-bottom: 7px;
+  display: table;
+}
+.skill .skill-image {
+  float: left;
+}
+.skill .skill-image img {
+  height: 50px;
+}
+.skill .skill-name {
+  display: table-cell;
+  vertical-align: middle;
+  padding-left: 7px;
+}
+.clear-float {
+  content: ".";
+  display: block;
+  height: 0;
+  visibility: hidden;
+  clear: both;
+}
+.edit-link {
+  margin-top: 7px;
+}
+#bio {
+  margin-top: 15px;
+}
 </style>
   </head>
   <body>
@@ -46,17 +75,43 @@
       <div id="bio">
         {{ profile.biography }}
       </div>
+
+      <div id="skills">
+        <h2>Skills</h2>
+        {% for skill in profile.skills.all %}
+        <div class="skill">
+          <div class="skill-image">
+            <img src="{{ skill.picture_url }}" alt="{{ skill.description }}" title="{{ skill.description }}" />
+          </div>
+          <span class="skill-name">{{ skill.name }}</span>
+          <div class="clear-float"></div>
+        </div>
+        {% endfor %}
+        {% if user.id == profile.user.id %}
+        <div class="edit-link">
+          <a href="">Edit</a>
+        </div>
+        {% endif %}
+      </div>
+
+      {% if user.id == profile.user.id %}
+      <h2>Food Restrictions</h2>
+      <div id="food-restrictions">
+        {% if profile.food_restrictions.all %}
+          {% for restriction in profile.food_restrictions.all %}
+          <div class="food-restriction">
+            <p>{{ restriction.name }}</p>
+            <p>{{ restriction.description }}</p>
+          </div>
+          {% endfor %}
+        {% else %}
+          No restrictions.
+        {% endif %}
+      </div>
+      <div class="edit-link">
+        <a href="">Edit</a>
+      </div>
+      {% endif %}
     </div>
-    <!--
-    user = models.OneToOneField(User, primary_key=True, related_name='profile')
-    profile_picture = models.ImageField(upload_to='profile_pictures', null=True, blank=True)
-    phone_number = models.CharField(max_length=11, null=True, blank=True)
-    zipcode = models.CharField(max_length=5, null=True, blank=True)
-    biography = models.TextField(blank=True)
-    playa_name = models.CharField(max_length=64, blank=True, null=True)
-    food_restrictions = models.ManyToManyField(FoodRestriction, blank=True)
-    skills = models.ManyToManyField(Skill, blank=True)
-    years_on_playa = models.IntegerField(blank=True, null=True)
-    -->
   </body>
 </html>
