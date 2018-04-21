@@ -157,3 +157,4 @@ DEFAULT_FILE_STORAGE = 'playacamp.custom_storages.MediaStorage'
 
 LOGIN_URL = "/login"
 LOGIN_REDIRECT_URL = "/profile/me"
+

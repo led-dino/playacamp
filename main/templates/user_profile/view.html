@@ -117,6 +117,21 @@ ul {
       </div>
 
       <div id="body-main-content">
+        <h2>Attendance</h2>
+        <div id="attendance">
+          {% if attendance %}
+            Hooray, looking forward to seeing you!
+          {% elif user.id == profile.user.id %}
+            <form method="POST" action="{% url 'change-attending' %}">
+              {% csrf_token %}
+              <input id="attending-checkbox" name="is-attending" type="checkbox" onChange="this.form.submit()"/>
+              Are you planning on attending this year?
+            </form>
+          {% else %}
+            No plans to attend this year :-(
+          {% endif %}
+        </div>
+
         <h2>Skills</h2>
         <ul id="skills">
           {% for skill in profile.skills.all %}
