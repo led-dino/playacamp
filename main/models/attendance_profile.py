@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.forms import ModelForm, forms
 
 from main.models.housing_group import HousingGroup
 from main.models.job import Job
@@ -58,3 +59,16 @@ class AttendanceProfile(models.Model):
     def __str__(self):
         return '{}[{}]'.format(self.user, self.year)
 
+
+class AttendanceProfileForm(ModelForm):
+    class Meta:
+        model = AttendanceProfile
+        fields = [
+            'transportation_method',
+            'has_early_pass',
+            'has_ticket',
+            'has_vehicle_pass',
+            'job_preferences',
+            'shift_time_preference',
+            'shift_day_preference',
+        ]

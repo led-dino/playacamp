@@ -16,6 +16,6 @@ urlpatterns = [     # pylint: disable=invalid-name
     url(r'^login/$', auth_views.LoginView.as_view()),
     url(r'^profile/(?P<user_id>\d+)$', main.views.user_profile.get),
     url(r'^profile/me/$', main.views.user_profile.get),
-    url(r'^profile/me/attendance/$', main.views.user_profile.change_attending, name='change-attending'),
+    url(r'^profile/me/attendance/$', main.views.user_profile.changed_attending, name='changed-attending'),
     url(r'^admin/', include(admin.site.urls)),
 ]

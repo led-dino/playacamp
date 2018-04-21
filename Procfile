@@ -1,1 +1,1 @@
-web: gunicorn playacamp.wsgi --log-file -
+web: gunicorn playacamp.wsgi --log-file=-

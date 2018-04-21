@@ -119,13 +119,35 @@ ul {
       <div id="body-main-content">
         <h2>Attendance</h2>
         <div id="attendance">
-          {% if attendance %}
-            Hooray, looking forward to seeing you!
-          {% elif user.id == profile.user.id %}
-            <form method="POST" action="{% url 'change-attending' %}">
+          {% if attendance_form.instance.pk %}
+            Hooray, looking forward to seeing you! :-) <br />
+            There are a few pieces of info that we need from you. <br /><br />
+            <form method="POST" action="{% url 'changed-attending' %}">
               {% csrf_token %}
-              <input id="attending-checkbox" name="is-attending" type="checkbox" onChange="this.form.submit()"/>
-              Are you planning on attending this year?
+              {% if messages %}
+              <ul class="messages">
+                  {% for message in messages %}
+                  <li {% if message.tags %}class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                  {% endfor %}
+              </ul>
+              {% endif %}
+              {{ attendance_form.transportation_method.label_tag }}{{ attendance_form.transportation_method }}<br />
+              {{ attendance_form.has_early_pass.label_tag }}{{ attendance_form.has_early_pass }}<br />
+              {{ attendance_form.has_ticket.label_tag }}{{ attendance_form.has_ticket }}<br />
+              {{ attendance_form.has_vehicle_pass.label_tag }}{{ attendance_form.has_vehicle_pass }}<br />
+              {{ attendance_form.job_preferences.label_tag }}{{ attendance_form.job_preferences }}<br />
+              {{ attendance_form.shift_time_preference.label_tag }}{{ attendance_form.shift_time_preference }}<br />
+              {{ attendance_form.shift_day_preference.label_tag }}{{ attendance_form.shift_day_preference }}<br /><br />
+              <input id="attending-checkbox" name="is-attending" type="checkbox" checked="checked" />
+              Are you still planning on attending this year?<br /><br />
+              <input type="submit" value="Submit" name="submit" />
+            </form>
+          {% elif user.id == profile.user.id %}
+            <form method="POST" action="{% url 'changed-attending' %}">
+              {% csrf_token %}
+              <input id="attending-checkbox" name="is-attending" type="checkbox" />
+              Are you planning on attending this year?<br /><br />
+              <input type="submit" value="Submit" name="submit" />
             </form>
           {% else %}
             No plans to attend this year :-(
