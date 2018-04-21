@@ -2,10 +2,15 @@
 <html>
   <head>
 <style>
+body {
+  background-color: #ccc;
+}
 #body-wrapper {
   width: 700px;
   margin-left: auto;
   margin-right: auto;
+  background-color: #fff;
+  padding-bottom: 30px;
 }
 #body-main-content {
   margin-left: 13%;
@@ -16,13 +21,22 @@ ul {
 }
 #header {
   display: table;
+  margin-top: 60px;
+  margin-bottom: 20px;
 }
 #details {
   display: table-cell;
   vertical-align: middle;
-  padding-left: 20px;
+  padding-left: 40px;
   width: auto;
   overflow: hidden;
+}
+#details-inner {
+  margin-left: 10px;
+}
+#profile-pic {
+  margin-top: -50px;
+  margin-left: -50px;
 }
 #profile-pic img {
   height: 300px;
@@ -32,6 +46,9 @@ ul {
 
 #skills {
   width: 500px;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 10px;
+  margin-left: 10px;
 }
 .skill {
   margin-left: 5px;
@@ -57,6 +74,8 @@ ul {
 }
 #food-restrictions {
   width: 500px;
+  margin-left: 10px;
+  margin-bottom: 20px;
 }
 .clear-float {
   content: ".";
@@ -70,6 +89,15 @@ ul {
 }
 #bio {
   margin-top: 15px;
+}
+#attendance {
+  border-bottom: 1px solid #ccc;
+  width: 500px;
+  padding-bottom: 10px;
+  margin-left: 10px;
+}
+#attendance-summary {
+  margin-bottom: 15px;
 }
 </style>
   </head>
@@ -86,31 +114,39 @@ ul {
             ({{ profile.playa_name }})
             {% endif %}
           </h1>
-          {% if profile.zipcode %}
-          <div id="zipcode">
-            {{ profile.get_city_and_state }} ({{ profile.get_timezone_offset }})
-          </div>
-          {% endif %}
+          <div id="details-inner">
+            {% if profile.zipcode %}
+            <div id="zipcode">
+              {{ profile.get_city_and_state }} ({{ profile.get_timezone_offset }})
+            </div>
+            {% endif %}
 
-          {% if profile.user.email %}
-          <div id="email">
-            <a href="mailto:{{ profile.user.email }}">{{ profile.user.email }}</a>
-          </div>
-          {% endif %}
+            {% if profile.user.email %}
+            <div id="email">
+              <a href="mailto:{{ profile.user.email }}">{{ profile.user.email }}</a>
+            </div>
+            {% endif %}
 
-          {% if profile.phone_number %}
-          <div id="phone-number">
-            <a href="tel:{{ profile.formatted_phone_number }}">{{ profile.formatted_phone_number }}</a>
-          </div>
-          {% endif %}
+            {% if profile.phone_number %}
+            <div id="phone-number">
+              <a href="tel:{{ profile.formatted_phone_number }}">{{ profile.formatted_phone_number }}</a>
+            </div>
+            {% endif %}
 
-          {% if profile.years_on_playa %}
-          <div id="years_on_playa">
-            Years on Playa: {{ profile.years_on_playa }}
-          </div>
-          {% endif %}
-          <div id="bio">
-            {{ profile.biography }}
+            {% if profile.years_on_playa %}
+            <div id="years_on_playa">
+              Years on Playa: {{ profile.years_on_playa }}
+            </div>
+            {% endif %}
+            <div id="bio">
+              {{ profile.biography }}
+            </div>
+
+            {% if user.id == profile.user.id %}
+            <div class="edit-link">
+              <a href="">Edit</a>
+            </div>
+            {% endif %}
           </div>
         </div>
         <div class="clear-float"></div>
@@ -119,73 +155,43 @@ ul {
       <div id="body-main-content">
         <h2>Attendance</h2>
         <div id="attendance">
-          {% if attendance_form.instance.pk %}
-            Hooray, looking forward to seeing you! :-) <br />
-            There are a few pieces of info that we need from you. <br /><br />
-            <form method="POST" action="{% url 'changed-attending' %}">
-              {% csrf_token %}
-              {% if messages %}
-              <ul class="messages">
-                  {% for message in messages %}
-                  <li {% if message.tags %}class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-                  {% endfor %}
-              </ul>
-              {% endif %}
-              {{ attendance_form.transportation_method.label_tag }}{{ attendance_form.transportation_method }}<br />
-              {{ attendance_form.has_early_pass.label_tag }}{{ attendance_form.has_early_pass }}<br />
-              {{ attendance_form.has_ticket.label_tag }}{{ attendance_form.has_ticket }}<br />
-              {{ attendance_form.has_vehicle_pass.label_tag }}{{ attendance_form.has_vehicle_pass }}<br />
-              {{ attendance_form.job_preferences.label_tag }}{{ attendance_form.job_preferences }}<br />
-              {{ attendance_form.shift_time_preference.label_tag }}{{ attendance_form.shift_time_preference }}<br />
-              {{ attendance_form.shift_day_preference.label_tag }}{{ attendance_form.shift_day_preference }}<br /><br />
-              <input id="attending-checkbox" name="is-attending" type="checkbox" checked="checked" />
-              Are you still planning on attending this year?<br /><br />
-              <input type="submit" value="Submit" name="submit" />
-            </form>
-          {% elif user.id == profile.user.id %}
-            <form method="POST" action="{% url 'changed-attending' %}">
-              {% csrf_token %}
-              <input id="attending-checkbox" name="is-attending" type="checkbox" />
-              Are you planning on attending this year?<br /><br />
-              <input type="submit" value="Submit" name="submit" />
-            </form>
-          {% else %}
-            No plans to attend this year :-(
-          {% endif %}
+          {% include "attendance_profile/form.html" %}
         </div>
 
         <h2>Skills</h2>
-        <ul id="skills">
-          {% for skill in profile.skills.all %}
-          <li class="skill">
-            <div class="skill-inner">
-            <div class="skill-image">
-              <img src="{{ skill.picture_url }}" alt="{{ skill.description }}" title="{{ skill.description }}" />
-            </div>
-            <span class="skill-name">{{ skill.name }}</span>
-            <div class="clear-float"></div>
-            </div>
-          </li>
-          {% endfor %}
-          <li class="clear-float"></li>
-        </ul>
-        {% if user.id == profile.user.id %}
-        <div class="edit-link">
-          <a href="">Edit</a>
+        <div id="skills">
+          <ul>
+            {% for skill in profile.skills.all %}
+            <li class="skill">
+              <div class="skill-inner">
+              <div class="skill-image">
+                <img src="{{ skill.picture_url }}" alt="{{ skill.description }}" title="{{ skill.description }}" />
+              </div>
+              <span class="skill-name">{{ skill.name }}</span>
+              <div class="clear-float"></div>
+              </div>
+            </li>
+            {% endfor %}
+            <li class="clear-float"></li>
+          </ul>
+          {% if user.id == profile.user.id %}
+          <div class="edit-link">
+            <a href="">Edit</a>
+          </div>
+          {% endif %}
         </div>
-        {% endif %}
 
         {% if user.id == profile.user.id %}
         <h2>Food Restrictions</h2>
-          <div id="food-restrictions">
-          {% if profile.food_restrictions.all %}
-            {% for restriction in profile.food_restrictions.all %}
-            {{ restriction.name }}{% if not forloop.last %},{% endif %}
-            {% endfor %}
-          {% else %}
-            No restrictions.
-          {% endif %}
-          </div>
+        <div id="food-restrictions">
+        {% if profile.food_restrictions.all %}
+          {% for restriction in profile.food_restrictions.all %}
+          {{ restriction.name }}{% if not forloop.last %},{% endif %}
+          {% endfor %}
+        {% else %}
+          No restrictions.
+        {% endif %}
+        </div>
         <div class="edit-link">
           <a href="">Edit</a>
         </div>

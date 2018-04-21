@@ -8,14 +8,51 @@ from main.models.transportation_method import TransportationMethod
 
 
 class AttendanceProfile(models.Model):
+    FORM_LABELS = {
+        'arrival_date': 'What day do you plan to arrive?',
+        'departure_date': 'What day do you plan to leave?',
+        'transportation_method': 'How are you planning on getting there?',
+        'has_early_pass': 'Do you have any early passes?',
+        'has_ticket': 'Do you have any tickets yet?',
+        'has_vehicle_pass': 'Do you have a vehicle pass?',
+    }
+
+    deleted_at = models.DateTimeField(blank=True, null=True)
+
     user = models.ForeignKey(User)
     year = models.IntegerField()
 
     housing_group = models.ForeignKey(HousingGroup, related_name='residents', null=True, blank=True)
     transportation_method = models.ForeignKey(TransportationMethod, related_name='attendees', null=True, blank=True)
 
-    arrival_date = models.DateField(blank=True, null=True)
-    departure_date = models.DateField(blank=True, null=True)
+    arrival_date = models.CharField(
+        max_length=16,
+        choices=(
+            ('early', 'Early Arrival (Wed-Sat)'),
+            ('sunday', 'Sunday'),
+            ('monday', 'Monday'),
+            ('tuesday', 'Tuesday'),
+            ('wednesday', 'Wednesday'),
+            ('thursday', 'Thursday'),
+            ('friday', 'Friday'),
+        ),
+        blank=True,
+        null=True
+    )
+    departure_date = models.CharField(
+        max_length=16,
+        choices=(
+            ('wednesday', 'Wednesday'),
+            ('thursday', 'Thursday'),
+            ('friday', 'Friday'),
+            ('saturday', 'Saturday (Man Burn)'),
+            ('sunday', 'Sunday (Temple Burn)'),
+            ('monday', 'Monday (Late Crew)'),
+            ('tuesday', 'Tuesday (Late Crew)'),
+        ),
+        blank=True,
+        null=True
+    )
 
     has_early_pass = models.NullBooleanField(blank=True)
     has_ticket = models.NullBooleanField(blank=True)
@@ -59,11 +96,17 @@ class AttendanceProfile(models.Model):
     def __str__(self):
         return '{}[{}]'.format(self.user, self.year)
 
+    def label_for_field(self, field_name):
+        # type: (str) -> Optional[str]
+        return self.FORM_LABELS.get(field_name, field_name)
+
 
 class AttendanceProfileForm(ModelForm):
     class Meta:
         model = AttendanceProfile
         fields = [
+            'arrival_date',
+            'departure_date',
             'transportation_method',
             'has_early_pass',
             'has_ticket',
@@ -72,3 +115,5 @@ class AttendanceProfileForm(ModelForm):
             'shift_time_preference',
             'shift_day_preference',
         ]
+
+        labels = AttendanceProfile.FORM_LABELS
