@@ -30,6 +30,7 @@ ul {
   float: left;
   width: 150px;
   text-align: left;
+  overflow: hidden;
 }
 .skill-inner {
   display: table;
@@ -44,6 +45,9 @@ ul {
   display: table-cell;
   vertical-align: middle;
   padding-left: 7px;
+}
+#food-restrictions {
+  width: 500px;
 }
 .clear-float {
   content: ".";
@@ -125,14 +129,12 @@ ul {
 
       {% if user.id == profile.user.id %}
       <h2>Food Restrictions</h2>
-      <div id="food-restrictions">
         {% if profile.food_restrictions.all %}
+        <div id="food-restrictions">
           {% for restriction in profile.food_restrictions.all %}
-          <div class="food-restriction">
-            <p>{{ restriction.name }}</p>
-            <p>{{ restriction.description }}</p>
-          </div>
+          {{ restriction.name }}{% if not forloop.last %},{% endif %}
           {% endfor %}
+        </div>
         {% else %}
           No restrictions.
         {% endif %}
