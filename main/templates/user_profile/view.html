@@ -121,27 +121,15 @@ ul {
 
         <h2>Skills</h2>
         <div id="skills">
+          Help the leads organize by letting us know what you're good at.
           {% include "skill/list.html" %}
-          {% if user.id == profile.user.id %}
-          <div class="edit-link">
-            <a href="">Edit</a>
-          </div>
-          {% endif %}
         </div>
 
         {% if user.id == profile.user.id %}
         <h2>Food Restrictions</h2>
         <div id="food-restrictions">
-        {% if profile.food_restrictions.all %}
-          {% for restriction in profile.food_restrictions.all %}
-          {{ restriction.name }}{% if not forloop.last %},{% endif %}
-          {% endfor %}
-        {% else %}
-          No restrictions.
-        {% endif %}
-        </div>
-        <div class="edit-link">
-          <a href="">Edit</a>
+          Help the Kitchen team out by listing your dietary restrictions.
+          {% include "food_restriction/list.html" %}
         </div>
         {% endif %}
       </div>

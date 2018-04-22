@@ -1,3 +1,34 @@
+{% if is_editable %}
+<form method="POST" action="{% url 'updated-skills' %}">
+    {% csrf_token %}
+    <ul>
+        {% for skill in profile.skills.all %}
+        <li class="skill">
+            <div class="skill-inner">
+                <div class="skill-image">
+                        <img src="{{ skill.picture_url }}" alt="{{ skill.description }}" title="{{ skill.description }}" />
+                </div>
+                <span class="skill-name"><input type="checkbox" name="skills[]" value="{{ skill.id }}" checked="checked" />&nbsp;{{ skill.name }}</span>
+                <div class="clear-float"></div>
+            </div>
+        </li>
+        {% endfor %}
+        {% for skill in other_skills %}
+        <li class="skill">
+            <div class="skill-inner">
+                <div class="skill-image">
+                        <img src="{{ skill.picture_url }}" alt="{{ skill.description }}" title="{{ skill.description }}" />
+                </div>
+                <span class="skill-name"><input type="checkbox" value="{{ skill.id }}" name="skills[]" />&nbsp;{{ skill.name }}</span>
+                <div class="clear-float"></div>
+            </div>
+        </li>
+        {% endfor %}
+        <li class="clear-float"></li>
+    </ul>
+    <button type="submit">Update</button>
+</form>
+{% else %}
 <ul>
     {% for skill in profile.skills.all %}
     <li class="skill">
@@ -12,3 +43,4 @@
     {% endfor %}
     <li class="clear-float"></li>
 </ul>
+{% endif %}

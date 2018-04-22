@@ -17,5 +17,7 @@ urlpatterns = [     # pylint: disable=invalid-name
     url(r'^profile/(?P<user_id>\d+)$', main.views.user_profile.get),
     url(r'^profile/me/$', main.views.user_profile.get),
     url(r'^profile/me/attendance/$', main.views.user_profile.changed_attending, name='changed-attending'),
+    url(r'^profile/me/skills/$', main.views.user_profile.updated_skills, name='updated-skills'),
+    url(r'^profile/me/food-restrictions/$', main.views.user_profile.updated_food_restrictions, name='updated-food-restrictions'),
     url(r'^admin/', include(admin.site.urls)),
 ]
