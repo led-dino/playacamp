@@ -8,16 +8,6 @@ from main.models.transportation_method import TransportationMethod
 
 
 class AttendanceProfile(models.Model):
-    FORM_LABELS = {
-        'arrival_date': 'What day do you plan to arrive?',
-        'departure_date': 'What day do you plan to leave?',
-        'transportation_method': 'How are you planning on getting there?',
-        'has_early_pass': 'Do you have any early passes?',
-        'has_ticket': 'Do you have any tickets yet?',
-        'has_vehicle_pass': 'Do you have a vehicle pass?',
-        'bicycle_status': 'What are you planning for your bicycle?',
-    }
-
     deleted_at = models.DateTimeField(blank=True, null=True)
 
     user = models.ForeignKey(User)
@@ -114,4 +104,12 @@ class AttendanceProfileForm(ModelForm):
             'shift_day_preference',
         ]
 
-        labels = AttendanceProfile.FORM_LABELS
+        labels = {
+            'arrival_date': 'What day do you plan to arrive?',
+            'departure_date': 'What day do you plan to leave?',
+            'transportation_method': 'How are you planning on getting there?',
+            'has_early_pass': 'Do you have any early passes?',
+            'has_ticket': 'Do you have any tickets yet?',
+            'has_vehicle_pass': 'Do you have a vehicle pass?',
+            'bicycle_status': 'What\'s your bicycle plan?',
+        }

@@ -22,6 +22,14 @@
             </div>
             {% endif %}
 
+            {% if profile.social_media_links %}
+                {% for link in profile.social_media_links.all %}
+                <div class="social-media-link">
+                    <a href="{{ link.link }}">{{ link.formatted_link }}</a>
+                </div>
+                {% endfor %}
+            {% endif %}
+
             {% if profile.phone_number %}
             <div id="phone-number">
                 <a href="tel:{{ profile.formatted_phone_number }}">{{ profile.formatted_phone_number }}</a>

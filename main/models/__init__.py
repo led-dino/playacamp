@@ -4,8 +4,8 @@ from main.models.housing_group import HousingGroup
 from main.models.job import Job
 from main.models.job_assignment import JobAssignment
 from main.models.skill import Skill
+from main.models.social_media_link import SocialMediaLink
 from main.models.team_membership import TeamMembership
 from main.models.transportation_method import TransportationMethod
 from main.models.team import Team
 from main.models.user_profile import UserProfile
-

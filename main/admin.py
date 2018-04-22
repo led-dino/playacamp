@@ -6,6 +6,7 @@ from .models import (AttendanceProfile,
                      Job,
                      JobAssignment,
                      Skill,
+                     SocialMediaLink,
                      Team,
                      TeamMembership,
                      TransportationMethod,
@@ -66,3 +67,9 @@ class JobAssignmentAdmin(admin.ModelAdmin):
 @admin.register(Skill)
 class SkillAdmin(admin.ModelAdmin):
     pass
+
+
+@admin.register(SocialMediaLink)
+class SocialMediaLinkAdmin(admin.ModelAdmin):
+    pass
+
