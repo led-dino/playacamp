@@ -15,6 +15,7 @@ class AttendanceProfile(models.Model):
         'has_early_pass': 'Do you have any early passes?',
         'has_ticket': 'Do you have any tickets yet?',
         'has_vehicle_pass': 'Do you have a vehicle pass?',
+        'bicycle_status': 'What are you planning for your bicycle?',
     }
 
     deleted_at = models.DateTimeField(blank=True, null=True)
@@ -96,10 +97,6 @@ class AttendanceProfile(models.Model):
     def __str__(self):
         return '{}[{}]'.format(self.user, self.year)
 
-    def label_for_field(self, field_name):
-        # type: (str) -> Optional[str]
-        return self.FORM_LABELS.get(field_name, field_name)
-
 
 class AttendanceProfileForm(ModelForm):
     class Meta:
@@ -111,6 +108,7 @@ class AttendanceProfileForm(ModelForm):
             'has_early_pass',
             'has_ticket',
             'has_vehicle_pass',
+            'bicycle_status',
             'job_preferences',
             'shift_time_preference',
             'shift_day_preference',
