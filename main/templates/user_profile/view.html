@@ -76,6 +76,8 @@ ul {
   width: 500px;
   margin-left: 10px;
   margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #ccc;
 }
 .clear-float {
   content: ".";
@@ -107,6 +109,9 @@ ul {
 #attendance table td {
   padding-left: 20px;
 }
+#teams {
+  margin-left: 10px;
+}
 </style>
   </head>
   <body>
@@ -132,6 +137,19 @@ ul {
           {% include "food_restriction/list.html" %}
         </div>
         {% endif %}
+
+        <h2>Teams</h2>
+        <div id="teams">
+          {% if profile.user.memberships.all %}
+          <ul>
+          {% for membership in profile.user.memberships.all %}
+            <li>{{ membership.team.name }}{% if membership.is_lead %} (Lead){% endif %}</li></li>
+          {% endfor %}
+          </ul>
+          {% else %}
+          No associated teams.
+          {% endif %}
+        </div>
       </div>
     </div>
   </body>

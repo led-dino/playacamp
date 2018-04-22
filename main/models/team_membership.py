@@ -5,7 +5,7 @@ from main.models.team import Team
 
 class TeamMembership(models.Model):
     team = models.ForeignKey(Team)
-    member = models.ForeignKey(User)
+    member = models.ForeignKey(User, related_name='memberships')
     is_lead = models.BooleanField(default=False)
 
     def __str__(self):

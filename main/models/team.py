@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 class Team(models.Model):
     name = models.CharField(max_length=64)
     description = models.TextField()
-    members = models.ManyToManyField(User, blank=True, through='TeamMembership')
+    members = models.ManyToManyField(User, blank=True, related_name='teams', through='TeamMembership')
 
     @property
     def leads(self):

@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-from django.forms import ModelForm, forms
+from django.forms import ModelForm, forms, CheckboxSelectMultiple
 
 from main.models.housing_group import HousingGroup
 from main.models.job import Job
@@ -112,4 +112,11 @@ class AttendanceProfileForm(ModelForm):
             'has_ticket': 'Do you have any tickets yet?',
             'has_vehicle_pass': 'Do you have a vehicle pass?',
             'bicycle_status': 'What\'s your bicycle plan?',
+            'job_preferences': 'Are there specific on-playa jobs you\'re interested in?',
+            'shift_time_preference': 'Do you prefer daytime or evening shifts?',
+            'shift_day_preference': 'How would you like to spread your shifts?',
+        }
+
+        widgets = {
+            'job_preferences': CheckboxSelectMultiple(),
         }
