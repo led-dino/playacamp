@@ -1,0 +1,48 @@
+<div id="header">
+    <div id="profile-pic">
+        <img src="{{ profile.profile_pic_url }}" />
+    </div>
+    <div id="details">
+        <h1>
+            {% firstof profile.user.get_full_name profile.user.get_username %}
+            {% if profile.playa_name %}
+            ({{ profile.playa_name }})
+            {% endif %}
+        </h1>
+        <div id="details-inner">
+            {% if profile.zipcode %}
+            <div id="zipcode">
+                {{ profile.get_city_and_state }} ({{ profile.get_timezone_offset }})
+            </div>
+            {% endif %}
+
+            {% if profile.user.email %}
+            <div id="email">
+                <a href="mailto:{{ profile.user.email }}">{{ profile.user.email }}</a>
+            </div>
+            {% endif %}
+
+            {% if profile.phone_number %}
+            <div id="phone-number">
+                <a href="tel:{{ profile.formatted_phone_number }}">{{ profile.formatted_phone_number }}</a>
+            </div>
+            {% endif %}
+
+            {% if profile.years_on_playa %}
+            <div id="years_on_playa">
+                Years on Playa: {{ profile.years_on_playa }}
+            </div>
+            {% endif %}
+            <div id="bio">
+                {{ profile.biography }}
+            </div>
+
+            {% if user.id == profile.user.id %}
+            <div class="edit-link">
+                <a href="">Edit</a>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+    <div class="clear-float"></div>
+</div>
