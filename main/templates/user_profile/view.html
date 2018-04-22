@@ -162,20 +162,7 @@ ul {
 
         <h2>Skills</h2>
         <div id="skills">
-          <ul>
-            {% for skill in profile.skills.all %}
-            <li class="skill">
-              <div class="skill-inner">
-              <div class="skill-image">
-                <img src="{{ skill.picture_url }}" alt="{{ skill.description }}" title="{{ skill.description }}" />
-              </div>
-              <span class="skill-name">{{ skill.name }}</span>
-              <div class="clear-float"></div>
-              </div>
-            </li>
-            {% endfor %}
-            <li class="clear-float"></li>
-          </ul>
+          {% include "skill/list.html" %}
           {% if user.id == profile.user.id %}
           <div class="edit-link">
             <a href="">Edit</a>

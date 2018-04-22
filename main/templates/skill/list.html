@@ -1,0 +1,14 @@
+<ul>
+    {% for skill in profile.skills.all %}
+    <li class="skill">
+        <div class="skill-inner">
+            <div class="skill-image">
+                    <img src="{{ skill.picture_url }}" alt="{{ skill.description }}" title="{{ skill.description }}" />
+            </div>
+            <span class="skill-name">{{ skill.name }}</span>
+            <div class="clear-float"></div>
+        </div>
+    </li>
+    {% endfor %}
+    <li class="clear-float"></li>
+</ul>
