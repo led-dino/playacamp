@@ -7,8 +7,16 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.utils import timezone
 
-from main.models import Skill, FoodRestriction
+from main.models import Skill, FoodRestriction, UserProfile
 from main.models.attendance_profile import AttendanceProfile, AttendanceProfileForm
+
+
+@login_required
+def list_profiles(request):
+    profiles = UserProfile.objects.all()
+    return render(request, 'user_profile/list.html', context={
+        'profiles': profiles,
+    })
 
 
 @login_required

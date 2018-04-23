@@ -1,0 +1,14 @@
+<div class="user-profile-summary">
+    <div class="profile-pic">
+        <a href="{{ profile.get_absolute_url }}"><img src="{{ profile.profile_pic_url }}" /></a>
+    </div>
+    <h4>
+        <a href="{{ profile.get_absolute_url }}">
+        {% firstof profile.user.get_full_name profile.user.get_username %}
+        {% if profile.playa_name %}
+        ({{ profile.playa_name }})
+        {% endif %}
+        </a>
+    </h4>
+    <div class="clear-float"></div>
+</div>
