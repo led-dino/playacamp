@@ -1,118 +1,12 @@
 <!doctype html>
+{% load static %}
 <html>
   <head>
-<style>
-body {
-  background-color: #ccc;
-}
-#body-wrapper {
-  width: 700px;
-  margin-left: auto;
-  margin-right: auto;
-  background-color: #fff;
-  padding-bottom: 30px;
-}
-#body-main-content {
-  margin-left: 13%;
-}
-ul {
-  padding: 0;
-  list-style-type: none;
-}
-#header {
-  display: table;
-  margin-top: 60px;
-  margin-bottom: 20px;
-}
-#details {
-  display: table-cell;
-  vertical-align: middle;
-  padding-left: 40px;
-  width: auto;
-  overflow: hidden;
-}
-#details-inner {
-  margin-left: 10px;
-}
-#profile-pic {
-  margin-top: -50px;
-  margin-left: -50px;
-}
-#profile-pic img {
-  height: 300px;
-  border-radius: 50%;
-  float: left;
-}
-
-#skills {
-  width: 500px;
-  border-bottom: 1px solid #ccc;
-  padding-bottom: 10px;
-  margin-left: 10px;
-}
-.skill {
-  margin-left: 5px;
-  margin-bottom: 7px;
-  float: left;
-  width: 150px;
-  text-align: left;
-  overflow: hidden;
-}
-.skill-inner {
-  display: table;
-}
-.skill .skill-image {
-  float: left;
-}
-.skill .skill-image img {
-  height: 50px;
-}
-.skill .skill-name {
-  display: table-cell;
-  vertical-align: middle;
-  padding-left: 7px;
-}
-#food-restrictions {
-  width: 500px;
-  margin-left: 10px;
-  margin-bottom: 20px;
-  padding-bottom: 10px;
-  border-bottom: 1px solid #ccc;
-}
-.clear-float {
-  content: ".";
-  display: block;
-  height: 0;
-  visibility: hidden;
-  clear: both;
-}
-.edit-link {
-  margin-top: 7px;
-}
-#bio {
-  margin-top: 15px;
-}
-#attendance {
-  border-bottom: 1px solid #ccc;
-  width: 500px;
-  padding-bottom: 10px;
-}
-#attendance-summary {
-  margin-bottom: 15px;
-}
-#attendance h4 {
-  margin-left: 20px;
-}
-#attendance table {
-  margin-left: 20px;
-}
-#attendance table td {
-  padding-left: 20px;
-}
-#teams {
-  margin-left: 10px;
-}
-</style>
+    <link rel="stylesheet" type="text/css" href={% static "css/base.css" %}>
+    <link rel="stylesheet" type="text/css" href={% static "css/user_profile/view.css" %}>
+    <link rel="stylesheet" type="text/css" href={% static "css/attendance_profile/form.css" %}>
+    <link rel="stylesheet" type="text/css" href={% static "css/skill/list.css" %}>
+    <link rel="stylesheet" type="text/css" href={% static "css/food_restriction/list.css" %}>
   </head>
   <body>
     <div id="body-wrapper">

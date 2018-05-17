@@ -1,0 +1,12 @@
+.profile-pic img {
+    height: 75px;
+    border-radius: 50%;
+}
+.profile-pic {
+    float: left;
+}
+.user-profile-summary {
+    border-bottom: 1px solid #ccc;
+    padding-top: 10px;
+    padding-left: 10px;
+}

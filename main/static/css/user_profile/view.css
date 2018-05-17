@@ -1,0 +1,36 @@
+#body-main-content {
+    margin-left: 13%;
+}
+#header {
+    display: table;
+    margin-top: 60px;
+    margin-bottom: 20px;
+}
+#details {
+    display: table-cell;
+    vertical-align: middle;
+    padding-left: 40px;
+    width: auto;
+    overflow: hidden;
+}
+#details-inner {
+    margin-left: 10px;
+}
+#profile-pic {
+    margin-top: -50px;
+    margin-left: -50px;
+}
+#profile-pic img {
+    height: 300px;
+    border-radius: 50%;
+    float: left;
+}
+.edit-link {
+    margin-top: 7px;
+}
+#bio {
+    margin-top: 15px;
+}
+#teams {
+    margin-left: 10px;
+}

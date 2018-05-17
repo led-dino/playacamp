@@ -1,0 +1,23 @@
+.clear-float {
+    content: ".";
+    display: block;
+    height: 0;
+    visibility: hidden;
+    clear: both;
+}
+
+ul {
+    padding: 0;
+    list-style-type: none;
+}
+body {
+    background-color: #ccc;
+}
+
+#body-wrapper {
+    width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: #fff;
+    padding-bottom: 30px;
+}

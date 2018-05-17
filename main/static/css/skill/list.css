@@ -1,0 +1,28 @@
+#skills {
+    width: 500px;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 10px;
+    margin-left: 10px;
+}
+.skill {
+    margin-left: 5px;
+    margin-bottom: 7px;
+    float: left;
+    width: 150px;
+    text-align: left;
+    overflow: hidden;
+}
+.skill-inner {
+    display: table;
+}
+.skill .skill-image {
+    float: left;
+}
+.skill .skill-image img {
+    height: 50px;
+}
+.skill .skill-name {
+    display: table-cell;
+    vertical-align: middle;
+    padding-left: 7px;
+}
