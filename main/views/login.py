@@ -1,15 +1,8 @@
-from django.contrib.auth import authenticate, login
+from django.contrib.auth.views import login
+from django.shortcuts import redirect
 
 
-def submit(request):
-    username = request.POST['username']
-    password = request.POST['password']
-    user = authenticate(request, username=username, password=password)
-    if user is not None:
-        login(request, user)
-        if user.profile:
-            return redirect(user.profile)
-        return HttpResponse('OK')
-    else:
-        return HttpResponse("Invalid credentials.", status_code=400)
-
+def get(request):
+    if request.user.is_authenticated:
+        return redirect('user-profile-me')
+    return login(request)

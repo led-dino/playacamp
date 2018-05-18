@@ -1,0 +1,50 @@
+<!doctype html>
+<html>
+<head>
+
+</head>
+<body>
+<h1>Signup</h1>
+<form method="POST" action="{% url 'signup-submit' %}">
+    {% csrf_token %}
+    <div>
+        What is your first name little dino?
+        <input type="text" name="first-name">
+    </div>
+
+    <div>
+        And your last name?
+        <input type="text" name="last-name">
+    </div>
+
+    <div>
+        Nice to meet you! So how many years have you gone to Burning Man?
+        <input type="number" name="years-on-playa">
+    </div>
+
+    <div>
+        Cool! What's your email so we can keep you up to date?
+        <input type="email" name="email">
+    </div>
+
+    <div>
+        And a password so we can identify you!
+        <input type="password" name="password"><br />
+        What was that password again? (in case you typo-ed)
+        <input type="password" name="duplicate-password">
+    </div>
+
+    <div>
+        And your phone number por favor?
+        <input type="tel" name="phone">
+    </div>
+
+    <div>
+        What is your zipcode?
+        <input type="number" name="zipcode">
+    </div>
+
+    <button>Submit</button>
+</form>
+</body>
+</html>

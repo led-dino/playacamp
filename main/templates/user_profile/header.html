@@ -37,15 +37,16 @@
             {% endif %}
 
             {% if profile.years_on_playa %}
-            <div id="years_on_playa">
+            <div id="years-on-playa">
                 Years on Playa: {{ profile.years_on_playa }}
             </div>
             {% endif %}
+
             <div id="bio">
                 {{ profile.biography }}
             </div>
 
-            {% if user.id == profile.user.id %}
+            {% if is_editable %}
             <div class="edit-link">
                 <a href="">Edit</a>
             </div>
