@@ -1,3 +1,5 @@
+from typing import Optional
+
 from django.db import models
 from django.contrib.auth.models import User
 from django.contrib.staticfiles.templatetags.staticfiles import static
@@ -9,8 +11,11 @@ import pytz
 import phonenumbers
 from uszipcode import ZipcodeSearchEngine
 from timezonefinder import TimezoneFinder
+from uszipcode.searchengine import Zipcode
+
 from main.models.food_restriction import FoodRestriction
 from main.models.skill import Skill
+from playacamp import settings
 
 
 class UserProfile(models.Model):
@@ -24,27 +29,25 @@ class UserProfile(models.Model):
     skills = models.ManyToManyField(Skill, blank=True)
     years_on_playa = models.IntegerField(blank=True, null=True)
 
-    def profile_pic_url(self):
-        # type: () -> str
+    def profile_pic_url(self) -> str:
         if self.profile_picture:
+            assert settings.AWS_STORAGE_BUCKET_NAME
             return self.profile_picture.url
         return static('default-profile-pic.png')
 
-    def get_rich_zipcode(self):
+    def get_rich_zipcode(self) -> Optional[Zipcode]:
         if not self.zipcode:
             return None
         search = ZipcodeSearchEngine()
         return search.by_zipcode(self.zipcode)
 
-    def get_city_and_state(self):
-        # type: () -> Optional[str]
+    def get_city_and_state(self) -> Optional[str]:
         zipcode = self.get_rich_zipcode()
         if zipcode is None:
             return None
         return '{}, {}'.format(zipcode['City'], zipcode['State'])
 
-    def get_timezone_offset(self):
-        # type: () -> Optional[str]
+    def get_timezone_offset(self) -> Optional[str]:
         zipcode = self.get_rich_zipcode()
         if zipcode is None:
             return None
@@ -56,8 +59,7 @@ class UserProfile(models.Model):
             return None
         return datetime.datetime.now(pytz.timezone(timezone_name)).strftime('%z')
 
-    def formatted_phone_number(self):
-        # type: () -> Optional[str]
+    def formatted_phone_number(self) -> Optional[str]:
         if self.phone_number:
             try:
                 parsed_number = phonenumbers.parse(self.phone_number, 'US')
@@ -69,9 +71,8 @@ class UserProfile(models.Model):
             return None
         return None
 
-    def get_absolute_url(self):
+    def get_absolute_url(self) -> str:
         return reverse('user-profile', kwargs={'user_id': self.user.id})
 
-    def __str__(self):
-        # type: () -> str
+    def __str__(self) -> str:
         return str(self.user)
