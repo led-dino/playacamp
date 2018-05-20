@@ -3,7 +3,7 @@ from typing import Dict
 
 import phonenumbers
 from django import forms
-from django.http import Http404, HttpResponseBadRequest
+from django.http import Http404, HttpResponseBadRequest, HttpResponse, HttpRequest
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
@@ -121,7 +121,7 @@ def update_basics(request):
 
 
 @login_required
-def changed_attending(request):
+def changed_attending(request: HttpRequest) -> HttpResponse:
     if request.method != 'POST':
         raise Http404
 
@@ -150,7 +150,7 @@ def changed_attending(request):
         return redirect(get)
 
 
-def create_attendance_record(request, year):
+def create_attendance_record(request: HttpRequest, year: int) -> HttpResponse:
     assert request.user.is_authenticated
     sys.stdout.flush()
 
@@ -159,7 +159,7 @@ def create_attendance_record(request, year):
     return redirect(get)
 
 
-def delete_attendance_record(request, attendance):
+def delete_attendance_record(request: HttpRequest, attendance: AttendanceProfile) -> HttpResponse:
     assert request.user.is_authenticated
     sys.stdout.flush()
 
@@ -169,7 +169,7 @@ def delete_attendance_record(request, attendance):
     return redirect(get)
 
 
-def update_attendance_record(request, attendance):
+def update_attendance_record(request: HttpRequest, attendance: AttendanceProfile) -> HttpResponse:
     assert request.user.is_authenticated
     sys.stdout.flush()
 
@@ -184,7 +184,7 @@ def update_attendance_record(request, attendance):
 
 
 @login_required
-def updated_skills(request):
+def updated_skills(request: HttpRequest) -> HttpResponse:
     if request.method != 'POST':
         raise Http404
 
@@ -199,7 +199,7 @@ def updated_skills(request):
 
 
 @login_required
-def updated_food_restrictions(request):
+def updated_food_restrictions(request: HttpRequest) -> HttpResponse:
     if request.method != 'POST':
         raise Http404
 
@@ -218,7 +218,7 @@ class UploadFileForm(forms.Form):
 
 
 @login_required
-def get_profile_picture_form(request):
+def get_profile_picture_form(request: HttpRequest) -> HttpResponse:
     if request.method != 'GET':
         raise Http404
     return render(request, 'user_profile/profile_pic_form.html', context={
@@ -227,7 +227,7 @@ def get_profile_picture_form(request):
 
 
 @login_required
-def submit_profile_picture_form(request):
+def submit_profile_picture_form(request: HttpRequest) -> HttpResponse:
     if request.method != 'POST':
         raise Http404
     print(request.FILES['file'])

@@ -2,19 +2,19 @@ import phonenumbers
 from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
 from django.db import IntegrityError
-from django.http import HttpResponseBadRequest
+from django.http import HttpResponseBadRequest, HttpResponse, HttpRequest
 from django.shortcuts import render, redirect
 
 from main.models import UserProfile
 
 
-def get(request):
+def get(request: HttpRequest) -> HttpResponse:
     if request.user.is_authenticated:
         return redirect('user-profile-me')
     return render(request, 'registration/signup.html')
 
 
-def post(request):
+def post(request: HttpRequest) -> HttpResponse:
     if request.method != 'POST':
         return redirect('signup')
 
