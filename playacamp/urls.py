@@ -19,6 +19,7 @@ urlpatterns = [     # pylint: disable=invalid-name
     url(r'^profiles/$', main.views.user_profile.list_profiles, name='user-profile-list'),
     url(r'^profile/(?P<user_id>\d+)$', main.views.user_profile.get, name='user-profile'),
     url(r'^profile/me/$', main.views.user_profile.get, name='user-profile-me'),
+    url(r'^profile/me/basic/$', main.views.user_profile.update_basics, name='update-basics-submit'),
     url(r'^profile/me/attendance/$', main.views.user_profile.changed_attending, name='changed-attending'),
     url(r'^profile/me/skills/$', main.views.user_profile.updated_skills, name='updated-skills'),
     url(r'^profile/me/food-restrictions/$', main.views.user_profile.updated_food_restrictions, name='updated-food-restrictions'),

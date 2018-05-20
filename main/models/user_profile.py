@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Optional, List
 
 from django.db import models
 from django.contrib.auth.models import User
@@ -58,6 +58,11 @@ class UserProfile(models.Model):
         if timezone_name is None:
             return None
         return datetime.datetime.now(pytz.timezone(timezone_name)).strftime('%z')
+
+    def missing_social_media_link_types(self) -> List[str]:
+        from main.models import SocialMediaLink
+        existing_links = {(link.account_type, link.get_account_type_display()) for link in self.social_media_links.all()}
+        return list(set(SocialMediaLink.ACCOUNT_TYPES) - existing_links)
 
     def formatted_phone_number(self) -> Optional[str]:
         if self.phone_number:

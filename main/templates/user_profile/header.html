@@ -9,6 +9,10 @@
     </div>
     {% endif %}
     <div id="details">
+        {% if is_editable %}
+        <form method="POST" action="{% url 'update-basics-submit' %}">
+            {% csrf_token %}
+        {% endif %}
         <h1>
             {% firstof profile.user.get_full_name profile.user.get_username %}
             {% if profile.playa_name %}
@@ -16,9 +20,21 @@
             {% endif %}
         </h1>
         <div id="details-inner">
+            <div id="playa-name">
+                {% if is_editable %}
+                <label>Playa Name:</label>
+                <input type="text" name="playa-name" value="{% firstof profile.playa_name '' %}">
+                {% endif %}
+            </div>
+
             {% if profile.zipcode %}
             <div id="zipcode">
+                {% if is_editable %}
+                <label>Zipcode:</label>
+                <input type="text" name="zipcode" value="{{ profile.zipcode }}">
+                {% else %}
                 {{ profile.get_city_and_state }} ({{ profile.get_timezone_offset }})
+                {% endif %}
             </div>
             {% endif %}
 
@@ -31,31 +47,58 @@
             {% if profile.social_media_links %}
                 {% for link in profile.social_media_links.all %}
                 <div class="social-media-link">
+                    {% if is_editable %}
+                    <label>{{ link.get_account_type_display }}:</label>
+                    <input type="text" name="social-link-{{ link.account_type }}" value="{{ link.link }}">
+                    {% else %}
                     <a href="{{ link.link }}">{{ link.formatted_link }}</a>
+                    {% endif %}
                 </div>
                 {% endfor %}
+                {% if is_editable %}
+                    {% for link_type, verbose_type in profile.missing_social_media_link_types %}
+                    <div class="social-media-link">
+                        <label>{{ verbose_type }}:</label>
+                        <input type="text" name="social-link-{{ link_type }}">
+                    </div>
+                    {% endfor %}
+                {% endif %}
             {% endif %}
 
             {% if profile.phone_number %}
             <div id="phone-number">
+                {% if is_editable %}
+                <label>Phone:</label>
+                <input type="tel" name="phone" value="{{ profile.formatted_phone_number }}">
+                {% else %}
                 <a href="tel:{{ profile.formatted_phone_number }}">{{ profile.formatted_phone_number }}</a>
+                {% endif %}
             </div>
             {% endif %}
 
             {% if profile.years_on_playa %}
             <div id="years-on-playa">
+                {% if is_editable %}
+                Years on Playa: <input type="number" value="{{ profile.years_on_playa }}" name="years-on-playa">
+                {% else %}
                 Years on Playa: {{ profile.years_on_playa }}
+                {% endif %}
             </div>
             {% endif %}
 
             <div id="bio">
+                {% if is_editable %}
+                <textarea name="bio">{{ profile.biography }}</textarea>
+                {% else %}
                 {{ profile.biography }}
+                {% endif %}
             </div>
 
             {% if is_editable %}
-            <div class="edit-link">
-                <a href="">Edit</a>
-            </div>
+            <button>Submit</button>
+            {% endif %}
+            {% if is_editable %}
+            </form>
             {% endif %}
         </div>
     </div>

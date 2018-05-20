@@ -1,14 +1,16 @@
 import sys
+from typing import Dict
 
+import phonenumbers
 from django import forms
-from django.http import Http404
+from django.http import Http404, HttpResponseBadRequest
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.utils import timezone
 
-from main.models import Skill, FoodRestriction, UserProfile
+from main.models import Skill, FoodRestriction, UserProfile, SocialMediaLink
 from main.models.attendance_profile import AttendanceProfile, AttendanceProfileForm
 
 
@@ -60,6 +62,62 @@ def get(request, user_id=None):
         'other_skills': other_skills_by_name.values(),
         'other_food_restrictions': other_food_restrictions_by_name.values(),
     })
+
+
+@login_required
+def update_basics(request):
+    if request.method != 'POST':
+        raise Http404
+
+    profile = request.user.profile
+
+    profile.playa_name = request.POST['playa-name']
+
+    zipcode = request.POST['zipcode']
+    if zipcode:
+        if len(zipcode) != 5:
+            return HttpResponseBadRequest('Invalid zipcode')
+        profile.zipcode = zipcode
+
+    links_by_account_type = {}  # type: Dict[str, str]
+    for account_type, verbose_type in SocialMediaLink.ACCOUNT_TYPES:
+        link = request.POST['social-link-{}'.format(account_type)]
+        links_by_account_type[account_type] = link
+
+    for social_link in profile.social_media_links.all():
+        new_value = links_by_account_type[social_link.account_type]
+        social_link.link = new_value
+        social_link.save()
+        links_by_account_type.pop(social_link.account_type)
+
+    for account_type in links_by_account_type:
+        new_link = links_by_account_type[account_type]
+        if not new_link:
+            continue
+        social_link = SocialMediaLink()
+        social_link.account_type = account_type
+        social_link.link = new_link
+        social_link.user_profile = profile
+        social_link.save()
+
+    phone = request.POST['phone']
+    if phone:
+        try:
+            parsed_number = phonenumbers.parse(phone, 'US')
+            profile.phone_nubmer = phonenumbers.format_number(parsed_number, phonenumbers.PhoneNumber())
+        except Exception:
+            return HttpResponseBadRequest('Error parsing phone number')
+
+    years_on_playa = request.POST['years-on-playa']
+    try:
+        profile.years_on_playa = int(years_on_playa) if years_on_playa else ''
+    except ValueError:
+        return HttpResponseBadRequest('Invalid value for years on playa')
+
+    profile.biography = request.POST['bio']
+    profile.save()
+
+    return redirect(get)
 
 
 @login_required
