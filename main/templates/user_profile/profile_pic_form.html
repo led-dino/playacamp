@@ -1,0 +1,17 @@
+<!doctype html>
+{% load static %}
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href={% static "css/base.css" %}>
+</head>
+<body>
+    <div id="body-wrapper">
+        <h1>Upload your profile picture!</h1>
+        <form method="POST" action="{% url 'profile-pic-form-submit' %}" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ photo_form.as_p }}
+            <button>Submit</button>
+        </form>
+    </div>
+</body>
+</html>

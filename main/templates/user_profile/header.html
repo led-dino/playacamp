@@ -1,7 +1,13 @@
 <div id="header">
-    <div id="profile-pic">
+    {% if is_editable %}
+    <a id="profile-pic" class="dimming-pic" href="{% url 'profile-pic-form' %}">
+        <img src="{{ profile.profile_pic_url }}" />
+    </a>
+    {% else %}
+    <div id="profile-pic" href="{% url 'profile-pic-form' %}">
         <img src="{{ profile.profile_pic_url }}" />
     </div>
+    {% endif %}
     <div id="details">
         <h1>
             {% firstof profile.user.get_full_name profile.user.get_username %}

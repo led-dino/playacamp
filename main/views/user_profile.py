@@ -1,5 +1,6 @@
 import sys
 
+from django import forms
 from django.http import Http404
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
@@ -151,4 +152,29 @@ def updated_food_restrictions(request):
     profile.food_restrictions.set([fr for fr in all_food_restrictions if fr.id in current_restriction_ids])
     profile.save()
 
+    return redirect(get)
+
+
+class UploadFileForm(forms.Form):
+    file = forms.FileField()
+
+
+@login_required
+def get_profile_picture_form(request):
+    if request.method != 'GET':
+        raise Http404
+    return render(request, 'user_profile/profile_pic_form.html', context={
+        'photo_form': UploadFileForm(),
+    })
+
+
+@login_required
+def submit_profile_picture_form(request):
+    if request.method != 'POST':
+        raise Http404
+    print(request.FILES['file'])
+    sys.stdout.flush()
+    profile = request.user.profile
+    profile.profile_picture = request.FILES['file']
+    profile.save()
     return redirect(get)
