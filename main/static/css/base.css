@@ -21,3 +21,10 @@ body {
     background-color: #fff;
     padding-bottom: 30px;
 }
+
+#navbar {
+    text-align: right;
+    padding-right: 10px;
+    padding-top: 5px;
+    float: right;
+}

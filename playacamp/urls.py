@@ -12,6 +12,7 @@ urlpatterns = [     # pylint: disable=invalid-name
     url(r'^$', main.views.index.get, name='index'),
 
     url(r'^login/$', main.views.login.get, name='login'),
+    url(r'^logout/$', main.views.login.log_out, name='logout'),
 
     url(r'^signup/$', main.views.signup.get, name='signup'),
     url(r'^signup/submit/$', main.views.signup.post, name='signup-submit'),

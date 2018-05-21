@@ -9,6 +9,7 @@
 #details {
     display: table-cell;
     vertical-align: middle;
+    padding-top: 10px;
     padding-left: 40px;
     width: auto;
     overflow: hidden;
