@@ -9,7 +9,11 @@ class Team(models.Model):
 
     @property
     def leads(self):
-        return self.members.filter(teammembership__is_lead=True).all()
+        return self.members.filter(memberships__is_lead=True).all()
+
+    @property
+    def non_leads(self):
+        return self.members.filter(memberships__is_lead=False).all()
 
     def __str__(self):
         return self.name

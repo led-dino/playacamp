@@ -14,10 +14,7 @@
             {% csrf_token %}
         {% endif %}
         <h1>
-            {% firstof profile.user.get_full_name profile.user.get_username %}
-            {% if profile.playa_name %}
-            ({{ profile.playa_name }})
-            {% endif %}
+            {{ profile.get_formatted_name }}
         </h1>
         <div id="details-inner">
             <div id="playa-name">

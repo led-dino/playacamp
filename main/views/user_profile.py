@@ -1,5 +1,5 @@
 import sys
-from typing import Dict
+from typing import Dict, Optional
 
 import phonenumbers
 from django import forms
@@ -15,7 +15,7 @@ from main.models.attendance_profile import AttendanceProfile, AttendanceProfileF
 
 
 @login_required
-def list_profiles(request):
+def list_profiles(request: HttpRequest) -> HttpResponse:
     profiles = UserProfile.objects.all()
     return render(request, 'user_profile/list.html', context={
         'profiles': profiles,
@@ -23,7 +23,7 @@ def list_profiles(request):
 
 
 @login_required
-def get(request, user_id=None):
+def get(request: HttpRequest, user_id: Optional[int]=None) -> HttpResponse:
     user = request.user if user_id is None else User.objects.get(pk=user_id)
     is_editable = request.user.id == user.id
 
@@ -65,7 +65,7 @@ def get(request, user_id=None):
 
 
 @login_required
-def update_basics(request):
+def update_basics(request: HttpRequest) -> HttpResponse:
     if request.method != 'POST':
         raise Http404
 

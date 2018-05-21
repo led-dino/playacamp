@@ -1,0 +1,19 @@
+<!doctype html>
+{% load static %}
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href={% static "css/base.css" %}>
+    <link rel="stylesheet" type="text/css" href={% static "css/team/list.css" %}>
+    <link rel="stylesheet" type="text/css" href={% static "css/team/list_item.css" %}>
+</head>
+<body>
+    <div id="body-wrapper">
+        <h1>Teams</h1>
+        <ul class="team-list">
+        {% for team in teams %}
+        {% include "team/list_item.html" with team=team %}
+        {% endfor %}
+        </ul>
+    </div>
+</body>
+</html>

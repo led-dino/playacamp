@@ -4,6 +4,7 @@ from django.contrib import admin
 import main.views.index
 import main.views.login
 import main.views.user_profile
+import main.views.team
 import main.views.signup
 
 admin.autodiscover()
@@ -16,6 +17,10 @@ urlpatterns = [     # pylint: disable=invalid-name
 
     url(r'^signup/$', main.views.signup.get, name='signup'),
     url(r'^signup/submit/$', main.views.signup.post, name='signup-submit'),
+
+    url(r'^teams/$', main.views.team.list, name='team-list'),
+    url(r'^team/(?P<team_id>\d+)$', main.views.team.get, name='team-detail'),
+    url(r'^team/(?P<team_id>\d+)/join-leave', main.views.team.toggle_membership, name='join-leave-team'),
 
     url(r'^profiles/$', main.views.user_profile.list_profiles, name='user-profile-list'),
     url(r'^profile/(?P<user_id>\d+)$', main.views.user_profile.get, name='user-profile'),

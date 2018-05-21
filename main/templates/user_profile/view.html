@@ -38,11 +38,17 @@
           {% if profile.user.memberships.all %}
           <ul>
           {% for membership in profile.user.memberships.all %}
-            <li>{{ membership.team.name }}{% if membership.is_lead %} (Lead){% endif %}</li></li>
+            <li>
+              <a href="{% url 'team-detail' membership.team.id %}">{{ membership.team.name }}</a>
+              {% if membership.is_lead %} (Lead){% endif %}
+            </li>
           {% endfor %}
           </ul>
           {% else %}
           No associated teams.
+          {% endif %}
+          {% if is_editable %}
+            To join a team, check out the list <a href="{% url 'team-list' %}">here</a>.
           {% endif %}
         </div>
       </div>

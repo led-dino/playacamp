@@ -1,0 +1,52 @@
+<!doctype html>
+{% load static %}
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href={% static "css/base.css" %}>
+    <link rel="stylesheet" type="text/css" href={% static "css/team/detail.css" %}>
+</head>
+<body>
+    <div id="body-wrapper">
+        <form class="join-leave-form" method="POST" action="{% url 'join-leave-team' team.id %}">
+            {% csrf_token %}
+            {% if is_member %}
+            <button class="leave-button">Leave</button>
+            {% else %}
+            <button class="join-button">Join</button>
+            {% endif %}
+        </form>
+
+        <h1>{{ team.name }}</h1>
+
+        <div class="team-description">
+            {{ team.description }}
+        </div>
+
+        <h2>Leads</h2>
+        <div>
+            {% if team.leads %}
+            <ul>
+            {% for user in team.leads %}
+                <li><a href="{% url 'user-profile' user.id %}">{{ user.profile.get_formatted_name }}</a></li>
+            {% endfor %}
+            </ul>
+            {% else %}
+                None
+            {% endif %}
+        </div>
+
+        <h2>Members</h2>
+        <div>
+            {% if team.non_leads %}
+            <ul>
+            {% for user in team.non_leads %}
+                <li><a href="{% url 'user-profile' user.id %}">{{ user.profile.get_formatted_name }}</a></li>
+            {% endfor %}
+            </ul>
+            {% else %}
+                None
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>

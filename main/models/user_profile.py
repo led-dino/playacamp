@@ -79,5 +79,12 @@ class UserProfile(models.Model):
     def get_absolute_url(self) -> str:
         return reverse('user-profile', kwargs={'user_id': self.user.id})
 
+    def get_formatted_name(self) -> str:
+        full_name = self.user.get_full_name()
+        base_name = full_name if full_name else self.user.get_username()
+        if self.playa_name:
+            return '{} ({})'.format(base_name, self.playa_name)
+        return full_name
+
     def __str__(self) -> str:
         return str(self.user)

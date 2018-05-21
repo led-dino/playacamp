@@ -1,0 +1,14 @@
+<li class="team-list-item">
+    <h3><a href="{% url 'team-detail' team.id %}">{{ team.name }}</a></h3>
+    <p>{{ team.description }}</p>
+    <p>
+        Leads:
+        {% if team.leads %}
+            {% for user in team.leads %}
+            <a href="{% url 'user-profile' user.id %}">{{ user.profile.get_formatted_name }}</a>
+            {% endfor %}
+        {% else %}
+            None
+        {% endif %}
+    </p>
+</li>
