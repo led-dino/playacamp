@@ -3,6 +3,7 @@ from typing import Dict, Optional
 
 import phonenumbers
 from django import forms
+from django.db.models import Q
 from django.http import Http404, HttpResponseBadRequest, HttpResponse, HttpRequest
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
@@ -16,9 +17,17 @@ from main.models.attendance_profile import AttendanceProfile, AttendanceProfileF
 
 @login_required
 def list_profiles(request: HttpRequest) -> HttpResponse:
-    profiles = UserProfile.objects.all()
+    search_query = request.GET.get('search')
+    if search_query is None:
+        profiles = UserProfile.objects.all()
+    else:
+        profiles = UserProfile.objects.filter(Q(playa_name__contains=search_query) |
+                                              Q(user__email__contains=search_query) |
+                                              Q(user__first_name__contains=search_query) |
+                                              Q(user__last_name__contains=search_query))
     return render(request, 'user_profile/list.html', context={
         'profiles': profiles,
+        'search_query': search_query or '',
     })
 
 

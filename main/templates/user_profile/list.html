@@ -9,7 +9,8 @@
     <div id="body-wrapper">
         {% include "navbar.html" %}
         <form method="GET" action="">
-            <input type="text" name="search" id="search-bar" />
+            <input type="text" name="search" id="search-bar" value="{{ search_query }}" />
+            <button>Search</button>
         </form>
         <ul>
             {% for profile in profiles %}
