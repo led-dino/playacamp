@@ -1,6 +1,11 @@
+import sys
+
 import phonenumbers
+from captcha.fields import ReCaptchaField
+from django import forms
 from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
+from django.core.exceptions import ValidationError
 from django.db import IntegrityError
 from django.http import HttpResponseBadRequest, HttpResponse, HttpRequest
 from django.shortcuts import render, redirect
@@ -8,67 +13,83 @@ from django.shortcuts import render, redirect
 from main.models import UserProfile
 
 
+# We only need a small subset of the fields (along with a recaptcha)
+# so this is a custom form just for the signup page.
+class SignUpForm(forms.Form):
+    first_name = forms.CharField(label="What is your first name little dino?", max_length=30)
+    last_name = forms.CharField(label="And your last name?", max_length=30)
+    years_on_playa = forms.IntegerField(label="Nice to meet you! So how many years have you gone to Burning Man?")
+    email = forms.EmailField(label="Cool! What's your email so we can keep you up to date?")
+    password = forms.CharField(label="And a password so we can identify you!",
+                               widget=forms.PasswordInput,
+                               min_length=8)
+    duplicate_password = forms.CharField(label=" What was that password again? (in case you typo-ed)",
+                                         widget=forms.PasswordInput,
+                                         min_length=8)
+    phone = forms.CharField(label="And your phone number por favor?")
+    zipcode = forms.CharField(label="Last thing. What's your zipcode?",
+                              max_length=5,
+                              min_length=5)
+    captcha = ReCaptchaField(label='')
+
+    def clean(self):
+        super().clean()
+        password = self.cleaned_data['password']
+        duplicate_password = self.cleaned_data['duplicate_password']
+        if password != duplicate_password:
+            raise ValidationError('Passwords must match!')
+
+    def clean_phone(self) -> str:
+        phone = self.cleaned_data['phone']
+        try:
+            parsed_number = phonenumbers.parse(phone, 'US')
+            formatted_phone = phonenumbers.format_number(parsed_number, phonenumbers.PhoneNumber())
+            chunks = formatted_phone.split('-')
+            if len(chunks) != 3 or len(chunks[0]) != 3 or len(chunks[1]) != 3 or len(chunks[2]) != 4:
+                raise ValidationError('Invalid phone number.')
+        except Exception:
+            raise ValidationError('Invalid phone number.')
+        return formatted_phone
+
+
 def get(request: HttpRequest) -> HttpResponse:
     if request.user.is_authenticated:
         return redirect('user-profile-me')
-    return render(request, 'registration/signup.html')
+    form = SignUpForm()
+    return render(request, 'registration/signup.html', context={
+        'form': form,
+    })
 
 
 def post(request: HttpRequest) -> HttpResponse:
     if request.method != 'POST':
         return redirect('signup')
 
-    first_name = str(request.POST['first-name'])
-    if first_name == '':
-        return HttpResponseBadRequest('First name required!')
-
-    last_name = str(request.POST['last-name'])
-    if last_name == '':
-        return HttpResponseBadRequest('Last name required!')
-
-    password = str(request.POST['password'])
-    if len(password) < 8:
-        return HttpResponseBadRequest('Password must be at least 8 characters!')
-
-    duplicate_password = str(request.POST['duplicate-password'])
-    if password != duplicate_password:
-        return HttpResponseBadRequest("Passwords don't match!")
+    form = SignUpForm(data=request.POST)
+    if not form.is_valid():
+        return render(request, 'registration/signup.html', context={
+            'form': form,
+        })
 
     try:
-        years_on_playa = int(request.POST['years-on-playa'])
-    except ValueError:
-        return HttpResponseBadRequest('Need a number for years on playa!')
-
-    email = str(request.POST['email'])
-    if email == '':
-        return HttpResponseBadRequest("Email is required!")
-
-    phone = str(request.POST['phone'])
-    parsed_number = phonenumbers.parse(phone, 'US')
-    formatted_phone = phonenumbers.format_number(parsed_number, phonenumbers.PhoneNumber())
-
-    zipcode = str(request.POST['zipcode'])
-    if len(zipcode) != 5:
-        return HttpResponseBadRequest("Zipcode looks invalid!")
-
-    try:
-        User.objects.create_user(username=email,
-                                 email=email,
-                                 password=password,
-                                 first_name=first_name,
-                                 last_name=last_name)
+        User.objects.create_user(username=form.cleaned_data['email'],
+                                 email=form.cleaned_data['email'],
+                                 password=form.cleaned_data['password'],
+                                 first_name=form.cleaned_data['first_name'],
+                                 last_name=form.cleaned_data['last_name'])
     except IntegrityError as e:
         if str(e) == 'UNIQUE constraint failed: auth_user.username':
             return HttpResponseBadRequest('User already exists.')
         raise
 
-    user = authenticate(username=email, password=password)
+    user = authenticate(username=form.cleaned_data['email'],
+                        password=form.cleaned_data['password'])
     assert user is not None
 
     user_profile = UserProfile()
-    user_profile.years_on_playa = years_on_playa
-    user_profile.phone_number = formatted_phone
-    user_profile.zipcode = zipcode
+    user_profile.years_on_playa = form.cleaned_data['years_on_playa']
+    user_profile.phone_number = form.cleaned_data['phone']
+    user_profile.zipcode = form.cleaned_data['zipcode']
     user_profile.user = user
     user_profile.save()
 

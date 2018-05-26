@@ -42,6 +42,7 @@ INSTALLED_APPS = (
     'main',
     'storages',
     'sass_processor',
+    'captcha',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -159,6 +160,8 @@ DEFAULT_FILE_STORAGE = 'playacamp.custom_storages.MediaStorage'
 
 LOGIN_URL = "/login"
 LOGIN_REDIRECT_URL = "/profile/me"
+
+NOCAPTCHA = True
 
 import django_heroku
 django_heroku.settings(locals())
