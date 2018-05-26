@@ -1,8 +1,9 @@
 <!doctype html>
 {% load static %}
+{% load sass_tags %}
 <html>
   <head>
-    <link rel="stylesheet" type="text/css" href={% static "css/base.css" %}>
+    <link rel="stylesheet" type="text/css" href={% sass_src "css/base.scss" %}>
     <link rel="stylesheet" type="text/css" href={% static "css/user_profile/view.css" %}>
     <link rel="stylesheet" type="text/css" href={% static "css/attendance_profile/form.css" %}>
     <link rel="stylesheet" type="text/css" href={% static "css/skill/list.css" %}>

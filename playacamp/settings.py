@@ -40,7 +40,8 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'main',
-    'storages'
+    'storages',
+    'sass_processor',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -141,6 +142,7 @@ AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
 
 STATIC_ROOT = os.path.join(PROJECT_ROOT, 'staticfiles')
 STATIC_URL = '/static/'
+SASS_PROCESSOR_ROOT = STATIC_ROOT
 
 # Extra places for collectstatic to find static files.
 STATICFILES_DIRS = (
