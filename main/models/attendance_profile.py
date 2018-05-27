@@ -19,13 +19,16 @@ class AttendanceProfile(models.Model):
     arrival_date = models.CharField(
         max_length=16,
         choices=(
-            ('early', 'Early Arrival (Wed-Sat)'),
+            ('wednesday1', 'Wednesday (Early)'),
+            ('thursday1', 'Thursday (Early)'),
+            ('friday1', 'Friday (Early)'),
+            ('saturday', 'Saturday (Early)'),
             ('sunday', 'Sunday'),
             ('monday', 'Monday'),
             ('tuesday', 'Tuesday'),
-            ('wednesday', 'Wednesday'),
-            ('thursday', 'Thursday'),
-            ('friday', 'Friday'),
+            ('wednesday2', 'Wednesday'),
+            ('thursday2', 'Thursday'),
+            ('friday2', 'Friday'),
         ),
         blank=True,
         null=True
