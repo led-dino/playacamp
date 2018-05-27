@@ -21,3 +21,4 @@ django-phonenumber-field==2.0.0
 django-compressor==2.2
 django-sass-processor==0.7
 libsass==0.14.5
+django-livereload-server==0.3.2
