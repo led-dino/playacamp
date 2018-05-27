@@ -1,12 +1,17 @@
 <!doctype html>
+{% load sass_tags %}
 <html>
   <head>
+    <link rel="stylesheet" type="text/css" href={% sass_src "styles/app.scss" %}>
+    <link rel="stylesheet" type="text/css" href={% sass_src "styles/views/registration/login.scss" %}>
   </head>
   <body>
-    <form method="POST">
-      {% csrf_token %}
-      {{ form.as_p }}
-      <button type="submit">Login</button>
-    </form>
+    <div id="body-wrapper">
+      <form class="login-form" method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Login</button>
+      </form>
+    </div>
   </body>
 </html>

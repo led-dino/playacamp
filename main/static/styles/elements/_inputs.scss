@@ -1,0 +1,23 @@
+@mixin input {
+    border: $border;
+    border-radius: $border-radius;
+    padding: $small-spacing;
+    margin: $small-spacing 0;
+
+    &:focus {
+        outline: none;
+    }
+}
+
+input {
+    @include input;
+}
+
+textarea {
+    @include input;
+    resize: none;
+}
+
+label {
+    display: block;
+}

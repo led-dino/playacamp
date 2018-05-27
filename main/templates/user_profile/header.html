@@ -38,7 +38,36 @@
 
                 {% if profile.user.email %}
                 <div id="email">
-                    <a href="mailto:{{ profile.user.email }}">{{ profile.user.email }}</a>
+                    {% if is_editable %}
+                        <label>Email:</label>
+                        <input type="text" disabled=true value="{{ profile.user.email }}">
+                    {% else %}
+                        <a href="mailto:{{ profile.user.email }}">{{ profile.user.email }}</a>
+                    {% endif %}
+                </div>
+                {% endif %}
+
+                {% if profile.zipcode %}
+                <div id="zipcode">
+                    {% if is_editable %}
+                    <label>Zipcode:</label>
+                    <input type="text" name="zipcode" value="{{ profile.zipcode }}">
+                    {% else %}
+                    {{ profile.get_city_and_state }} ({{ profile.get_timezone_offset }})
+                    {% endif %}
+                </div>
+                {% endif %}
+
+                {% if profile.user.email %}
+                <div id="zipcode">
+                    {% if is_editable %}
+                    <label>Email:</label>
+                    <input type="text" disabled=true value="{{ profile.user.email }}">
+                    {% else %}
+                    <div id="email">
+                        <a href="mailto:{{ profile.user.email }}">{{ profile.user.email }}</a>
+                    </div>
+                    {% endif %}
                 </div>
                 {% endif %}
 
@@ -77,23 +106,19 @@
                 {% if profile.years_on_playa %}
                 <div id="years-on-playa">
                     {% if is_editable %}
-                    Years on Playa: <input type="number" value="{{ profile.years_on_playa }}" name="years-on-playa">
+                    <label>Years on Playa:</label>
+                    <input type="number" value="{{ profile.years_on_playa }}" name="years-on-playa">
                     {% else %}
                     Years on Playa: {{ profile.years_on_playa }}
                     {% endif %}
                 </div>
                 {% endif %}
 
-                <div id="bio">
-                    {% if is_editable %}
+                {% if is_editable %}
+                    <label>Bio:</label>
                     <textarea name="bio">{{ profile.biography }}</textarea>
                     {% else %}
                     {{ profile.biography }}
-                    {% endif %}
-                </div>
-
-                {% if is_editable %}
-                <button>Submit</button>
                 {% endif %}
 
             </div>

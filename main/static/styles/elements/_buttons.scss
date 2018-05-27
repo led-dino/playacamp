@@ -1,0 +1,12 @@
+button {
+    border: none;
+    border-radius: $border-radius;
+    background-color: $green-dark;
+    padding: $small-spacing $medium-spacing;
+    font-weight: $medium-font-weight;
+    color: white;
+
+    &:focus {
+        outline: none;
+    }
+}

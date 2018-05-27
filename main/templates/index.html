@@ -1,11 +1,14 @@
 <!doctype html>
+{% load sass_tags %}
 <html>
   <head>
-
+    <link rel="stylesheet" type="text/css" href={% sass_src "styles/app.scss" %}>
   </head>
   <body>
-    <h1>LED Dinosaur</h1>
-    <a href="{% url 'signup' %}">Sign Up</a>
-    <a href="{% url 'login' %}">Login</a>
+    <div id="body-wrapper">
+        <h1>LED Dinosaur</h1>
+        <a href="{% url 'signup' %}"><button>Sign Up</button></a>
+        <a href="{% url 'login' %}"><button>Login</button></a>
+    </div>
   </body>
 </html>

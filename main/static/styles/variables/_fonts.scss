@@ -1,0 +1,33 @@
+@import url('https://rsms.me/inter/inter-ui.css');
+
+// BASE FONT
+$base-font-family: 'Inter UI', sans-serif;
+$base-font-size: 12px;
+$base-font-weight: 300;
+$base-font: $base-font-weight $base-font-size $base-font-family;
+
+// FONT WEIGHTS
+$light-font-weight: 200;
+$regular-font-weight: $base-font-weight;
+$medium-font-weight: 500;
+$bold-font-weight: 600;
+
+// HEADER FONT
+$h1-font-size: 36px;
+$h1-font-weight: $bold-font-weight;
+
+$h2-font-size: 32px;
+$h2-font-weight: $bold-font-weight;
+
+$h3-font-size: 28px;
+$h3-font-weight: $bold-font-weight;
+
+$h4-font-size: 24px;
+$h4-font-weight: $bold-font-weight;
+
+$h5-font-size: 20px;
+$h5-font-weight: $bold-font-weight;
+
+$h6-font-size: 16px;
+$h6-font-weight: $bold-font-weight;
+

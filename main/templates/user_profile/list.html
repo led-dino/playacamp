@@ -1,9 +1,10 @@
 <!doctype html>
 {% load static %}
+{% load sass_tags %}
 <html>
-<link rel="stylesheet" type="text/css" href={% static "css/base.css" %}>
-<link rel="stylesheet" type="text/css" href={% static "css/user_profile/list.css" %}>
 <head>
+    <link rel="stylesheet" type="text/css" href={% sass_src "styles/app.scss" %}>
+    <link rel="stylesheet" type="text/css" href={% static "styles/views/user_profile/list.css" %}>
 </head>
 <body>
     <div id="body-wrapper">
