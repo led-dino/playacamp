@@ -1,11 +1,11 @@
-from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpRequest
 from django.shortcuts import render, redirect
 
 from main.models import Team, TeamMembership
+from main.models.user_profile import requires_verified_by_admin
 
 
-@login_required
+@requires_verified_by_admin
 def get(request: HttpRequest, team_id: int) -> HttpResponse:
     team = Team.objects.get(pk=team_id)
     try:
@@ -21,7 +21,7 @@ def get(request: HttpRequest, team_id: int) -> HttpResponse:
     })
 
 
-@login_required
+@requires_verified_by_admin
 def list(request: HttpRequest) -> HttpResponse:
     teams = Team.objects.all()
     return render(request, 'team/list.html', context={
@@ -29,7 +29,7 @@ def list(request: HttpRequest) -> HttpResponse:
     })
 
 
-@login_required
+@requires_verified_by_admin
 def toggle_membership(request: HttpRequest, team_id: int) -> HttpResponse:
     team = Team.objects.get(pk=team_id)
     try:

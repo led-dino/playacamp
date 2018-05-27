@@ -3,6 +3,9 @@ from django.shortcuts import render, redirect
 
 
 def get(request: HttpRequest) -> HttpResponse:
-    if request.user.is_authenticated:
+    if not request.user.is_authenticated:
+        return render(request, 'index.html')
+
+    if request.user.profile.is_verified_by_admin:
         return redirect('user-profile-list')
-    return render(request, 'index.html')
+    return redirect('user-profile-me')

@@ -3,6 +3,7 @@ from typing import Dict, Optional
 
 import phonenumbers
 from django import forms
+from django.core.exceptions import PermissionDenied
 from django.db.models import Q
 from django.http import Http404, HttpResponseBadRequest, HttpResponse, HttpRequest
 from django.shortcuts import render, redirect
@@ -13,9 +14,10 @@ from django.utils import timezone
 
 from main.models import Skill, FoodRestriction, UserProfile, SocialMediaLink
 from main.models.attendance_profile import AttendanceProfile, AttendanceProfileForm
+from main.models.user_profile import requires_verified_by_admin
 
 
-@login_required
+@requires_verified_by_admin
 def list_profiles(request: HttpRequest) -> HttpResponse:
     search_query = request.GET.get('search')
     if search_query is None:
@@ -34,7 +36,9 @@ def list_profiles(request: HttpRequest) -> HttpResponse:
 @login_required
 def get(request: HttpRequest, user_id: Optional[int]=None) -> HttpResponse:
     user = request.user if user_id is None else User.objects.get(pk=user_id)
-    is_editable = request.user.id == user.id
+    is_logged_in_user = request.user.id == user.id
+    if not is_logged_in_user and not request.user.profile.is_verified_by_admin:
+        raise PermissionDenied
 
     current_year = timezone.now().year
     try:
@@ -45,7 +49,7 @@ def get(request: HttpRequest, user_id: Optional[int]=None) -> HttpResponse:
     except AttendanceProfile.DoesNotExist:
         # There exists no AttendanceProfile already, so if the page isn't
         # editable we don't want to display a form.
-        attendance_form = AttendanceProfileForm() if is_editable else None
+        attendance_form = AttendanceProfileForm() if is_logged_in_user else None
 
     all_skills_by_name = {s.name: s for s in Skill.objects.all()}
     my_skills_by_name = {s.name: s for s in user.profile.skills.all()}
@@ -65,7 +69,7 @@ def get(request: HttpRequest, user_id: Optional[int]=None) -> HttpResponse:
 
     return render(request, 'user_profile/view.html', context={
         'profile': user.profile,
-        'is_editable': is_editable,
+        'is_editable': is_logged_in_user,
         'attendance_form': attendance_form,
         'messages': messages.get_messages(request),
         'other_skills': other_skills_by_name.values(),

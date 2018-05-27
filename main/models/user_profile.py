@@ -1,5 +1,7 @@
 from typing import Optional, List
 
+from django.contrib.auth.decorators import user_passes_test
+from django.core.exceptions import PermissionDenied
 from django.db import models
 from django.contrib.auth.models import User
 from django.contrib.staticfiles.templatetags.staticfiles import static
@@ -18,6 +20,17 @@ from main.models.skill import Skill
 from playacamp import settings
 
 
+def requires_verified_by_admin(func):
+    def check_verified_by_admin(user):
+        if not user.is_authenticated:
+            return False
+        if user.profile.is_verified_by_admin:
+            return True
+        raise PermissionDenied('You need to be verified by an admin.')
+    decorator = user_passes_test(check_verified_by_admin)
+    return decorator(func)
+
+
 class UserProfile(models.Model):
     user = models.OneToOneField(User, primary_key=True, related_name='profile')
     profile_picture = ResizedImageField(size=[512, 512], quality=100, upload_to='profile_pictures', null=True, blank=True)
@@ -29,6 +42,7 @@ class UserProfile(models.Model):
     skills = models.ManyToManyField(Skill, blank=True)
     years_on_playa = models.IntegerField(blank=True, null=True)
     invited_by = models.CharField(max_length=64, null=True, blank=True)
+    is_verified_by_admin = models.NullBooleanField()
 
     def profile_pic_url(self) -> str:
         if self.profile_picture:
