@@ -1,5 +1,3 @@
-import sys
-
 import phonenumbers
 from captcha.fields import ReCaptchaField
 from django import forms
@@ -19,6 +17,7 @@ class SignUpForm(forms.Form):
     first_name = forms.CharField(label="What is your first name little dino?", max_length=30)
     last_name = forms.CharField(label="And your last name?", max_length=30)
     years_on_playa = forms.IntegerField(label="Nice to meet you! So how many years have you gone to Burning Man?")
+    invited_by = forms.CharField(label="Who invited you to LED Dinosaur?", max_length=64)
     email = forms.EmailField(label="Cool! What's your email so we can keep you up to date?")
     password = forms.CharField(label="And a password so we can identify you!",
                                widget=forms.PasswordInput,
@@ -88,6 +87,7 @@ def post(request: HttpRequest) -> HttpResponse:
 
     user_profile = UserProfile()
     user_profile.years_on_playa = form.cleaned_data['years_on_playa']
+    user_profile.invited_by = form.cleaned_data['invited_by']
     user_profile.phone_number = form.cleaned_data['phone']
     user_profile.zipcode = form.cleaned_data['zipcode']
     user_profile.user = user

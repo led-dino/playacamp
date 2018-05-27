@@ -28,6 +28,7 @@ class UserProfile(models.Model):
     food_restrictions = models.ManyToManyField(FoodRestriction, blank=True)
     skills = models.ManyToManyField(Skill, blank=True)
     years_on_playa = models.IntegerField(blank=True, null=True)
+    invited_by = models.CharField(max_length=64, null=True, blank=True)
 
     def profile_pic_url(self) -> str:
         if self.profile_picture:
