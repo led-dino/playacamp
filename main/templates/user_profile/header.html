@@ -1,15 +1,15 @@
-<div id="header">
+<div class="header">
     {% if is_editable %}
-    <a id="profile-pic" class="dimming-pic" href="{% url 'profile-pic-form' %}">
+    <a class="profile-pic dimming-pic" href="{% url 'profile-pic-form' %}">
         <img src="{{ profile.profile_pic_url }}" />
     </a>
     {% else %}
-    <div id="profile-pic" href="{% url 'profile-pic-form' %}">
+    <div class="profile-pic" href="{% url 'profile-pic-form' %}">
         <img src="{{ profile.profile_pic_url }}" />
     </div>
     {% endif %}
 
-    <div id="details">
+    <div class="details">
         {% if is_editable %}
         <form method="POST" action="{% url 'update-basics-submit' %}">
             {% csrf_token %}
@@ -17,8 +17,8 @@
             <h1>
                 {{ profile.get_formatted_name }}
             </h1>
-            <div id="details-inner">
-                <div id="playa-name">
+            <div class="details-inner">
+                <div class="playa-name">
                     {% if is_editable %}
                     <label>Playa Name:</label>
                     <input type="text" name="playa-name" value="{% firstof profile.playa_name '' %}">
@@ -26,7 +26,7 @@
                 </div>
 
                 {% if profile.zipcode %}
-                <div id="zipcode">
+                <div class="zipcode">
                     {% if is_editable %}
                     <label>Zipcode:</label>
                     <input type="text" name="zipcode" value="{{ profile.zipcode }}">
@@ -37,36 +37,12 @@
                 {% endif %}
 
                 {% if profile.user.email %}
-                <div id="email">
+                <div class="email">
                     {% if is_editable %}
                         <label>Email:</label>
                         <input type="text" disabled=true value="{{ profile.user.email }}">
                     {% else %}
                         <a href="mailto:{{ profile.user.email }}">{{ profile.user.email }}</a>
-                    {% endif %}
-                </div>
-                {% endif %}
-
-                {% if profile.zipcode %}
-                <div id="zipcode">
-                    {% if is_editable %}
-                    <label>Zipcode:</label>
-                    <input type="text" name="zipcode" value="{{ profile.zipcode }}">
-                    {% else %}
-                    {{ profile.get_city_and_state }} ({{ profile.get_timezone_offset }})
-                    {% endif %}
-                </div>
-                {% endif %}
-
-                {% if profile.user.email %}
-                <div id="zipcode">
-                    {% if is_editable %}
-                    <label>Email:</label>
-                    <input type="text" disabled=true value="{{ profile.user.email }}">
-                    {% else %}
-                    <div id="email">
-                        <a href="mailto:{{ profile.user.email }}">{{ profile.user.email }}</a>
-                    </div>
                     {% endif %}
                 </div>
                 {% endif %}
@@ -93,7 +69,7 @@
                 {% endif %}
 
                 {% if profile.phone_number %}
-                <div id="phone-number">
+                <div class="phone-number">
                     {% if is_editable %}
                     <label>Phone:</label>
                     <input type="tel" name="phone" value="{{ profile.formatted_phone_number }}">
@@ -104,7 +80,7 @@
                 {% endif %}
 
                 {% if profile.years_on_playa %}
-                <div id="years-on-playa">
+                <div class="years-on-playa">
                     {% if is_editable %}
                     <label>Years on Playa:</label>
                     <input type="number" value="{{ profile.years_on_playa }}" name="years-on-playa">
@@ -126,5 +102,4 @@
         </form>
         {% endif %}
     </div>
-    <div class="clear-float"></div>
 </div>

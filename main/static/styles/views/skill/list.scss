@@ -1,0 +1,23 @@
+@import '../../variables/index';
+
+.skill-list {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: $small-spacing;
+
+    &__skill {
+        display: flex;
+        align-items: center;
+        margin: $small-spacing;
+        margin-left: 0;
+        width: 150px;
+
+        &__image img {
+            height: 50px;
+        }
+
+        &__name {
+            margin-left: $xsmall-spacing;
+        }
+    }
+}

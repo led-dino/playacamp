@@ -1,0 +1,58 @@
+@mixin profile-pic {
+    border-radius: 50%;
+    overflow: hidden;
+    position: relative;
+    z-index: 1;
+    display: block;
+
+    img {
+        width: 100%;
+        vertical-align: top;
+    }
+}
+
+.header {
+    display: table;
+    margin-top: 60px;
+    margin-bottom: 20px;
+}
+
+.details {
+    display: table-cell;
+    vertical-align: middle;
+    padding-top: 10px;
+    padding-left: 40px;
+    width: auto;
+    overflow: hidden;
+}
+
+.details-inner {
+    margin-left: 10px;
+}
+
+.profile-pic {
+    @include profile-pic;
+    width: 300px;
+    height: 300px;
+    margin-top: -50px;
+    margin-left: -50px;
+}
+
+.dimming-pic {
+    &:before {
+        content: '\A';
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top:0;
+        left:0;
+        background:rgba(0,0,0,0.5);
+        opacity: 0;
+        transition: all 0.5s;
+        -webkit-transition: all 0.5s;
+    }
+
+    &:hover:before {
+        opacity: 1;
+    }
+}

@@ -3,9 +3,10 @@
 <html>
 <head>
     <link rel="stylesheet" type="text/css" href={% sass_src "styles/app.scss" %}>
+    <link rel="stylesheet" type="text/css" href={% sass_src "styles/views/registration/signup.scss" %}>
 </head>
 <body>
-    <div id="body-wrapper">
+    <div class="body-wrapper">
         <h1>Signup</h1>
         <form method="POST" action="{% url 'signup-submit' %}">
             {% csrf_token %}

@@ -5,7 +5,7 @@
     <link rel="stylesheet" type="text/css" href={% sass_src "styles/app.scss" %}>
 </head>
 <body>
-    <div id="body-wrapper">
+    <div class="body-wrapper">
         <h1>Upload your profile picture!</h1>
         <form method="POST" action="{% url 'profile-pic-form-submit' %}" enctype="multipart/form-data">
             {% csrf_token %}

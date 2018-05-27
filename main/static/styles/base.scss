@@ -11,24 +11,25 @@ ul {
     list-style-type: none;
 }
 
-#body-wrapper {
+@mixin body-wrapper {
     width: 800px;
     padding: $medium-spacing $large-spacing;
     margin: 0 auto;
     background-color: #fff;
 }
 
-#navbar {
+.body-wrapper {
+    @include body-wrapper;
+    text-align: center;
+
+    &--left-align {
+        @include body-wrapper;
+    }
+}
+
+.navbar {
     text-align: right;
     padding-right: 10px;
     padding-top: 5px;
     float: right;
-}
-
-.clear-float {
-    content: ".";
-    display: block;
-    height: 0;
-    visibility: hidden;
-    clear: both;
 }

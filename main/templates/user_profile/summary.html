@@ -1,16 +1,14 @@
 <div class="user-profile-summary">
-    <a id="profile-pic" class="dimming-pic" href="{{ profile.get_absolute_url }}">
+    <a class="user-profile-summary__picture dimming-pic" href="{{ profile.get_absolute_url }}">
         <img src="{{ profile.profile_pic_url }}" />
     </a>
-    <h4>
+    <div class="user-profile-summary__details">
         <a href="{{ profile.get_absolute_url }}">
         {% firstof profile.user.get_full_name profile.user.get_username %}
         {% if profile.playa_name %}
         ({{ profile.playa_name }})
         {% endif %}
         </a>
-    </h4>
-    <a href="mailto:{{ profile.user.email }}">{{ profile.user.email }}</a>
-
-    <div class="clear-float"></div>
+         <a href="mailto:{{ profile.user.email }}">{{ profile.user.email }}</a>
+    </div>
 </div>

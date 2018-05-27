@@ -6,8 +6,8 @@
     <link rel="stylesheet" type="text/css" href={% sass_src "styles/views/registration/login.scss" %}>
   </head>
   <body>
-    <div id="body-wrapper">
-      <form class="login-form" method="POST">
+    <div class="body-wrapper">
+      <form method="POST">
         {% csrf_token %}
         {{ form.as_p }}
         <button type="submit">Login</button>

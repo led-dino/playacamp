@@ -4,38 +4,38 @@
 <html>
   <head>
     <link rel="stylesheet" type="text/css" href={% sass_src "styles/app.scss" %}>
-    <link rel="stylesheet" type="text/css" href={% static "styles/views/user_profile/view.css" %}>
-    <link rel="stylesheet" type="text/css" href={% static "styles/views/attendance_profile/form.css" %}>
-    <link rel="stylesheet" type="text/css" href={% static "styles/views/skill/list.css" %}>
-    <link rel="stylesheet" type="text/css" href={% static "styles/views/food_restriction/list.css" %}>
+    <link rel="stylesheet" type="text/css" href={% sass_src "styles/views/user_profile/view.scss" %}>
+    <link rel="stylesheet" type="text/css" href={% sass_src "styles/views/attendance_profile/form.scss" %}>
+    <link rel="stylesheet" type="text/css" href={% sass_src "styles/views/skill/list.scss" %}>
+    <link rel="stylesheet" type="text/css" href={% sass_src "styles/views/food_restriction/list.scss" %}>
   </head>
   <body>
-    <div id="body-wrapper">
+    <div class="body-wrapper--left-align">
       {% include "navbar.html" %}
       {% include "user_profile/header.html" %}
 
-      <div id="body-main-content">
-        <h2>Attendance</h2>
-        <div id="attendance">
+      <div class="main-content">
+        <h4>Attendance</h4>
+        <div class="main-content__section attendance">
           {% include "attendance_profile/form.html" %}
         </div>
 
-        <h2>Skills</h2>
-        <div id="skills">
+        <h4>Skills</h4>
+        <div class="main-content__section">
           Help the leads organize by letting us know what you're good at.
           {% include "skill/list.html" %}
         </div>
 
         {% if user.id == profile.user.id %}
-        <h2>Food Restrictions</h2>
-        <div id="food-restrictions">
+        <h4>Food Restrictions</h4>
+        <div class="main-content__section">
           Help the Kitchen team out by listing your dietary restrictions.
           {% include "food_restriction/list.html" %}
         </div>
         {% endif %}
 
-        <h2>Teams</h2>
-        <div id="teams">
+        <h4>Teams</h4>
+        <div class="main-content__section">
           {% if profile.user.memberships.all %}
           <ul>
           {% for membership in profile.user.memberships.all %}

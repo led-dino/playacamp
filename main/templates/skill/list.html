@@ -1,46 +1,35 @@
 {% if is_editable %}
 <form method="POST" action="{% url 'updated-skills' %}">
     {% csrf_token %}
-    <ul>
+    <div class="skill-list">
         {% for skill in profile.skills.all %}
-        <li class="skill">
-            <div class="skill-inner">
-                <div class="skill-image">
-                        <img src="{{ skill.picture_url }}" alt="{{ skill.description }}" title="{{ skill.description }}" />
-                </div>
-                <span class="skill-name"><input type="checkbox" name="skills[]" value="{{ skill.id }}" checked="checked" />&nbsp;{{ skill.name }}</span>
-                <div class="clear-float"></div>
+        <div class="skill-list__skill">
+            <div class="skill-list__skill__image">
+                <img src="{{ skill.picture_url }}" alt="{{ skill.description }}" title="{{ skill.description }}" />
             </div>
-        </li>
+            <span class="skill-list__skill__name"><input type="checkbox" name="skills[]" value="{{ skill.id }}" checked="checked" />&nbsp;{{ skill.name }}</span>
+        </div>
         {% endfor %}
         {% for skill in other_skills %}
-        <li class="skill">
-            <div class="skill-inner">
-                <div class="skill-image">
-                        <img src="{{ skill.picture_url }}" alt="{{ skill.description }}" title="{{ skill.description }}" />
-                </div>
-                <span class="skill-name"><input type="checkbox" value="{{ skill.id }}" name="skills[]" />&nbsp;{{ skill.name }}</span>
-                <div class="clear-float"></div>
+         <div class="skill-list__skill">
+            <div class="skill-list__skill__image">
+                <img src="{{ skill.picture_url }}" alt="{{ skill.description }}" title="{{ skill.description }}" />
             </div>
-        </li>
+            <span class="skill-list__skill__name"><input type="checkbox" value="{{ skill.id }}" name="skills[]" />&nbsp;{{ skill.name }}</span>
+        </div>
         {% endfor %}
-        <li class="clear-float"></li>
-    </ul>
+    </div>
     <button type="submit">Update</button>
 </form>
 {% else %}
-<ul>
+<div class="skill-list">
     {% for skill in profile.skills.all %}
-    <li class="skill">
-        <div class="skill-inner">
-            <div class="skill-image">
-                    <img src="{{ skill.picture_url }}" alt="{{ skill.description }}" title="{{ skill.description }}" />
-            </div>
-            <span class="skill-name">{{ skill.name }}</span>
-            <div class="clear-float"></div>
+    <div class="skill-list__skill">
+        <div class="skill-list__skill__image">
+                <img src="{{ skill.picture_url }}" alt="{{ skill.description }}" title="{{ skill.description }}" />
         </div>
-    </li>
+        <span class="skill-list__skill__name">{{ skill.name }}</span>
+    </div>
     {% endfor %}
-    <li class="clear-float"></li>
-</ul>
+</div>
 {% endif %}

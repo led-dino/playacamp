@@ -1,0 +1,19 @@
+@import '../../variables/index';
+@import 'header';
+
+.main-content {
+    margin-left: 15%;
+
+    &__section {
+        border-bottom: $border;
+        width: 500px;
+        margin-left: $medium-spacing;
+        padding-bottom: $medium-spacing;
+    }
+}
+.edit-link {
+    margin-top: 7px;
+}
+.teams {
+    margin-left: 10px;
+}

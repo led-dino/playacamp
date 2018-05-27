@@ -4,20 +4,20 @@
 <html>
 <head>
     <link rel="stylesheet" type="text/css" href={% sass_src "styles/app.scss" %}>
-    <link rel="stylesheet" type="text/css" href={% static "styles/views/user_profile/list.css" %}>
+    <link rel="stylesheet" type="text/css" href={% sass_src "styles/views/user_profile/list.scss" %}>
 </head>
 <body>
-    <div id="body-wrapper">
+    <div class="body-wrapper">
         {% include "navbar.html" %}
         <form method="GET" action="">
             <input type="text" name="search" id="search-bar" value="{{ search_query }}" />
             <button>Search</button>
         </form>
-        <ul>
+        <div class="profiles">
             {% for profile in profiles %}
-            <li>{% include "user_profile/summary.html" with profile=profile %}</li>
+              {% include "user_profile/summary.html" with profile=profile %}
             {% endfor %}
-        </ul>
+        </div>
     </div>
 </body>
 </html>

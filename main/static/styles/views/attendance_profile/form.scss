@@ -1,0 +1,18 @@
+@import '../../variables/index';
+
+.attendance {
+    &__summary {
+        margin-bottom: $medium-spacing;
+    }
+
+    h4 {
+        margin-left: $large-spacing;
+    }
+
+    table {
+        margin-left: $large-spacing;
+        td {
+            padding-left: $large-spacing;
+        }
+    }
+}

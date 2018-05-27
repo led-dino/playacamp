@@ -7,7 +7,7 @@
     <link rel="stylesheet" type="text/css" href={% static "styles/views/team/detail.css" %}>
 </head>
 <body>
-    <div id="body-wrapper">
+    <div class="body-wrapper">
         <form class="join-leave-form" method="POST" action="{% url 'join-leave-team' team.id %}">
             {% csrf_token %}
             {% if is_member %}

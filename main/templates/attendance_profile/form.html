@@ -2,7 +2,7 @@
 
 {% if attendance_form.instance.pk %}
     {% if is_editable %}
-        <div id="attendance-summary">
+        <div class="attendance__summary">
             Hooray, we're looking forward to seeing you! :-) There are a few pieces of info that we need from you to help
             us plan this year's camp.
         </div>
@@ -21,7 +21,7 @@
             <table>
                 <tr>
                     <td>Are you still planning on attending this year?</td>
-                    <td><input id="attending-checkbox" name="is-attending" type="checkbox" checked="checked" /></td>
+                    <td><input class="attending-checkbox" name="is-attending" type="checkbox" checked="checked" /></td>
                 </tr>
                 <tr>
                     <td>Have you paid your camp dues?</td>
@@ -139,7 +139,7 @@
             <table>
                 <tr>
                     <td>Are you planning on attending this year?</td>
-                    <td><input id="attending-checkbox" name="is-attending" type="checkbox" /></td>
+                    <td><input class="attending-checkbox" name="is-attending" type="checkbox" /></td>
                 </tr>
             </table>
             <input type="submit" value="Submit" name="submit" />
