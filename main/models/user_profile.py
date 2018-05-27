@@ -47,6 +47,10 @@ class UserProfile(models.Model):
     is_verified_by_admin = models.NullBooleanField()
 
     @property
+    def username(self) -> str:
+        return self.user.username
+
+    @property
     def first_name(self) -> str:
         return self.user.first_name
 
