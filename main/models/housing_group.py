@@ -2,13 +2,15 @@ from django.db import models
 
 
 class HousingGroup(models.Model):
-    CAMP_YURT = ('campyurt', 'Camp Yurt')
-    NEW_YURT = ('newyurt', 'New Yurt')
-    TENT = ('tent', 'Tent')
-    RECREATIONAL_VEHICLE = ('rv', 'RV')
     CONTAINER = ('container', 'Container')
+    VAN = ('van', 'Van')
+    RECREATIONAL_VEHICLE = ('rv', 'RV')
+    SHIFTPOD = ('shiftpod', 'Shiftpod')
+    CAMP_YURT = ('campyurt', 'Camp Yurt')
+    NEW_YURT = ('personalyurt', 'Personal Yurt')
+    TENT = ('tent', 'Tent')
     OTHER = ('other', 'Other')
-    HOUSING_CHOICES = (CAMP_YURT, NEW_YURT, TENT, RECREATIONAL_VEHICLE, CONTAINER, OTHER)
+    HOUSING_CHOICES = (CAMP_YURT, NEW_YURT, TENT, RECREATIONAL_VEHICLE, CONTAINER, OTHER, VAN, SHIFTPOD)
 
     housing_type = models.CharField(
         max_length=10,

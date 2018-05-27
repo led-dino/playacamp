@@ -31,7 +31,7 @@
                     <label>Zipcode:</label>
                     <input type="text" name="zipcode" value="{{ profile.zipcode }}">
                     {% else %}
-                    {{ profile.get_city_and_state }} ({{ profile.get_timezone_offset }})
+                    {{ profile.city_and_state }} ({{ profile.get_timezone_offset }})
                     {% endif %}
                 </div>
                 {% endif %}

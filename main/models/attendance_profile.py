@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-from django.forms import ModelForm, forms, CheckboxSelectMultiple
+from django.forms import ModelForm, CheckboxSelectMultiple
 
 from main.models.housing_group import HousingGroup
 from main.models.job import Job

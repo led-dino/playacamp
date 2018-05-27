@@ -6,6 +6,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.contrib.staticfiles.templatetags.staticfiles import static
 from django.urls import reverse
+from django.utils import timezone
 from django_resized import ResizedImageField
 
 import datetime
@@ -15,6 +16,7 @@ from uszipcode import ZipcodeSearchEngine
 from timezonefinder import TimezoneFinder
 from uszipcode.searchengine import Zipcode
 
+from main.models import AttendanceProfile
 from main.models.food_restriction import FoodRestriction
 from main.models.skill import Skill
 from playacamp import settings
@@ -44,6 +46,30 @@ class UserProfile(models.Model):
     invited_by = models.CharField(max_length=64, null=True, blank=True)
     is_verified_by_admin = models.NullBooleanField()
 
+    @property
+    def first_name(self) -> str:
+        return self.user.first_name
+
+    @property
+    def last_name(self) -> str:
+        return self.user.last_name
+
+    @property
+    def email(self) -> str:
+        return self.user.email
+
+    def try_fetch_current_attendance(self) -> Optional[AttendanceProfile]:
+        current_year = timezone.now().year
+        try:
+            return AttendanceProfile.objects.get(user=self.user,
+                                                 year=current_year)
+        except AttendanceProfile.DoesNotExist:
+            return None
+
+    @property
+    def is_attending(self) -> bool:
+        return self.try_fetch_current_attendance() is not None
+
     def profile_pic_url(self) -> str:
         if self.profile_picture:
             assert settings.AWS_STORAGE_BUCKET_NAME
@@ -56,7 +82,7 @@ class UserProfile(models.Model):
         search = ZipcodeSearchEngine()
         return search.by_zipcode(self.zipcode)
 
-    def get_city_and_state(self) -> Optional[str]:
+    def city_and_state(self) -> Optional[str]:
         zipcode = self.get_rich_zipcode()
         if zipcode is None:
             return None
@@ -103,3 +129,24 @@ class UserProfile(models.Model):
 
     def __str__(self) -> str:
         return str(self.user)
+
+
+    @classmethod
+    def csv_columns(cls) -> List[str]:
+        return [
+            "First Name",
+            "Last Name",
+            "Email",
+            "Attending",
+            "Location",
+        ]
+
+    def to_csv(self) -> List[str]:
+        attendance = self.try_fetch_current_attendance()
+        return [
+            self.first_name,
+            self.last_name,
+            self.email,
+            attendance is not None,
+            self.city_and_state(),
+        ]

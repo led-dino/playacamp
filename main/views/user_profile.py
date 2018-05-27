@@ -40,16 +40,15 @@ def get(request: HttpRequest, user_id: Optional[int]=None) -> HttpResponse:
     if not is_logged_in_user and not request.user.profile.is_verified_by_admin:
         raise PermissionDenied
 
-    current_year = timezone.now().year
-    try:
-        attendance = AttendanceProfile.objects.get(user=user,
-                                                   year=current_year,
-                                                   deleted_at=None)
+    attendance = user.profile.try_fetch_current_attendance()
+    if attendance:
         attendance_form = AttendanceProfileForm(instance=attendance)
-    except AttendanceProfile.DoesNotExist:
+    elif is_logged_in_user:
+        attendance_form = AttendanceProfileForm()
+    else:
         # There exists no AttendanceProfile already, so if the page isn't
         # editable we don't want to display a form.
-        attendance_form = AttendanceProfileForm() if is_logged_in_user else None
+        attendance_form = None
 
     all_skills_by_name = {s.name: s for s in Skill.objects.all()}
     my_skills_by_name = {s.name: s for s in user.profile.skills.all()}
@@ -139,13 +138,7 @@ def changed_attending(request: HttpRequest) -> HttpResponse:
         raise Http404
 
     is_attending = request.POST.get('is-attending') == 'on'
-    current_year = timezone.now().year
-
-    try:
-        attendance = AttendanceProfile.objects.get(user=request.user,
-                                                   year=current_year)
-    except AttendanceProfile.DoesNotExist:
-        attendance = None
+    attendance = request.user.profile.try_fetch_current_attendance()
 
     if is_attending:
         if attendance is None:
