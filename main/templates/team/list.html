@@ -1,11 +1,10 @@
 <!doctype html>
-{% load static %}
 {% load sass_tags %}
 <html>
 <head>
     <link rel="stylesheet" type="text/css" href={% sass_src "styles/app.scss" %}>
-    <link rel="stylesheet" type="text/css" href={% static "styles/views/team/list.css" %}>
-    <link rel="stylesheet" type="text/css" href={% static "styles/views/team/list_item.css" %}>
+    <link rel="stylesheet" type="text/css" href={% sass_src "styles/views/team/list.scss" %}>
+    <link rel="stylesheet" type="text/css" href={% sass_src "styles/views/team/list_item.scss" %}>
 </head>
 <body>
     <div class="body-wrapper">
