@@ -1,3 +1,13 @@
-.join-leave-form {
-    float: right;
+@import '../../variables/index';
+
+.team {
+    &__membership-form {
+        display: block;
+        margin-top: $medium-spacing;
+    }
+
+    &__member-list {
+        display: flex;
+        flex-direction: column;
+    }
 }

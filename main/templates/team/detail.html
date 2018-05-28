@@ -6,43 +6,39 @@
     <link rel="stylesheet" type="text/css" href={% sass_src "styles/views/team/detail.scss" %}>
 </head>
 <body>
-    <div class="body-wrapper">
-        <form class="join-leave-form" method="POST" action="{% url 'join-leave-team' team.id %}">
-            {% csrf_token %}
-            {% if is_member %}
-            <button class="leave-button">Leave</button>
-            {% else %}
-            <button class="join-button">Join</button>
-            {% endif %}
-        </form>
-
+    <div class="body-wrapper team">
         <h1>{{ team.name }}</h1>
 
-        <div class="team-description">
+        <div class="team__description">
             {{ team.description }}
         </div>
 
-        <h2>Leads</h2>
-        <div>
+        <form class="team__membership-form" method="POST" action="{% url 'join-leave-team' team.id %}">
+            {% csrf_token %}
+            {% if is_member %}
+            <button>Leave</button>
+            {% else %}
+            <button>Join</button>
+            {% endif %}
+        </form>
+
+        <h4>Leads</h4>
+        <div class="team__member-list">
             {% if team.leads %}
-            <ul>
             {% for user in team.leads %}
-                <li><a href="{% url 'user-profile' user.id %}">{{ user.profile.get_formatted_name }}</a></li>
+                <a href="{% url 'user-profile' user.id %}">{{ user.profile.get_formatted_name }}</a>
             {% endfor %}
-            </ul>
             {% else %}
                 None
             {% endif %}
         </div>
 
-        <h2>Members</h2>
-        <div>
+        <h4>Members</h4>
+        <div class="team__member-list">
             {% if team.non_leads %}
-            <ul>
             {% for user in team.non_leads %}
-                <li><a href="{% url 'user-profile' user.id %}">{{ user.profile.get_formatted_name }}</a></li>
+                <a href="{% url 'user-profile' user.id %}">{{ user.profile.get_formatted_name }}</a>
             {% endfor %}
-            </ul>
             {% else %}
                 None
             {% endif %}
