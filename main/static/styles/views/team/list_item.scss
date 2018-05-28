@@ -1,0 +1,14 @@
+@import '../../variables/index';
+
+.team-list-item {
+    margin: $medium-spacing 0;
+
+    &__name {
+        font-size: $h5-font-size;
+        font-weight: $h5-font-weight;
+    }
+
+    &__description {
+        margin: $xsmall-spacing 0;
+    }
+}

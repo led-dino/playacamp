@@ -1,0 +1,12 @@
+@import '../../variables/index';
+
+.food-restrictions-list {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: $small-spacing;
+
+    &__food-restriction {
+        display: flex;
+        align-items: center;
+    }
+}

@@ -1,14 +1,20 @@
 {% if is_editable %}
 <form method="POST" action="{% url 'updated-food-restrictions' %}">
     {% csrf_token %}
-    <ul>
+    <div class="food-restrictions-list">
     {% for restriction in profile.food_restrictions.all %}
-        <li><input type="checkbox" value="{{ restriction.id }}" name="food_restrictions[]" checked="checked" />{{ restriction.name }}</li>
+        <div class="food-restrictions-list__food-restriction">
+            <input type="checkbox" value="{{ restriction.id }}" name="food_restrictions[]" checked="checked">
+            <label for="food_restrictions[]">&nbsp;{{ restriction.name }}</label>
+        </div>
     {% endfor %}
     {% for restriction in other_food_restrictions %}
-        <li><input type="checkbox" value="{{ restriction.id }}" name="food_restrictions[]" />{{ restriction.name }}</li>
+        <div class="food-restrictions-list__food-restriction">
+            <input type="checkbox" value="{{ restriction.id }}" name="food_restrictions[]" />
+            <label for="food_restrictions[]">&nbsp;{{ restriction.name }}</label>
+        </div>
     {% endfor %}
-    </ul>
+    </div>
     <button type="sumbit">Update</button>
 </form>
 {% else %}

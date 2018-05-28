@@ -1,7 +1,7 @@
-<li class="team-list-item">
-    <h3><a href="{% url 'team-detail' team.id %}">{{ team.name }}</a></h3>
-    <p>{{ team.description }}</p>
-    <p>
+<div class="team-list-item">
+    <a class="team-list-item__name" href="{% url 'team-detail' team.id %}">{{ team.name }}</a>
+    <div class="team-list-item__description">{{ team.description }}</div>
+    <div class="team-list-item__leads">
         Leads:
         {% if team.leads %}
             {% for user in team.leads %}
@@ -10,5 +10,5 @@
         {% else %}
             None
         {% endif %}
-    </p>
-</li>
+    </div>
+</div>

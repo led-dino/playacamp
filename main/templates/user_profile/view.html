@@ -36,14 +36,12 @@
         <h4>Teams</h4>
         <div class="main-content__section">
           {% if profile.user.memberships.all %}
-          <ul>
+          <div>
           {% for membership in profile.user.memberships.all %}
-            <li>
               <a href="{% url 'team-detail' membership.team.id %}">{{ membership.team.name }}</a>
               {% if membership.is_lead %} (Lead){% endif %}
-            </li>
           {% endfor %}
-          </ul>
+          </div>
           {% else %}
           No associated teams.
           {% endif %}

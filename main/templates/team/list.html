@@ -9,11 +9,11 @@
 <body>
     <div class="body-wrapper">
         <h1>Teams</h1>
-        <ul class="team-list">
-        {% for team in teams %}
-        {% include "team/list_item.html" with team=team %}
-        {% endfor %}
-        </ul>
+        <div class="team-list">
+            {% for team in teams %}
+            {% include "team/list_item.html" with team=team %}
+            {% endfor %}
+        </div>
     </div>
 </body>
 </html>
