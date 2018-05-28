@@ -3,7 +3,7 @@
 }
 
 body {
-    background-color: white;
+    background-color: $blue-light;
 }
 
 ul {
@@ -15,7 +15,6 @@ ul {
     width: 800px;
     padding: $medium-spacing $large-spacing;
     margin: 0 auto;
-    background-color: #fff;
 }
 
 .body-wrapper {

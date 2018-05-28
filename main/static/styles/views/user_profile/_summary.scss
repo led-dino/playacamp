@@ -5,13 +5,17 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    border-bottom: $border;
     padding: $small-spacing;
+    background: white;
+    border-radius: $border-radius;
+    width: 400px;
+    margin: $small-spacing auto;
 
     &__picture {
         @include profile-pic;
         width: 75px;
         height: 75px;
+        margin-left: $small-spacing;
     }
 
     &__details {

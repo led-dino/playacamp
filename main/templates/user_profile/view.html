@@ -14,27 +14,27 @@
       {% include "user_profile/header.html" %}
 
       <div class="main-content">
-        <h4>Attendance</h4>
         <div class="main-content__section attendance">
+          <h4>Attendance</h4>
           {% include "attendance_profile/form.html" %}
         </div>
 
-        <h4>Skills</h4>
         <div class="main-content__section">
+          <h4>Skills</h4>
           Help the leads organize by letting us know what you're good at.
           {% include "skill/list.html" %}
         </div>
 
         {% if user.id == profile.user.id %}
-        <h4>Food Restrictions</h4>
         <div class="main-content__section">
+          <h4>Food Restrictions</h4>
           Help the Kitchen team out by listing your dietary restrictions.
           {% include "food_restriction/list.html" %}
         </div>
         {% endif %}
 
-        <h4>Teams</h4>
         <div class="main-content__section">
+          <h4>Teams</h4>
           {% if profile.user.memberships.all %}
           <div>
           {% for membership in profile.user.memberships.all %}

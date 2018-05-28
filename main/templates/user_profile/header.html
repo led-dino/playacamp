@@ -1,105 +1,85 @@
 <div class="header">
     {% if is_editable %}
-    <a class="profile-pic dimming-pic" href="{% url 'profile-pic-form' %}">
+    <a class="header__profile-pic dimming-pic" href="{% url 'profile-pic-form' %}">
         <img src="{{ profile.profile_pic_url }}" />
     </a>
     {% else %}
-    <div class="profile-pic" href="{% url 'profile-pic-form' %}">
+    <div class="header__profile-pic" href="{% url 'profile-pic-form' %}">
         <img src="{{ profile.profile_pic_url }}" />
     </div>
     {% endif %}
 
-    <div class="details">
+    <div class="header__details">
+        <h1>
+            {{ profile.get_formatted_name }}
+        </h1>
+
         {% if is_editable %}
         <form method="POST" action="{% url 'update-basics-submit' %}">
             {% csrf_token %}
-        {% endif %}
-            <h1>
-                {{ profile.get_formatted_name }}
-            </h1>
-            <div class="details-inner">
-                <div class="playa-name">
-                    {% if is_editable %}
+            <div class="header__details__form">
+                <div class="header__details__form__field">
                     <label>Playa Name:</label>
                     <input type="text" name="playa-name" value="{% firstof profile.playa_name '' %}">
-                    {% endif %}
                 </div>
 
-                {% if profile.zipcode %}
-                <div class="zipcode">
-                    {% if is_editable %}
-                    <label>Zipcode:</label>
-                    <input type="text" name="zipcode" value="{{ profile.zipcode }}">
-                    {% else %}
-                    {{ profile.city_and_state }} ({{ profile.get_timezone_offset }})
-                    {% endif %}
+                <div class="header__details__form__field">
+                    <label>Years on Playa:</label>
+                    <input type="number" value="{{ profile.years_on_playa }}" name="years-on-playa">
                 </div>
-                {% endif %}
 
-                {% if profile.user.email %}
-                <div class="email">
-                    {% if is_editable %}
-                        <label>Email:</label>
-                        <input type="text" disabled=true value="{{ profile.user.email }}">
-                    {% else %}
-                        <a href="mailto:{{ profile.user.email }}">{{ profile.user.email }}</a>
-                    {% endif %}
+                <div class="header__details__form__field">
+                    <label>Email:</label>
+                    <input type="text" disabled=true value="{{ profile.user.email }}">
                 </div>
-                {% endif %}
+
+                <div class="header__details__form__field">
+                    <label>Phone:</label>
+                    <input type="tel" name="phone" value="{{ profile.formatted_phone_number }}">
+                </div>
 
                 {% if profile.social_media_links %}
                     {% for link in profile.social_media_links.all %}
-                    <div class="social-media-link">
-                        {% if is_editable %}
+                    <div class="header__details__form__field">
                         <label>{{ link.get_account_type_display }}:</label>
                         <input type="text" name="social-link-{{ link.account_type }}" value="{{ link.link }}">
-                        {% else %}
-                        <a href="{{ link.link }}">{{ link.formatted_link }}</a>
-                        {% endif %}
                     </div>
                     {% endfor %}
-                    {% if is_editable %}
-                        {% for link_type, verbose_type in profile.missing_social_media_link_types %}
-                        <div class="social-media-link">
-                            <label>{{ verbose_type }}:</label>
-                            <input type="text" name="social-link-{{ link_type }}">
-                        </div>
-                        {% endfor %}
-                    {% endif %}
+                    {% for link_type, verbose_type in profile.missing_social_media_link_types %}
+                    <div class="header__details-form__field">
+                        <label>{{ verbose_type }}:</label>
+                        <input type="text" name="social-link-{{ link_type }}">
+                    </div>
+                    {% endfor %}
                 {% endif %}
 
-                {% if profile.phone_number %}
-                <div class="phone-number">
-                    {% if is_editable %}
-                    <label>Phone:</label>
-                    <input type="tel" name="phone" value="{{ profile.formatted_phone_number }}">
-                    {% else %}
-                    <a href="tel:{{ profile.formatted_phone_number }}">{{ profile.formatted_phone_number }}</a>
-                    {% endif %}
+                <div class="header__details__form__field">
+                    <label>Zipcode:</label>
+                    <input type="text" name="zipcode" value="{{ profile.zipcode }}">
                 </div>
-                {% endif %}
-
-                {% if profile.years_on_playa %}
-                <div class="years-on-playa">
-                    {% if is_editable %}
-                    <label>Years on Playa:</label>
-                    <input type="number" value="{{ profile.years_on_playa }}" name="years-on-playa">
-                    {% else %}
-                    Years on Playa: {{ profile.years_on_playa }}
-                    {% endif %}
-                </div>
-                {% endif %}
-
-                {% if is_editable %}
-                    <label>Bio:</label>
-                    <textarea name="bio">{{ profile.biography }}</textarea>
-                    {% else %}
-                    {{ profile.biography }}
-                {% endif %}
-
             </div>
-        {% if is_editable %}
+
+            <div class="header__details__form__field">
+                <label>Bio:</label>
+                <textarea name="bio">{{ profile.biography }}</textarea>
+            </div>
         </form>
+
+        {% else %}
+        Years on Playa: {{ profile.years_on_playa }}
+        <a href="mailto:{{ profile.user.email }}">{{ profile.user.email }}</a>
+        <a href="tel:{{ profile.formatted_phone_number }}">{{ profile.formatted_phone_number }}</a>
+        {% if profile.social_media_links %}
+            {% for link in profile.social_media_links.all %}
+                <a href="{{ link.link }}">{{ link.formatted_link }}</a>
+            {% endfor %}
         {% endif %}
+        {{ profile.city_and_state }} ({{ profile.get_timezone_offset }})
+        {{ profile.biography }}
+
+
+        {% endif %}
+
+
     </div>
 </div>

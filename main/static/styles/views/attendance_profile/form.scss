@@ -1,20 +1,16 @@
 @import '../../variables/index';
 
 .attendance {
-    margin-bottom: $small-spacing;
 
     &__summary {
         margin-bottom: $medium-spacing;
     }
 
-    h4 {
-        margin-left: $large-spacing;
-    }
-
     table {
-        margin-left: $large-spacing;
+        margin-left: $small-spacing;
+        margin-bottom: $small-spacing;
         td {
-            padding-left: $large-spacing;
+            padding-left: $small-spacing;
         }
     }
 }

@@ -2,18 +2,24 @@
 @import 'header';
 
 .main-content {
-    margin-left: 15%;
+    margin: auto;
+    width: 600px;
 
     &__section {
-        border-bottom: $border;
-        width: 500px;
-        margin-left: $medium-spacing;
-        padding-bottom: $medium-spacing;
+        background-color: white;
+        border-radius: $border-radius;
+        padding: $medium-spacing $large-spacing;
+        margin-bottom: $large-spacing;
+
+        h4 {
+            margin-top: $small-spacing;
+            margin-bottom: $medium-spacing;
+        }
     }
 }
 .edit-link {
-    margin-top: 7px;
+    margin-top: $xsmall-spacing;
 }
 .teams {
-    margin-left: 10px;
+    margin-left: $small-spacing;
 }

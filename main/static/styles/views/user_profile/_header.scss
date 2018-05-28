@@ -12,30 +12,41 @@
 }
 
 .header {
-    display: table;
-    margin-top: 60px;
-    margin-bottom: 20px;
-}
+    display: flex;
+    margin-top: $xlarge-spacing;
+    margin-bottom: $medium-spacing;
 
-.details {
-    display: table-cell;
-    vertical-align: middle;
-    padding-top: 10px;
-    padding-left: 40px;
-    width: auto;
-    overflow: hidden;
-}
+    &__profile-pic {
+        @include profile-pic;
+        width: 300px;
+        height: 300px;
+        margin-top: -50px;
+        margin-left: -50px;
+        flex-shrink: 0;
+    }
 
-.details-inner {
-    margin-left: 10px;
-}
+    &__details {
+        display: flex;
+        flex-direction: column;
+        vertical-align: middle;
+        padding-top: $small-spacing;
+        padding-left: $large-spacing;
+        width: auto;
+        overflow: hidden;
 
-.profile-pic {
-    @include profile-pic;
-    width: 300px;
-    height: 300px;
-    margin-top: -50px;
-    margin-left: -50px;
+        &__form {
+            display: flex;
+            flex-wrap: wrap;
+
+            &__field {
+                margin: 0 $small-spacing;
+
+                textarea {
+                    width: 380px;
+                }
+            }
+        }
+    }
 }
 
 .dimming-pic {
