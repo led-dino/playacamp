@@ -1,7 +1,7 @@
 from typing import Optional, List
 
 from django.contrib.auth.decorators import user_passes_test
-from django.core.exceptions import PermissionDenied
+from django.core.exceptions import PermissionDenied, ValidationError
 from django.db import models
 from django.contrib.auth.models import User
 from django.contrib.staticfiles.templatetags.staticfiles import static
@@ -36,7 +36,7 @@ def requires_verified_by_admin(func):
 class UserProfile(models.Model):
     user = models.OneToOneField(User, primary_key=True, related_name='profile')
     profile_picture = ResizedImageField(size=[512, 512], quality=100, upload_to='profile_pictures', null=True, blank=True)
-    phone_number = models.CharField(max_length=11, null=True, blank=True)
+    phone_number = models.CharField(max_length=12, null=True, blank=True)
     zipcode = models.CharField(max_length=5, null=True, blank=True)
     biography = models.TextField(blank=True)
     playa_name = models.CharField(max_length=64, blank=True, null=True)
@@ -134,6 +134,19 @@ class UserProfile(models.Model):
     def __str__(self) -> str:
         return str(self.user)
 
+    @classmethod
+    def parse_phone_number(cls, raw_number: str) -> str:
+        try:
+            parsed_number = phonenumbers.parse(raw_number, 'US')
+            formatted_phone = phonenumbers.format_number(parsed_number, phonenumbers.PhoneNumber())
+            if len(formatted_phone) != 12:
+                raise ValidationError('Invalid phone number. Expected xxx-xxx-xxxx')
+            chunks = formatted_phone.split('-')
+            if len(chunks) != 3 or len(chunks[0]) != 3 or len(chunks[1]) != 3 or len(chunks[2]) != 4:
+                raise ValidationError('Invalid phone number. Expected xxx-xxx-xxxx')
+        except Exception:
+            raise ValidationError('Invalid phone number. Expected xxx-xxx-xxxx')
+        return formatted_phone
 
     @classmethod
     def csv_columns(cls) -> List[str]:

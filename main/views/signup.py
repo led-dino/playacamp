@@ -39,16 +39,7 @@ class SignUpForm(forms.Form):
             raise ValidationError('Passwords must match!')
 
     def clean_phone(self) -> str:
-        phone = self.cleaned_data['phone']
-        try:
-            parsed_number = phonenumbers.parse(phone, 'US')
-            formatted_phone = phonenumbers.format_number(parsed_number, phonenumbers.PhoneNumber())
-            chunks = formatted_phone.split('-')
-            if len(chunks) != 3 or len(chunks[0]) != 3 or len(chunks[1]) != 3 or len(chunks[2]) != 4:
-                raise ValidationError('Invalid phone number.')
-        except Exception:
-            raise ValidationError('Invalid phone number.')
-        return formatted_phone
+        return UserProfile.parse_phone_number(self.cleaned_data['phone'])
 
 
 def get(request: HttpRequest) -> HttpResponse:
