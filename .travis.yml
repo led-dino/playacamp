@@ -4,4 +4,8 @@ python:
 install:
   - pip install -r requirements.txt
 script:
+  - python manage.py collectstatic --noinput
+  - ls -a playacamp/
+  - ls -a playacamp/staticfiles/
+  - ls -a staticfiles/
   - python manage.py test
