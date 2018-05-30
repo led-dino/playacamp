@@ -1,10 +1,10 @@
 import phonenumbers
 from captcha.fields import ReCaptchaField
 from django import forms
-from django.contrib.auth import authenticate
+from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
-from django.db import IntegrityError
+from django.db import IntegrityError, transaction
 from django.http import HttpResponseBadRequest, HttpResponse, HttpRequest
 from django.shortcuts import render, redirect
 
@@ -61,27 +61,29 @@ def post(request: HttpRequest) -> HttpResponse:
             'form': form,
         })
 
-    try:
-        User.objects.create_user(username=form.cleaned_data['email'],
-                                 email=form.cleaned_data['email'],
-                                 password=form.cleaned_data['password'],
-                                 first_name=form.cleaned_data['first_name'],
-                                 last_name=form.cleaned_data['last_name'])
-    except IntegrityError as e:
-        if str(e) == 'UNIQUE constraint failed: auth_user.username':
-            return HttpResponseBadRequest('User already exists.')
-        raise
+    with transaction.atomic():
+        try:
+            User.objects.create_user(username=form.cleaned_data['email'],
+                                     email=form.cleaned_data['email'],
+                                     password=form.cleaned_data['password'],
+                                     first_name=form.cleaned_data['first_name'],
+                                     last_name=form.cleaned_data['last_name'])
+        except IntegrityError as e:
+            if str(e) == 'UNIQUE constraint failed: auth_user.username':
+                return HttpResponseBadRequest('User already exists.')
+            raise
 
-    user = authenticate(username=form.cleaned_data['email'],
-                        password=form.cleaned_data['password'])
-    assert user is not None
+        user = authenticate(username=form.cleaned_data['email'],
+                            password=form.cleaned_data['password'])
+        assert user is not None
 
-    user_profile = UserProfile()
-    user_profile.years_on_playa = form.cleaned_data['years_on_playa']
-    user_profile.invited_by = form.cleaned_data['invited_by']
-    user_profile.phone_number = form.cleaned_data['phone']
-    user_profile.zipcode = form.cleaned_data['zipcode']
-    user_profile.user = user
-    user_profile.save()
+        user_profile = UserProfile()
+        user_profile.years_on_playa = form.cleaned_data['years_on_playa']
+        user_profile.invited_by = form.cleaned_data['invited_by']
+        user_profile.phone_number = form.cleaned_data['phone']
+        user_profile.zipcode = form.cleaned_data['zipcode']
+        user_profile.user = user
+        user_profile.save()
 
-    return redirect(user_profile)
+        login(request, user)
+        return redirect(user_profile)

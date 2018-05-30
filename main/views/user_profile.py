@@ -129,7 +129,7 @@ def update_basics(request: HttpRequest) -> HttpResponse:
     profile.biography = request.POST['bio']
     profile.save()
 
-    return redirect(get)
+    return redirect('user-profile-me')
 
 
 @login_required
@@ -142,18 +142,18 @@ def changed_attending(request: HttpRequest) -> HttpResponse:
 
     if is_attending:
         if attendance is None:
-            return create_attendance_record(request, current_year)
+            return create_attendance_record(request, timezone.now().year)
 
         if attendance.deleted_at is not None:
             attendance.deleted_at = None
             attendance.save()
-            return redirect(get)
+            return redirect('user-profile-me')
 
         return update_attendance_record(request, attendance)
     else:
         if attendance is not None and attendance.deleted_at is None:
             return delete_attendance_record(request, attendance)
-        return redirect(get)
+        return redirect('user-profile-me')
 
 
 def create_attendance_record(request: HttpRequest, year: int) -> HttpResponse:
@@ -162,7 +162,7 @@ def create_attendance_record(request: HttpRequest, year: int) -> HttpResponse:
 
     attendance = AttendanceProfile(user=request.user, year=year)
     attendance.save()
-    return redirect(get)
+    return redirect('user-profile-me')
 
 
 def delete_attendance_record(request: HttpRequest, attendance: AttendanceProfile) -> HttpResponse:
@@ -172,7 +172,7 @@ def delete_attendance_record(request: HttpRequest, attendance: AttendanceProfile
     attendance.deleted_at = timezone.now()
     attendance.save()
 
-    return redirect(get)
+    return redirect('user-profile-me')
 
 
 def update_attendance_record(request: HttpRequest, attendance: AttendanceProfile) -> HttpResponse:
@@ -186,7 +186,7 @@ def update_attendance_record(request: HttpRequest, attendance: AttendanceProfile
         for error in form.errors:
             messages.add_message(request, messages.ERROR, form.errors[error][0])
 
-    return redirect(get)
+    return redirect('user-profile-me')
 
 
 @login_required
@@ -201,7 +201,7 @@ def updated_skills(request: HttpRequest) -> HttpResponse:
     profile.skills.set([s for s in all_skills if s.id in current_skill_ids])
     profile.save()
 
-    return redirect(get)
+    return redirect('user-profile-me')
 
 
 @login_required
@@ -216,7 +216,7 @@ def updated_food_restrictions(request: HttpRequest) -> HttpResponse:
     profile.food_restrictions.set([fr for fr in all_food_restrictions if fr.id in current_restriction_ids])
     profile.save()
 
-    return redirect(get)
+    return redirect('user-profile-me')
 
 
 class UploadFileForm(forms.Form):
@@ -241,4 +241,4 @@ def submit_profile_picture_form(request: HttpRequest) -> HttpResponse:
     profile = request.user.profile
     profile.profile_picture = request.FILES['file']
     profile.save()
-    return redirect(get)
+    return redirect('user-profile-me')
