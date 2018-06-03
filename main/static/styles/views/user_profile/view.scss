@@ -15,6 +15,11 @@
             margin-top: $small-spacing;
             margin-bottom: $medium-spacing;
         }
+
+        &__no-team {
+            font-size: 18px;
+            margin-bottom: $small-spacing;
+        }
     }
 }
 .edit-link {

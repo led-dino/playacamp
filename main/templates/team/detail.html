@@ -33,6 +33,7 @@
             {% endif %}
         </div>
 
+        {% if is_allowed_to_view_members %}
         <h4>Members</h4>
         <div class="team__member-list">
             {% if team.non_leads %}
@@ -43,6 +44,7 @@
                 None
             {% endif %}
         </div>
+        {% endif %}
     </div>
 </body>
 </html>

@@ -43,7 +43,7 @@
           {% endfor %}
           </div>
           {% else %}
-          No associated teams.
+          <div class="main-content__section__no-team">You're not on any teams yet!</div>
           {% endif %}
           {% if is_editable %}
             To join a team, check out the list <a href="{% url 'team-list' %}">here</a>.
