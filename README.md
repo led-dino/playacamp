@@ -1,5 +1,7 @@
 # PlayaCamp
 
+[![Build Status](https://travis-ci.org/led-dino/playacamp.svg?branch=master)](https://travis-ci.org/led-dino/playacamp)
+
 A Django app for managing a Burning Man camp
 
 ## Running Locally
