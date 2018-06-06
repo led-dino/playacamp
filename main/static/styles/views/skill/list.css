@@ -1,0 +1,15 @@
+@import url("https://rsms.me/inter/inter-ui.css");
+.skill-list {
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 10px; }
+  .skill-list__skill {
+    display: flex;
+    align-items: center;
+    margin: 10px;
+    margin-left: 0;
+    width: 150px; }
+    .skill-list__skill__image img {
+      height: 50px; }
+    .skill-list__skill__name {
+      margin-left: 5px; }

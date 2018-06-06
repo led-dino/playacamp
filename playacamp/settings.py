@@ -25,7 +25,7 @@ PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 SECRET_KEY = 'i+acxn5(akgsn!sr4^qgf(^m&*@+g1@u^t@=8s@axc41ml*f=s'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 # TEST_RUNNER = 'playacamp.heroku_test_runner.HerokuDiscoverRunner'
 
@@ -156,9 +156,9 @@ STATICFILES_DIRS = (
 )
 
 STATICFILES_FINDERS = [
-    'sass_processor.finders.CssFinder',
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    'sass_processor.finders.CssFinder',
 ]
 
 # Simplified static file serving.

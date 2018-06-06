@@ -1,0 +1,8 @@
+@import url("https://rsms.me/inter/inter-ui.css");
+.food-restrictions-list {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px; }
+  .food-restrictions-list__food-restriction {
+    display: flex;
+    align-items: center; }
