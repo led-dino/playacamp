@@ -156,9 +156,9 @@ STATICFILES_DIRS = (
 )
 
 STATICFILES_FINDERS = [
+    'sass_processor.finders.CssFinder',
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-    'sass_processor.finders.CssFinder',
 ]
 
 # Simplified static file serving.
