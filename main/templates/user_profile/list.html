@@ -1,11 +1,10 @@
-<!doctype html>
+{% extends "base.html" %}
 {% load sass_tags %}
-<html>
-<head>
-    <link rel="stylesheet" type="text/css" href={% sass_src "styles/app.scss" %}>
+{% block title %}{% endblock %}
+{% block style %}
     <link rel="stylesheet" type="text/css" href={% sass_src "styles/views/user_profile/list.scss" %}>
-</head>
-<body>
+{% endblock %}
+{% block content %}
     <div class="body-wrapper">
         {% include "navbar.html" %}
         <form method="GET" action="">
@@ -18,5 +17,4 @@
             {% endfor %}
         </div>
     </div>
-</body>
-</html>
+{% endblock %}

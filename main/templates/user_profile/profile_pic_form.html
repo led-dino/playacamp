@@ -1,10 +1,7 @@
-<!doctype html>
+{% extends "base.html" %}
 {% load sass_tags %}
-<html>
-<head>
-    <link rel="stylesheet" type="text/css" href={% sass_src "styles/app.scss" %}>
-</head>
-<body>
+{% block title %}Upload Your Profile Picture!{% endblock %}
+{% block content %}
     <div class="body-wrapper">
         <h1>Upload your profile picture!</h1>
         <form method="POST" action="{% url 'profile-pic-form-submit' %}" enctype="multipart/form-data">
@@ -13,5 +10,4 @@
             <button>Submit</button>
         </form>
     </div>
-</body>
-</html>
+{% endblock %}

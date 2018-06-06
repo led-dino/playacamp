@@ -1,14 +1,13 @@
-<!doctype html>
+{% extends "base.html" %}
 {% load sass_tags %}
-<html>
-  <head>
-    <link rel="stylesheet" type="text/css" href={% sass_src "styles/app.scss" %}>
+{% block title %}{% endblock %}
+{% block style %}
     <link rel="stylesheet" type="text/css" href={% sass_src "styles/views/user_profile/view.scss" %}>
     <link rel="stylesheet" type="text/css" href={% sass_src "styles/views/attendance_profile/form.scss" %}>
     <link rel="stylesheet" type="text/css" href={% sass_src "styles/views/skill/list.scss" %}>
     <link rel="stylesheet" type="text/css" href={% sass_src "styles/views/food_restriction/list.scss" %}>
-  </head>
-  <body>
+{% endblock %}
+{% block content %}
     <div class="body-wrapper--left-align">
       {% include "navbar.html" %}
       {% include "user_profile/header.html" %}
@@ -51,5 +50,4 @@
         </div>
       </div>
     </div>
-  </body>
-</html>
+{% endblock %}

@@ -1,0 +1,13 @@
+<!doctype html>
+{% load sass_tags %}
+<html>
+<head>
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" type="text/css" href={% sass_src "styles/app.scss" %}>
+    {% block style %}{% endblock %}
+</head>
+<body>
+    {% block content %}
+    {% endblock %}
+</body>
+</html>

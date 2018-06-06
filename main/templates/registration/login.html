@@ -1,11 +1,10 @@
-<!doctype html>
+{% extends "base.html" %}
 {% load sass_tags %}
-<html>
-  <head>
-    <link rel="stylesheet" type="text/css" href={% sass_src "styles/app.scss" %}>
+{% block title %}Login{% endblock %}
+{% block style %}
     <link rel="stylesheet" type="text/css" href={% sass_src "styles/views/registration/login.scss" %}>
-  </head>
-  <body>
+{% endblock %}
+{% block content %}
     <div class="body-wrapper">
       <form method="POST">
         {% csrf_token %}
@@ -14,5 +13,4 @@
       </form>
       <a href="{% url 'password_reset' %}">Forgot your password?</a>
     </div>
-  </body>
-</html>
+{% endblock %}

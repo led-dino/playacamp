@@ -1,11 +1,10 @@
-<!doctype html>
+{% extends "base.html" %}
 {% load sass_tags %}
-<html>
-<head>
-    <link rel="stylesheet" type="text/css" href={% sass_src "styles/app.scss" %}>
+{% block title %}{{ team.name }}{% endblock %}
+{% block style %}
     <link rel="stylesheet" type="text/css" href={% sass_src "styles/views/team/detail.scss" %}>
-</head>
-<body>
+{% endblock %}
+{% block content %}
     <div class="body-wrapper team">
         <h1>{{ team.name }}</h1>
 
@@ -46,5 +45,4 @@
         </div>
         {% endif %}
     </div>
-</body>
-</html>
+{% endblock %}
