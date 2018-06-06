@@ -190,5 +190,4 @@ django_heroku.settings(locals())
 
 SASS_PROCESSOR_ROOT = STATIC_ROOT
 
-print(STATIC_ROOT)
-print(SASS_PROCESSOR_ROOT)
+print(locals())
