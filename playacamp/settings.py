@@ -147,6 +147,9 @@ STATIC_ROOT = os.path.join(PROJECT_ROOT, 'staticfiles')
 STATIC_URL = '/static/'
 SASS_PROCESSOR_ROOT = STATIC_ROOT
 
+print(STATIC_ROOT)
+print(SASS_PROCESSOR_ROOT)
+
 # Extra places for collectstatic to find static files.
 STATICFILES_DIRS = (
     os.path.join(PROJECT_ROOT, 'static'),
@@ -184,3 +187,6 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
 import django_heroku
 django_heroku.settings(locals())
+
+print(STATIC_ROOT)
+print(SASS_PROCESSOR_ROOT)
