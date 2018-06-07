@@ -182,6 +182,8 @@ EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
+SECURE_SSL_REDIRECT = not DEBUG
+
 import django_heroku
 django_heroku.settings(locals(), test_runner=False)
 
