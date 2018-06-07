@@ -19,7 +19,7 @@ class TestUserProfileViews(TestCase):
         self.client.login(username='foobar', password='foobarbaz')
         response = self.client.post(reverse('changed-attending'), {
             'is-attending': 'on',
-        })
+        }, follow=True, secure=True)
         self.assertRedirects(response, reverse('user-profile-me'))
         attendance = self.user_profile.try_fetch_current_attendance()
         self.assertIsNotNone(attendance)
@@ -27,7 +27,7 @@ class TestUserProfileViews(TestCase):
 
         response = self.client.post(reverse('changed-attending'), {
             'is-attending': 'off',
-        })
+        }, follow=True, secure=True)
         self.assertRedirects(response, reverse('user-profile-me'))
         attendance = self.user_profile.try_fetch_current_attendance()
         self.assertTrue(attendance.deleted_at)
