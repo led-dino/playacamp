@@ -1,10 +1,13 @@
 import os
 from typing import Dict
 
+import boto3
 from django.contrib.auth.models import User
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.test import TestCase, RequestFactory
 from django.urls import reverse
+from moto import mock_s3
+from moto import mock_s3_deprecated as mock_s3_b2
 
 from main.models import UserProfile, FoodRestriction, Skill
 from playacamp import settings
@@ -308,6 +311,21 @@ class TestUpdatedFoodRestrictionsView(TestUserProfileView):
 
 
 class TestUpdateProfilePictureView(TestUserProfileView):
+    def setUp(self) -> None:
+        self.mock_s3 = mock_s3()
+        self.mock_s3.start()
+        self.mock_s3_b2 = mock_s3_b2()
+        self.mock_s3_b2.start()
+
+        # Setup the appropriate buckets
+        self.s3_conn = boto3.resource('s3', region_name='us-west-2')
+        self.s3_conn.create_bucket(Bucket=settings.AWS_STORAGE_BUCKET_NAME)
+        super(TestUpdateProfilePictureView, self).setUp()
+
+    def tearDown(self) -> None:
+        super(TestUpdateProfilePictureView, self).tearDown()
+        self.mock_s3.stop()
+
     def test_get_and_submit_profile_picture_form(self) -> None:
         self.client.login(username='foobar', password='foobarbaz')
 
@@ -320,4 +338,11 @@ class TestUpdateProfilePictureView(TestUserProfileView):
                                         data={'file': photo},
                                         secure=True,
                                         follow=True)
-            self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, 200)
+        bucket = self.s3_conn.Bucket(settings.AWS_STORAGE_BUCKET_NAME)
+        objects = list(bucket.objects.all())
+        self.assertEqual(len(objects), 1)
+        self.assertEqual(objects[0].key,
+                         os.path.join(settings.MEDIAFILES_LOCATION,
+                                      'profile_pictures',
+                                      'photo.png'))
