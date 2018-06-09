@@ -20,8 +20,8 @@
         @include profile-pic;
         width: 300px;
         height: 300px;
-        margin-top: -50px;
         margin-left: -50px;
+        margin-top: 24px;
         flex-shrink: 0;
     }
 
@@ -44,6 +44,10 @@
                 textarea {
                     width: 380px;
                 }
+            }
+
+            &__button {
+                margin: $small-spacing;
             }
         }
     }
