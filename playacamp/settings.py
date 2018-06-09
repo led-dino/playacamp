@@ -10,6 +10,8 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 """
 
 import os
+import sys
+
 import dj_database_url
 
 
@@ -92,6 +94,12 @@ DATABASES = {
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
+
+if 'test' in sys.argv:
+    DATABASES['default'] = {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'test_db'),
+    }
 
 # Password validation
 # https://docs.djangoproject.com/en/1.9/ref/settings/#auth-password-validators

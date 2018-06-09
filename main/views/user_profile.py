@@ -80,10 +80,9 @@ def get(request: HttpRequest, user_id: Optional[int]=None) -> HttpResponse:
 def update_basics(request: HttpRequest) -> HttpResponse:
     if request.method != 'POST':
         raise Http404
-
     profile = request.user.profile
 
-    profile.playa_name = request.POST['playa-name']
+    profile.playa_name = request.POST['playa_name']
 
     zipcode = request.POST['zipcode']
     if zipcode:
@@ -93,7 +92,7 @@ def update_basics(request: HttpRequest) -> HttpResponse:
 
     links_by_account_type = {}  # type: Dict[str, str]
     for account_type, verbose_type in SocialMediaLink.ACCOUNT_TYPES:
-        link = request.POST['social-link-{}'.format(account_type)]
+        link = request.POST['social_link_{}'.format(account_type)]
         links_by_account_type[account_type] = link
 
     for social_link in profile.social_media_links.all():
@@ -116,13 +115,17 @@ def update_basics(request: HttpRequest) -> HttpResponse:
     if phone:
         try:
             parsed_number = phonenumbers.parse(phone, 'US')
-            profile.phone_nubmer = phonenumbers.format_number(parsed_number, phonenumbers.PhoneNumber())
+            formatted_number = phonenumbers.format_number(parsed_number, phonenumbers.PhoneNumber())
+            number_chunks = formatted_number.split('-')
+            if list(map(len, number_chunks)) != [3, 3, 4]:
+                return HttpResponseBadRequest('Error parsing phone number')
+            profile.phone_number = formatted_number
         except Exception:
             return HttpResponseBadRequest('Error parsing phone number')
 
-    years_on_playa = request.POST['years-on-playa']
+    years_on_playa = request.POST['years_on_playa']
     try:
-        profile.years_on_playa = int(years_on_playa) if years_on_playa else ''
+        profile.years_on_playa = int(years_on_playa) if years_on_playa else None
     except ValueError:
         return HttpResponseBadRequest('Invalid value for years on playa')
 
@@ -236,7 +239,6 @@ def get_profile_picture_form(request: HttpRequest) -> HttpResponse:
 def submit_profile_picture_form(request: HttpRequest) -> HttpResponse:
     if request.method != 'POST':
         raise Http404
-    print(request.FILES['file'])
     sys.stdout.flush()
     profile = request.user.profile
     profile.profile_picture = request.FILES['file']

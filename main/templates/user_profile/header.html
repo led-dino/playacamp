@@ -20,12 +20,12 @@
             <div class="header__details__form">
                 <div class="header__details__form__field">
                     <label>Playa Name:</label>
-                    <input type="text" name="playa-name" value="{% firstof profile.playa_name '' %}">
+                    <input type="text" name="playa_name" value="{% firstof profile.playa_name '' %}">
                 </div>
 
                 <div class="header__details__form__field">
                     <label>Years on Playa:</label>
-                    <input type="number" value="{{ profile.years_on_playa }}" name="years-on-playa">
+                    <input type="number" value="{{ profile.years_on_playa }}" name="years_on_playa">
                 </div>
 
                 <div class="header__details__form__field">
@@ -42,13 +42,13 @@
                     {% for link in profile.social_media_links.all %}
                     <div class="header__details__form__field">
                         <label>{{ link.get_account_type_display }}:</label>
-                        <input type="text" name="social-link-{{ link.account_type }}" value="{{ link.link }}">
+                        <input type="text" name="social_link_{{ link.account_type }}" value="{{ link.link }}">
                     </div>
                     {% endfor %}
                     {% for link_type, verbose_type in profile.missing_social_media_link_types %}
                     <div class="header__details__form__field">
                         <label>{{ verbose_type }}:</label>
-                        <input type="text" name="social-link-{{ link_type }}">
+                        <input type="text" name="social_link_{{ link_type }}">
                     </div>
                     {% endfor %}
                 {% endif %}
