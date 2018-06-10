@@ -17,6 +17,7 @@ def get(request: HttpRequest, team_id: int) -> HttpResponse:
     is_member = my_team is not None
 
     return render(request, 'team/detail.html', context={
+        'profile': request.user.profile,
         'team': team,
         'is_member': is_member,
         'is_allowed_to_view_members': is_allowed_to_view_members,
@@ -27,6 +28,7 @@ def get(request: HttpRequest, team_id: int) -> HttpResponse:
 def list(request: HttpRequest) -> HttpResponse:
     teams = Team.objects.all()
     return render(request, 'team/list.html', context={
+        'profile': request.user.profile,
         'teams': teams,
     })
 

@@ -200,7 +200,7 @@ class TestUserProfileChangeAttendingView(TestUserProfileView):
         attendance = self.user_profile.try_fetch_current_attendance(include_soft_deleted=True)
         self.assertIsNotNone(attendance)
         self.assertFalse(attendance.deleted_at)
-        self.assertEqual(len(list(self.user_profile.user.attendance_profiles.all())), 1)
+        self.assertEqual(len(list(self.user_profile.user.attendanceprofile_set.all())), 1)
 
         response = self.client.post(reverse('changed-attending'), {
             'is-attending': 'off',
@@ -209,7 +209,7 @@ class TestUserProfileChangeAttendingView(TestUserProfileView):
         self.user_profile.refresh_from_db()
         attendance = self.user_profile.try_fetch_current_attendance(include_soft_deleted=True)
         self.assertTrue(attendance.deleted_at)
-        self.assertEqual(len(list(self.user_profile.user.attendance_profiles.all())), 1)
+        self.assertEqual(len(list(self.user_profile.user.attendanceprofile_set.all())), 1)
 
         response = self.client.post(reverse('changed-attending'), {
             'is-attending': 'on',
@@ -219,7 +219,7 @@ class TestUserProfileChangeAttendingView(TestUserProfileView):
         attendance = self.user_profile.try_fetch_current_attendance(include_soft_deleted=True)
         self.assertIsNotNone(attendance)
         self.assertFalse(attendance.deleted_at)
-        self.assertEqual(len(list(self.user_profile.user.attendance_profiles.all())), 1)
+        self.assertEqual(len(list(self.user_profile.user.attendanceprofile_set.all())), 1)
 
 
 class TestUpdatedSkillsView(TestUserProfileView):

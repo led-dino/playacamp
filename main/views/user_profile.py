@@ -28,6 +28,7 @@ def list_profiles(request: HttpRequest) -> HttpResponse:
                                               Q(user__first_name__contains=search_query) |
                                               Q(user__last_name__contains=search_query))
     return render(request, 'user_profile/list.html', context={
+        'profile': request.user.profile,
         'profiles': profiles,
         'search_query': search_query or '',
     })

@@ -1,0 +1,45 @@
+@import 'variables/index';
+
+.navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 50px;
+    background-color: $gray-dark;
+    color: white;
+    z-index: 1000;
+
+    h1 {
+        float: left;
+        margin: 0 $medium-spacing;
+    }
+
+    &__link {
+        font-size: $large-font-size;
+        height: 50px;
+        line-height: 50px;
+        white-space: nowrap;
+        margin: 0;
+        padding: 0 $small-spacing;
+        border-left: 1px $gray-light solid;
+    }
+
+    &__link:hover {
+        text-decoration: underline;
+    }
+
+    &__logout {
+        float: right;
+        margin: 0 $small-spacing;
+        position: absolute;
+        right: $small-spacing;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+}
+
+.navbar-footer {
+    position: static;
+    display: inline-block;
+    margin-top: 50px;
+}

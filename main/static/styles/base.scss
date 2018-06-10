@@ -1,3 +1,5 @@
+$sticky-banner-height: 50px;
+
 * {
     font: $base-font;
 }
@@ -27,26 +29,23 @@ ul {
     }
 }
 
-.navbar {
-    text-align: right;
-    padding-right: 10px;
-    padding-top: 5px;
-    float: right;
-}
-
 .sticky-banner {
-    height: 50px;
+    height: $sticky-banner-height;
     text-align: center;
-    font-size: 36px;
+    font-size: $large-font-size;
     background-color: $green-dark;
     position: fixed;
-    top: 0px;
+    top: 50px;
     z-index: 1000;
     width: 100%;
+    font-weight: $bold-font-weight;
+    line-height: $sticky-banner-height;
 }
 
 .sticky-banner-footer {
+    position: static;
     margin-top: 50px;
+    display: block;
 }
 
 .bold {

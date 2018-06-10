@@ -10,7 +10,7 @@ from main.models.transportation_method import TransportationMethod
 class AttendanceProfile(models.Model):
     deleted_at = models.DateTimeField(blank=True, null=True)
 
-    user = models.ForeignKey(User, related_name='attendance_profiles')
+    user = models.ForeignKey(User)
     year = models.IntegerField()
 
     housing_group = models.ForeignKey(HousingGroup, related_name='residents', null=True, blank=True)

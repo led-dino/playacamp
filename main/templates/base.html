@@ -4,9 +4,11 @@
 <head>
     <title>{% block title %}{% endblock %}</title>
     <link rel="stylesheet" type="text/css" href={% sass_src "styles/app.scss" %}>
+    <link rel="stylesheet" type="text/css" href={% sass_src "styles/navbar.scss" %}>
     {% block style %}{% endblock %}
 </head>
 <body>
+    {% include "navbar.html" %}
     {% block content %}
     {% endblock %}
 </body>
