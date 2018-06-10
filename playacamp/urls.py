@@ -1,5 +1,6 @@
 from django.conf.urls import include, url
 from django.contrib import admin, auth
+from django.views.generic import TemplateView
 
 import main.views.index
 import main.views.login
@@ -45,6 +46,8 @@ urlpatterns = [     # pylint: disable=invalid-name
     url(r'^profile/me/food-restrictions/$', main.views.user_profile.updated_food_restrictions, name='updated-food-restrictions'),
     url(r'^profile/me/picture/$', main.views.user_profile.get_profile_picture_form, name='profile-pic-form'),
     url(r'^profile/me/picture/submit/$', main.views.user_profile.submit_profile_picture_form, name='profile-pic-form-submit'),
+
+    url(r'^dues/$', TemplateView.as_view(template_name='dues.html'), name='dues'),
 
     url(r'^admin/', include(admin.site.urls)),
 ]

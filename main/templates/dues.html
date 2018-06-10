@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% load sass_tags %}
+{% block title %}Camp Dues{% endblock %}
+{% block style %}
+    <link rel="stylesheet" type="text/css" href={% sass_src "styles/views/dues.scss" %}>
+{% endblock %}
+{% block content %}
+    <div class="body-wrapper">
+        <h1>Camp Dues</h1>
+        <h4>Camp dues are <span class="bold">$500</span>. Send them to <a href="https://venmo.com/leddinosaur">@leddinosaur</a> on Venmo.</h4>
+        <p class="dues__details">
+            We can't guarantee a spot in the camp until dues are paid. That being said, we don't want dues to
+            be the reason you can't attend. If the cost of dues would be prohibitive for you, talk with
+            <a href="mailto:zionswoons@gmail.com ">Courtney</a> and we'll figure something out.
+        </p>
+
+        <p class="dues__details">
+            It might take a few days after paying dues for it to show up on your Dino profile. This is expected, so
+            don't worry if it doesn't happen right away!
+        </p>
+
+        <h5 class="dues__subheader">A Few Things Dues Pay For...</h5>
+        <ul class="dues__list">
+            <li class="dues__list__elem">Water and fuel for the camp</li>
+            <li class="dues__list__elem">Breakfast, dinner, and snacks for the camp</li>
+            <li class="dues__list__elem">Booze for the bar</li>
+            <li class="dues__list__elem">LED gifts</li>
+            <li class="dues__list__elem">Camp art projects</li>
+            <li class="dues__list__elem">Repair, replacement, storage, and delivery costs for camp equipment</li>
+            <li class="dues__list__elem">Greywater pumping</li>
+            <li class="dues__list__elem">A shower!</li>
+            <li class="dues__list__elem">A 30 foot tall flame thrower!</li>
+            <li class="dues__list__elem">Many other things!</li>
+        </ul>
+    </div>
+{% endblock %}

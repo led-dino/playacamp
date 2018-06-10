@@ -1,8 +1,0 @@
-@import url("https://rsms.me/inter/inter-ui.css");
-.team__membership-form {
-  display: block;
-  margin-top: 20px; }
-
-.team__member-list {
-  display: flex;
-  flex-direction: column; }

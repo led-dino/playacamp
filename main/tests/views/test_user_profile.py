@@ -196,16 +196,30 @@ class TestUserProfileChangeAttendingView(TestUserProfileView):
             'is-attending': 'on',
         }, follow=True, secure=True)
         self.assertRedirects(response, expected_redirect_url)
-        attendance = self.user_profile.try_fetch_current_attendance()
+        self.user_profile.refresh_from_db()
+        attendance = self.user_profile.try_fetch_current_attendance(include_soft_deleted=True)
         self.assertIsNotNone(attendance)
         self.assertFalse(attendance.deleted_at)
+        self.assertEqual(len(list(self.user_profile.user.attendance_profiles.all())), 1)
 
         response = self.client.post(reverse('changed-attending'), {
             'is-attending': 'off',
         }, follow=True, secure=True)
         self.assertRedirects(response, expected_redirect_url)
-        attendance = self.user_profile.try_fetch_current_attendance()
+        self.user_profile.refresh_from_db()
+        attendance = self.user_profile.try_fetch_current_attendance(include_soft_deleted=True)
         self.assertTrue(attendance.deleted_at)
+        self.assertEqual(len(list(self.user_profile.user.attendance_profiles.all())), 1)
+
+        response = self.client.post(reverse('changed-attending'), {
+            'is-attending': 'on',
+        }, follow=True, secure=True)
+        self.assertRedirects(response, expected_redirect_url)
+        self.user_profile.refresh_from_db()
+        attendance = self.user_profile.try_fetch_current_attendance(include_soft_deleted=True)
+        self.assertIsNotNone(attendance)
+        self.assertFalse(attendance.deleted_at)
+        self.assertEqual(len(list(self.user_profile.user.attendance_profiles.all())), 1)
 
 
 class TestUpdatedSkillsView(TestUserProfileView):

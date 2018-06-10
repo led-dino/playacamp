@@ -4,6 +4,7 @@
 
 body {
     background-color: $blue-light;
+    margin: 0;
 }
 
 ul {
@@ -31,4 +32,28 @@ ul {
     padding-right: 10px;
     padding-top: 5px;
     float: right;
+}
+
+.sticky-banner {
+    height: 50px;
+    text-align: center;
+    font-size: 36px;
+    background-color: $green-dark;
+    position: fixed;
+    top: 0px;
+    z-index: 1000;
+    width: 100%;
+}
+
+.sticky-banner-footer {
+    margin-top: 50px;
+}
+
+.bold {
+    font-weight: bold;
+    font-size: inherit;
+}
+
+a {
+    font-size: inherit;
 }

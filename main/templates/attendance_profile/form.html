@@ -25,7 +25,13 @@
                 </tr>
                 <tr>
                     <td>Have you paid your camp dues?</td>
-                    <td>{{ attendance_form.instance.paid_dues|yesno:"Yes,No,Not Sure" }}</td>
+                    <td>
+                        {% if attendance_form.instance.paid_dues %}
+                        Yes
+                        {% else %}
+                        No. <a href="{% url 'dues' %}">How do I pay?</a>
+                        {% endif %}
+                    </td>
                 </tr>
                 <tr>
                     <td>{{ attendance_form.arrival_date.label_tag }}</td>

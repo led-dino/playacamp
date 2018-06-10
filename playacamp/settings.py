@@ -27,7 +27,7 @@ PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 SECRET_KEY = 'i+acxn5(akgsn!sr4^qgf(^m&*@+g1@u^t@=8s@axc41ml*f=s'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = ('runserver' in sys.argv) or ('livereload' in sys.argv)
 
 # TEST_RUNNER = 'playacamp.heroku_test_runner.HerokuDiscoverRunner'
 

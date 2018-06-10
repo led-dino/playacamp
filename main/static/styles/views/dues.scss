@@ -1,0 +1,23 @@
+@import '../variables/index';
+
+.dues {
+    &__details {
+        text-align: left;
+
+    }
+
+    &__subheader {
+        text-align: center;
+        margin-bottom: 0;
+    }
+
+    &__list {
+        width: calc(100% / 2);
+        margin: $small-spacing auto;
+        list-style-type: disc;
+
+        &__elem {
+            text-align: left;
+        }
+    }
+}

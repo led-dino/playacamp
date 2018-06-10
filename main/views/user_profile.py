@@ -141,7 +141,7 @@ def changed_attending(request: HttpRequest) -> HttpResponse:
         raise Http404
 
     is_attending = request.POST.get('is-attending') == 'on'
-    attendance = request.user.profile.try_fetch_current_attendance()
+    attendance = request.user.profile.try_fetch_current_attendance(include_soft_deleted=True)
 
     if is_attending:
         if attendance is None:

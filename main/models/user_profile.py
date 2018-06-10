@@ -62,11 +62,16 @@ class UserProfile(models.Model):
     def email(self) -> str:
         return self.user.email
 
-    def try_fetch_current_attendance(self) -> Optional[AttendanceProfile]:
+    def try_fetch_current_attendance(self, include_soft_deleted=False) -> Optional[AttendanceProfile]:
         current_year = timezone.now().year
         try:
-            return AttendanceProfile.objects.get(user=self.user,
-                                                 year=current_year)
+            if include_soft_deleted:
+                return AttendanceProfile.objects.get(user=self.user,
+                                                     year=current_year)
+            else:
+                return AttendanceProfile.objects.get(user=self.user,
+                                                     year=current_year,
+                                                     deleted_at=None)
         except AttendanceProfile.DoesNotExist:
             return None
 
