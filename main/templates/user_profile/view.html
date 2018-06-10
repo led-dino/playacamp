@@ -9,48 +9,48 @@
 {% endblock %}
 {% block content %}
     {% if attendance_form.instance.pk and not attendance_form.instance.paid_dues %}
-    <div class="sticky-banner">You Still Need To Pay Dues! <a href="{% url 'dues' %}">Here's how!</a></div>
-    <div class="sticky-banner-footer"></div>
+        <div class="sticky-banner">You Still Need To Pay Dues! <a href="{% url 'dues' %}">Here's how!</a></div>
+        <div class="sticky-banner-footer"></div>
     {% endif %}
     <div class="body-wrapper--left-align">
-      {% include "user_profile/header.html" %}
+        {% include "user_profile/header.html" %}
 
-      <div class="main-content">
-        <div class="main-content__section attendance">
-          <h4>Attendance</h4>
-          {% include "attendance_profile/form.html" %}
-        </div>
+        <div class="main-content">
+            <div class="main-content__section attendance">
+                <h4>Attendance</h4>
+                {% include "attendance_profile/form.html" %}
+            </div>
 
-        <div class="main-content__section">
-          <h4>Skills</h4>
-          Help the leads organize by letting us know what you're good at.
-          {% include "skill/list.html" %}
-        </div>
+            <div class="main-content__section">
+                <h4>Teams</h4>
+                {% if profile.user.memberships.all %}
+                <div>
+                    {% for membership in profile.user.memberships.all %}
+                    <a href="{% url 'team-detail' membership.team.id %}">{{ membership.team.name }}</a>
+                    {% if membership.is_lead %} (Lead){% endif %}
+                    {% endfor %}
+                </div>
+                {% else %}
+                <div class="main-content__section__no-team">You're not on any teams yet!</div>
+                {% endif %}
+                {% if is_editable %}
+                To join a team, check out the list <a href="{% url 'team-list' %}">here</a>.
+                {% endif %}
+            </div>
 
-        {% if user.id == profile.user.id %}
-        <div class="main-content__section">
-          <h4>Food Restrictions</h4>
-          Help the Kitchen team out by listing your dietary restrictions.
-          {% include "food_restriction/list.html" %}
-        </div>
-        {% endif %}
+            <div class="main-content__section">
+                <h4>Skills</h4>
+                Help the leads organize by letting us know what you're good at.
+                {% include "skill/list.html" %}
+            </div>
 
-        <div class="main-content__section">
-          <h4>Teams</h4>
-          {% if profile.user.memberships.all %}
-          <div>
-          {% for membership in profile.user.memberships.all %}
-              <a href="{% url 'team-detail' membership.team.id %}">{{ membership.team.name }}</a>
-              {% if membership.is_lead %} (Lead){% endif %}
-          {% endfor %}
-          </div>
-          {% else %}
-          <div class="main-content__section__no-team">You're not on any teams yet!</div>
-          {% endif %}
-          {% if is_editable %}
-            To join a team, check out the list <a href="{% url 'team-list' %}">here</a>.
-          {% endif %}
+            {% if user.id == profile.user.id %}
+            <div class="main-content__section">
+                <h4>Food Restrictions</h4>
+                Help the Kitchen team out by listing your dietary restrictions.
+                {% include "food_restriction/list.html" %}
+            </div>
+            {% endif %}
         </div>
-      </div>
     </div>
 {% endblock %}
