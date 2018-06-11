@@ -3,6 +3,16 @@
 <html>
 <head>
     <title>{% block title %}{% endblock %}</title>
+    {% if google_analytics_tracking_id %}
+    <script async src="https://www.googletagmanager.com/gtag/js?id={{ google_analytics_tracking_id }}"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', '{{ google_analytics_tracking_id }}');
+    </script>
+    {% endif %}
     <link rel="stylesheet" type="text/css" href={% sass_src "styles/app.scss" %}>
     <link rel="stylesheet" type="text/css" href={% sass_src "styles/navbar.scss" %}>
     {% block style %}{% endblock %}
