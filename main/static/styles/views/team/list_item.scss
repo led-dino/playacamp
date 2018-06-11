@@ -31,5 +31,17 @@
         top: 50%;
         transform: translateY(-50%);
         right: $small-spacing;
+
+        button {
+            width: 75px;
+        }
+
+        &__leave {
+            background-color: $gray-dark;
+        }
+
+        &__join {
+            background-color: $green-dark;
+        }
     }
 }

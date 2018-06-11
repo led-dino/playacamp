@@ -7,9 +7,18 @@
 {% block content %}
     <div class="body-wrapper">
         <h1>Signup</h1>
-        <form method="POST" action="{% url 'signup-submit' %}">
+        <form class="body-wrapper__form" method="POST" action="{% url 'signup-submit' %}">
             {% csrf_token %}
-            {{ form.as_p }}
+            {% for field in form %}
+            <div class="body-wrapper__form__field__{{ field.name }}">
+                {{ field.errors }}
+                {{ field.label_tag }}
+                <div class="body-wrapper__form__field__{{ field.name }}__wrapper">{{ field }}</div>
+                {% if field.help_text %}
+                <p class="help">{{ field.help_text|safe }}</p>
+                {% endif %}
+            </div>
+            {% endfor %}
             <button>Submit</button>
         </form>
     </div>

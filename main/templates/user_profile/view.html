@@ -8,7 +8,7 @@
     <link rel="stylesheet" type="text/css" href={% sass_src "styles/views/food_restriction/list.scss" %}>
 {% endblock %}
 {% block content %}
-    {% if attendance_form.instance.pk and not attendance_form.instance.paid_dues %}
+    {% if is_editable and attendance_form.instance.pk and not attendance_form.instance.paid_dues %}
         <div class="sticky-banner">You Still Need To Pay Dues! <a href="{% url 'dues' %}">Here's how!</a></div>
         <div class="sticky-banner-footer"></div>
     {% endif %}
@@ -40,13 +40,15 @@
                 {% endif %}
             </div>
 
+            {% if is_editable %}
             <div class="main-content__section">
                 <h4>Skills</h4>
                 Help the leads organize by letting us know what you're good at.
                 {% include "skill/list.html" %}
             </div>
+            {% endif %}
 
-            {% if user.id == profile.user.id %}
+            {% if is_editable %}
             <div class="main-content__section">
                 <h4>Food Restrictions</h4>
                 Help the Kitchen team out by listing your dietary restrictions.

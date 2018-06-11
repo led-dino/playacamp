@@ -18,7 +18,7 @@ class SignUpForm(forms.Form):
     last_name = forms.CharField(label="And your last name?", max_length=30)
     years_on_playa = forms.IntegerField(label="Nice to meet you! So how many years have you gone to Burning Man?")
     interested_team = forms.ModelChoiceField(label='Which team are you interested in joining? '
-                                                   '(You can always change this later)',
+                                                   '(you can always change this later)',
                                              queryset=Team.objects.all())
     invited_by = forms.CharField(label="Who invited you to LED Dinosaur?", max_length=64)
     email = forms.EmailField(label="Cool! What's your email so we can keep you up to date?")
