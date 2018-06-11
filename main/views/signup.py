@@ -8,7 +8,7 @@ from django.db import IntegrityError, transaction
 from django.http import HttpResponseBadRequest, HttpResponse, HttpRequest
 from django.shortcuts import render, redirect
 
-from main.models import UserProfile
+from main.models import UserProfile, Team, TeamMembership
 
 
 # We only need a small subset of the fields (along with a recaptcha)
@@ -17,6 +17,9 @@ class SignUpForm(forms.Form):
     first_name = forms.CharField(label="What is your first name little dino?", max_length=30)
     last_name = forms.CharField(label="And your last name?", max_length=30)
     years_on_playa = forms.IntegerField(label="Nice to meet you! So how many years have you gone to Burning Man?")
+    interested_team = forms.ModelChoiceField(label='Which team are you interested in joining? '
+                                                   '(You can always change this later)',
+                                             queryset=Team.objects.all())
     invited_by = forms.CharField(label="Who invited you to LED Dinosaur?", max_length=64)
     email = forms.EmailField(label="Cool! What's your email so we can keep you up to date?")
     password = forms.CharField(label="And a password so we can identify you!",
@@ -84,6 +87,9 @@ def post(request: HttpRequest) -> HttpResponse:
         user_profile.zipcode = form.cleaned_data['zipcode']
         user_profile.user = user
         user_profile.save()
+
+        membership = TeamMembership(member=user, team=form.cleaned_data['interested_team'])
+        membership.save()
 
         login(request, user)
         return redirect(user_profile)
