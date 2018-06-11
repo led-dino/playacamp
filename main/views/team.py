@@ -40,7 +40,7 @@ def toggle_membership(request: HttpRequest, team_id: int) -> HttpResponse:
     if request.method != 'POST':
         raise Http404
 
-    next_url = request.POST['next']
+    next_url = request.POST.get('next')
     team = Team.objects.get(pk=team_id)
     try:
         my_team = request.user.teams.get(pk=team_id)
