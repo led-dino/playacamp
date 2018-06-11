@@ -1,14 +1,35 @@
 @import '../../variables/index';
 
 .team-list-item {
-    margin: $medium-spacing 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: $small-spacing;
+    background: white;
+    border-radius: $border-radius;
+    width: 400px;
+    margin: $small-spacing auto;
+    text-align: left;
+    position: relative;
 
-    &__name {
-        font-size: $h5-font-size;
-        font-weight: $h5-font-weight;
+    &__details {
+        width: 60%;
+
+        &__name {
+            font-size: $h5-font-size;
+            font-weight: $h5-font-weight;
+            text-align: left;
+        }
+
+        &__description {
+            margin: $xsmall-spacing 0;
+        }
     }
 
-    &__description {
-        margin: $xsmall-spacing 0;
+    &__team__membership-form {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        right: $small-spacing;
     }
 }

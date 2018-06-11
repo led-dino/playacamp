@@ -16,6 +16,16 @@
             margin-bottom: $medium-spacing;
         }
 
+        ul {
+            list-style-type: circle;
+            margin-left: $medium-spacing;
+        }
+
+        li {
+            margin: $small-spacing 0;
+            font-size: $medium-font-size;
+        }
+
         &__no-team {
             font-size: 18px;
             margin-bottom: $small-spacing;
