@@ -1,0 +1,15 @@
+@import '../../variables/index';
+
+.body-wrapper {
+    height: 100%;
+}
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+
+    a {
+        margin: $xsmall-spacing;
+    }
+}

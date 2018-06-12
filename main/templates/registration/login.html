@@ -6,11 +6,14 @@
 {% endblock %}
 {% block content %}
     <div class="body-wrapper">
-      <form method="POST">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Login</button>
-      </form>
-      <a href="{% url 'password_reset' %}">Forgot your password?</a>
+        <div class="login-form">
+            <form method="POST">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit">Login</button>
+            </form>
+            <a href="{% url 'password_reset' %}">Forgot your password?</a>
+            <a href="{% url 'signup' %}">I don't have an account yet!</a>
+        </div>
     </div>
 {% endblock %}
