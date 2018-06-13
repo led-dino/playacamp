@@ -1,12 +1,12 @@
 from django.conf.urls import include, url
 from django.contrib import admin, auth
-from django.views.generic import TemplateView
 
 import main.views.index
 import main.views.login
 import main.views.user_profile
 import main.views.team
 import main.views.signup
+import main.views.static
 
 admin.autodiscover()
 
@@ -47,9 +47,9 @@ urlpatterns = [     # pylint: disable=invalid-name
     url(r'^profile/me/picture/$', main.views.user_profile.get_profile_picture_form, name='profile-pic-form'),
     url(r'^profile/me/picture/submit/$', main.views.user_profile.submit_profile_picture_form, name='profile-pic-form-submit'),
 
-    url(r'^dues/$', TemplateView.as_view(template_name='dues.html'), name='dues'),
+    url(r'^dues/$', main.views.static.dues, name='dues'),
 
-    url(r'^newbies/$', TemplateView.as_view(template_name='newbies.html'), name='newbies'),
+    url(r'^newbies/$', main.views.static.newbies, name='newbies'),
 
     url(r'^admin/', include(admin.site.urls)),
 ]
