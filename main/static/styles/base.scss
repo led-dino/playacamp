@@ -5,7 +5,7 @@ $sticky-banner-height: 50px;
 }
 
 body {
-    background-color: $green-light;
+    background-color: $gray-light;
     margin: 0;
 }
 
@@ -33,14 +33,19 @@ ul {
     height: $sticky-banner-height;
     text-align: center;
     font-size: $large-font-size;
-    background-color: $gray-light;
-    color: white;
+    background-color: $green-light;
+    color: lighten($gray-dark, 25%);
+    box-shadow: $box-shadow-light;
     position: fixed;
     top: 50px;
     z-index: 1000;
     width: 100%;
-    font-weight: $bold-font-weight;
     line-height: $sticky-banner-height;
+
+    a {
+        color: $gray-dark;
+        font-weight: $bold-font-weight;
+    }
 }
 
 .sticky-banner-footer {

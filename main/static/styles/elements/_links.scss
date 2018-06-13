@@ -1,5 +1,9 @@
 a {
     text-decoration: none;
-    color: $green-dark;
+    color: $green-medium;
     font-weight: $medium-font-weight;
+
+    &:hover {
+        color: $green-light;
+    }
 }
