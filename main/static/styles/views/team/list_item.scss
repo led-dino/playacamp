@@ -4,11 +4,12 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: $small-spacing;
+    padding: $medium-spacing;
     background: white;
+    box-shadow: $box-shadow;
     border-radius: $border-radius;
     width: 400px;
-    margin: $small-spacing auto;
+    margin: $large-spacing auto;
     text-align: left;
     position: relative;
 
@@ -27,21 +28,8 @@
     }
 
     &__team__membership-form {
-        position: absolute;
-        top: 50%;
-        transform: translateY(-50%);
-        right: $small-spacing;
-
         button {
             width: 75px;
-        }
-
-        &__leave {
-            background-color: $gray-dark;
-        }
-
-        &__join {
-            background-color: $green-dark;
         }
     }
 }

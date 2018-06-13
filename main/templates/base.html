@@ -2,7 +2,7 @@
 {% load sass_tags %}
 <html>
 <head>
-    <title>{% block title %}{% endblock %}</title>
+    <title>Dinobook</title>
     {% if google_analytics_tracking_id %}
     <script async src="https://www.googletagmanager.com/gtag/js?id={{ google_analytics_tracking_id }}"></script>
     <script>
@@ -13,6 +13,7 @@
       gtag('config', '{{ google_analytics_tracking_id }}');
     </script>
     {% endif %}
+    <link rel=icon href="/static/favicon.png">
     <link rel="stylesheet" type="text/css" href={% sass_src "styles/app.scss" %}>
     <link rel="stylesheet" type="text/css" href={% sass_src "styles/navbar.scss" %}>
     {% block style %}{% endblock %}
