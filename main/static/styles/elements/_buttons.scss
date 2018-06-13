@@ -15,3 +15,11 @@ button {
         outline: none;
     }
 }
+
+.btn-danger {
+    background-color: $red;
+
+    &:hover {
+        background-color: $red-bright;
+    }
+}

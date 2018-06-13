@@ -16,7 +16,7 @@
             <form class="team__membership-form" method="POST" action="{% url 'join-leave-team' team.id %}">
                 {% csrf_token %}
                 {% if is_member %}
-                <button>Leave</button>
+                <button class="btn-danger">Leave</button>
                 {% else %}
                 <button>Join</button>
                 {% endif %}

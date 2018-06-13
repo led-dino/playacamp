@@ -17,9 +17,9 @@
         {% csrf_token %}
         <input type="hidden" name="next" value="{% url 'team-list' %}" />
         {% if team.id in my_team_ids %}
-        <button class="team-list-item__team__membership-form__leave">Leave</button>
+        <button class="btn-danger">Leave</button>
         {% else %}
-        <button class="team-list-item__team__membership-form__join">Join</button>
+        <button>Join</button>
         {% endif %}
     </form>
 </div>
