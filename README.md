@@ -6,36 +6,34 @@ A Django app for managing a Burning Man camp
 
 ## Running Locally
 
-Make sure you have Python [installed properly](http://install.python-guide.org).  Also, install the [Heroku Toolbelt](https://toolbelt.heroku.com/) and [Postgres](https://devcenter.heroku.com/articles/heroku-postgresql#local-setup).
+Make sure you have Python 3 [installed properly](http://install.python-guide.org).
 
 ```sh
-$ git clone git@github.com:mhahnenberg/playacamp.git
+$ git clone git@github.com:led-dino/playacamp.git
 $ cd playacamp
 
 $ pip install -r requirements.txt
 
 $ python manage.py migrate
 
-$ heroku local
+$ python manage.py runserver
+
+# In another terminal
+$ python manage.py livereload
 ```
 
-Your app should now be running on [localhost:5000](http://localhost:5000/).
+You should also edit your `/etc/hosts` file to add an entry for `local.leddino.com`:
+
+```
+# /etc/hosts
+127.0.0.1   local.leddino.com
+```
+
+Your app should now be running on [local.leddino.com:8000](http://local.leddino.com:8000/).
 
 ## Deploying to Heroku
 
-```sh
-$ heroku create
-$ git push heroku master
-
-$ heroku run python manage.py migrate
-$ heroku open
-```
-or
-
-[![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy)
+When you land a change on the `master` branch it will automatically be deployed to a Heroku staging application.
 
 ## Documentation
 
-For more information about using Python on Heroku, see these Dev Center articles:
-
-- [Python on Heroku](https://devcenter.heroku.com/categories/python) 
