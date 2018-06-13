@@ -29,28 +29,33 @@ ul {
     }
 }
 
-.sticky-banner {
-    height: $sticky-banner-height;
-    text-align: center;
-    font-size: $large-font-size;
-    background-color: $green-light;
+.notification-container {
+    background-color: $caviar-orange;
     color: lighten($gray-dark, 25%);
     box-shadow: $box-shadow-light;
+    color: white;
     position: fixed;
     top: 50px;
     z-index: 1000;
     width: 100%;
-    line-height: $sticky-banner-height;
 
-    a {
-        color: $gray-dark;
+    &__notification {
+        height: $sticky-banner-height;
+        text-align: center;
+        font-size: $large-font-size;
         font-weight: $bold-font-weight;
+        line-height: $sticky-banner-height;
+
+        a {
+            font-weight: $bold-font-weight;
+            color: $gray-dark;
+        }
     }
 }
 
-.sticky-banner-footer {
+.notification-container-footer {
     position: static;
-    margin-top: 50px;
+    height: $sticky-banner-height;
     display: block;
 }
 

@@ -8,9 +8,8 @@
     <link rel="stylesheet" type="text/css" href={% sass_src "styles/views/food_restriction/list.scss" %}>
 {% endblock %}
 {% block content %}
-    {% if is_editable and attendance_form.instance.pk and not attendance_form.instance.paid_dues %}
-        <div class="sticky-banner">You Still Need To Pay Dues! <a href="{% url 'dues' %}">Here's how!</a></div>
-        <div class="sticky-banner-footer"></div>
+    {% if is_editable %}
+        {% include "notifications/list.html" %}
     {% endif %}
     <div class="body-wrapper--left-align">
         {% include "user_profile/header.html" %}

@@ -10,6 +10,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.template.loader import get_template, render_to_string
 from django.utils import timezone
 
 from main.models import Skill, FoodRestriction, UserProfile, SocialMediaLink
@@ -67,6 +68,12 @@ def get(request: HttpRequest, user_id: Optional[int]=None) -> HttpResponse:
             continue
         other_food_restrictions_by_name[fr_name] = all_food_restrictions_by_name[fr_name]
 
+    notifications = []
+    if is_logged_in_user:
+        if attendance_form.instance.pk and not attendance_form.instance.paid_dues:
+            pay_dues_template = render_to_string('notifications/pay_dues.html')
+            notifications.append(pay_dues_template)
+
     return render(request, 'user_profile/view.html', context={
         'profile': user.profile,
         'is_editable': is_logged_in_user,
@@ -74,6 +81,7 @@ def get(request: HttpRequest, user_id: Optional[int]=None) -> HttpResponse:
         'messages': messages.get_messages(request),
         'other_skills': other_skills_by_name.values(),
         'other_food_restrictions': other_food_restrictions_by_name.values(),
+        'notifications': notifications,
     })
 
 
