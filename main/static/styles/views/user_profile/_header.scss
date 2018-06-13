@@ -42,6 +42,10 @@
             &__field {
                 margin: 0 $small-spacing;
 
+                input {
+                    width: 180px;
+                }
+
                 textarea {
                     width: 380px;
                 }

@@ -2,13 +2,13 @@ button {
     cursor: pointer;
     border: none;
     border-radius: $border-radius;
-    background-color: $green-medium;
+    background-color: $green;
     padding: $small-spacing $medium-spacing;
     font-weight: $medium-font-weight;
     color: white;
 
     &:hover {
-        background-color: $green-light;
+        background-color: $green-bright;
     }
 
     &:focus {

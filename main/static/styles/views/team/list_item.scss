@@ -31,5 +31,12 @@
         button {
             width: 75px;
         }
+        &__leave {
+            background-color: $red;
+
+            &:hover {
+                background-color: $red-bright;
+            }
+        }
     }
 }
