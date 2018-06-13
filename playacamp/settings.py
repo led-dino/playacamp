@@ -125,16 +125,31 @@ LOGGING = {
     'disable_existing_loggers': False,
     'handlers': {
         'console': {
+            'level': 'INFO',
             'class': 'logging.StreamHandler',
+            'stream': sys.stdout,
         },
     },
     'loggers': {
         'django': {
             'handlers': ['console'],
-            'level': os.getenv('DJANGO_LOG_LEVEL', 'ERROR'),
+            'level': os.getenv('DJANGO_LOG_LEVEL', 'INFO'),
+        },
+        'playacamp': {
+            'handlers': ['console'],
+            'propagate': False,
+            'level': 'INFO',
+        },
+        'main': {
+            'handlers': ['console'],
+            'propagate': False,
+            'level': 'INFO',
         },
     },
 }
+
+# We want to propagate exceptions so that they get logged to stdout.
+DEBUG_PROPAGATE_EXCEPTIONS = True
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/
