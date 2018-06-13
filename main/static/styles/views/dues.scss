@@ -1,9 +1,14 @@
 @import '../variables/index';
 
 .dues {
+    background: white;
+    margin: $large-spacing auto;
+    padding: $large-spacing;
+    border-radius: $border-radius;
+    box-shadow: $box-shadow;
+
     &__details {
         text-align: left;
-
     }
 
     &__subheader {
@@ -12,7 +17,7 @@
     }
 
     &__list {
-        width: calc(100% / 2);
+        width: 40%;
         margin: $small-spacing auto;
         list-style-type: disc;
 
