@@ -71,8 +71,10 @@ def get(request: HttpRequest, user_id: Optional[int]=None) -> HttpResponse:
     notifications = []
     if is_logged_in_user:
         if attendance_form.instance.pk and not attendance_form.instance.paid_dues:
-            pay_dues_template = render_to_string('notifications/pay_dues.html')
-            notifications.append(pay_dues_template)
+            notifications.append('pay_dues')
+
+        if user.profile.years_on_playa == 0:
+            notifications.append('newbie')
 
     return render(request, 'user_profile/view.html', context={
         'profile': user.profile,

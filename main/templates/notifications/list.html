@@ -1,7 +1,11 @@
 <div class="notification-container">
     {% for notification in notifications %}
     <div class="notification-container__notification">
-        {{ notification }}
+        <div class="notification-container__notification__{{ notification }}">
+            {% with "notifications/"|add:notification|add:".html" as template_name %}
+                {% include template_name %}
+            {% endwith %}
+        </div>
     </div>
     {% endfor %}
 </div>

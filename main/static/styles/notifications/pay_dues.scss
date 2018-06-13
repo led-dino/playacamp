@@ -1,0 +1,19 @@
+@import "../variables/index";
+
+.notification-container {
+    &__notification {
+        &__pay_dues {
+            height: $xlarge-spacing;
+            text-align: center;
+            font-size: $large-font-size;
+            font-weight: $bold-font-weight;
+            line-height: $xlarge-spacing;
+            background-color: $caviar-orange;
+
+            a {
+                font-weight: $bold-font-weight;
+                color: $gray-dark;
+            }
+        }
+    }
+}

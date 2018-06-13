@@ -49,5 +49,7 @@ urlpatterns = [     # pylint: disable=invalid-name
 
     url(r'^dues/$', TemplateView.as_view(template_name='dues.html'), name='dues'),
 
+    url(r'^newbies/$', TemplateView.as_view(template_name='newbies.html'), name='newbies'),
+
     url(r'^admin/', include(admin.site.urls)),
 ]

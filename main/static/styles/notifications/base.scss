@@ -1,0 +1,21 @@
+@import '../variables/index';
+
+.notification-container {
+    color: lighten($gray-dark, 25%);
+    box-shadow: $box-shadow-light;
+    color: white;
+    position: fixed;
+    top: 50px;
+    z-index: 1000;
+    width: 100%;
+
+    &__notification {
+
+    }
+}
+
+.notification-container-footer {
+    position: static;
+    height: $xlarge-spacing;
+    display: block;
+}
