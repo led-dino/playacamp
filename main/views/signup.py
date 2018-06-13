@@ -14,11 +14,11 @@ from main.models import UserProfile, Team, TeamMembership
 # We only need a small subset of the fields (along with a recaptcha)
 # so this is a custom form just for the signup page.
 class SignUpForm(forms.Form):
-    first_name = forms.CharField(label="What is your first name little dino?", max_length=30)
+    first_name = forms.CharField(label="What's your first name, little dino?", max_length=30)
     last_name = forms.CharField(label="And your last name?", max_length=30)
     years_on_playa = forms.IntegerField(label="Nice to meet you! So how many years have you gone to Burning Man?")
     interested_team = forms.ModelChoiceField(label='Which team are you interested in joining? '
-                                                   '(you can always change this later)',
+                                                   '(you can always change it later)',
                                              queryset=Team.objects.all())
     invited_by = forms.CharField(label="Who invited you to LED Dinosaur?", max_length=64)
     email = forms.EmailField(label="Cool! What's your email so we can keep you up to date?")
@@ -28,8 +28,8 @@ class SignUpForm(forms.Form):
     duplicate_password = forms.CharField(label=" What was that password again? (in case you typo-ed)",
                                          widget=forms.PasswordInput,
                                          min_length=8)
-    phone = forms.CharField(label="And your phone number por favor?")
-    zipcode = forms.CharField(label="Last thing. What's your zipcode?",
+    phone = forms.CharField(label="And your phone number, por favor?")
+    zipcode = forms.CharField(label="Last one. What's your zip code?",
                               max_length=5,
                               min_length=5)
     captcha = ReCaptchaField(label='')

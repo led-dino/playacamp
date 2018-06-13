@@ -1,16 +1,14 @@
 @import '../../variables/index';
 
 .attendance {
-
-    &__summary {
-        margin-bottom: $medium-spacing;
-    }
-
     table {
         margin-left: $small-spacing;
         margin-bottom: $small-spacing;
         td {
             padding-left: $small-spacing;
+            input {
+                margin: 0;
+            }
         }
     }
 }
