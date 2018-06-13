@@ -33,7 +33,8 @@ ul {
     height: $sticky-banner-height;
     text-align: center;
     font-size: $large-font-size;
-    background-color: $green-dark;
+    background-color: $gray-light;
+    color: white;
     position: fixed;
     top: 50px;
     z-index: 1000;
