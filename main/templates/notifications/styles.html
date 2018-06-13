@@ -1,7 +1,1 @@
 {% load sass_tags %}
-<link rel="stylesheet" type="text/css" href={% sass_src "styles/notifications/base.scss" %}>
-{% for notification in notifications %}
-    {% with "styles/notifications/"|add:notification|add:".scss" as path %}
-        <link rel="stylesheet" type="text/css" href={% sass_src path %}>
-    {% endwith %}
-{% endfor %}

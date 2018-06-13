@@ -2,17 +2,17 @@
 
 .notification-container {
     &__notification {
-        &__pay_dues {
+        &__newbie {
             height: $xlarge-spacing;
             text-align: center;
             font-size: $large-font-size;
             font-weight: $bold-font-weight;
             line-height: $xlarge-spacing;
-            background-color: $caviar-orange;
+            background-color: $green-medium;
 
             a {
                 font-weight: $bold-font-weight;
-                color: $gray-dark;
+                color: white;
             }
         }
     }
