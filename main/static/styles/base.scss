@@ -10,11 +10,6 @@ body {
     margin: 0;
 }
 
-ul {
-    padding: 0;
-    list-style-type: none;
-}
-
 @mixin body-wrapper {
     width: 800px;
     padding: $medium-spacing $large-spacing;

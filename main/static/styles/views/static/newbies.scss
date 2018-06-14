@@ -1,33 +1,35 @@
+@import '../../variables/index';
+
 .confetti-wrapper {
     position: relative;
-    width: 100%;
-    min-height: 100vh;
+    width: 85vh;
+    min-height: 90vh;
 }
 
 [class|="confetti"] {
-  position: absolute;
+    position: absolute;
 }
 
-$colors: (#d13447, #ffbf00, #263672);
+$colors: ($green, $green-bright, $red, $red-bright, $orange, #d13447, #ffbf00, #263672);
 
 @for $i from 0 through 149 {
-  $w: random(20);
-  $l: random(200);
-  .confetti-#{$i} {
-    width: #{$w}px;
-    height: #{$w * 0.4}px;
-    background-color: nth($colors, random(3));
-    top: -10%;
-    left: unquote($l+"%");
-    opacity: random() + 0.5;
-    transform: rotate(#{random() * 360}deg);
-    animation: drop-#{$i} unquote(4 + random() + "s") unquote(random() + "s");
-  }
-
-  @keyframes drop-#{$i} {
-    100% {
-      top: 110%;
-      left: unquote($l+random(15)+"%");
+    $w: random(20);
+    $l: random(200);
+    .confetti-#{$i} {
+        width: #{$w}px;
+        height: #{$w * 0.4}px;
+        background-color: nth($colors, random(8));
+        top: -10%;
+        left: unquote($l + "%");
+        opacity: random() + 0.5;
+        transform: rotate(#{random() * 360}deg);
+        animation: drop-#{$i} unquote(4 + random() + "s") unquote(random() + "s");
     }
-  }
+
+    @keyframes drop-#{$i} {
+        100% {
+            top: 110%;
+            left: unquote($l + random(15) + "%");
+        }
+    }
 }

@@ -11,11 +11,25 @@
         {% endfor %}
     </div>
     <div class="body-wrapper card">
-        <h1>Newbie Guide</h1>
-        <h4>WELCOME TO LED DINO!</h4>
-        <p>We're so excited that you decided to take the leap and join us for this year's Burn... it's going to be a wild ride, so we put together a primer for you—everything you need to know.</p>
-        <p>
-
-        </p>
+        <h1>Newbies</h1>
+        <h4>Welcome to LED Dino! 🦖🎉💚</h4>
+        <p>We're SO EXCITED that you decided to take the leap and join us for this year's Burn! It's going to be a wild ride, so we put together a primer for you with everything you need to know.</p>
+        <h3>For the Camp</h3>
+        <div>
+            <div><a href="{% url 'dues' %}">Pay dues</a></div>
+            <div><a href="{% url 'team-list' %}">Join a team</a></div>
+            <div>Subscribe to the email list and join the <a href="https://www.facebook.com/groups/857140864440209/">Facebook group</a></div>
+            <div>Get to know the camp by coming to pre-playa events</div>
+            <div>Work a few shifts on the playa, like bartending or washing dishes after meals</div>
+        </div>
+        <h3>For the Burn</h3>
+        <div>
+            <div>Get a TICKET!</div>
+            <div>Find transportation, like the Burner Bus</div>
+            <div>Bring or <a href="https://playabikerepair.com/products/burning-man-bike-rental">rent</a> a bike</div>
+            <div>Buy all of your supplies—we have a <a href="https://docs.google.com/spreadsheets/d/1iiKw3TPm3c7Tvo8NhWJUEbfQ3Vwa6_qYmwQI0vopmS4/edit#gid=0">list</a> of everything you'll need!</div>
+        </div>
+        <h3>Essential Reads</h3>
+        <a href="https://survival.burningman.org/">Burning Man Survival Guide</a>
     </div>
 {% endblock %}
