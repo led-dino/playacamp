@@ -10,7 +10,6 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from django.template.loader import get_template, render_to_string
 from django.utils import timezone
 
 from main.models import Skill, FoodRestriction, UserProfile, SocialMediaLink

@@ -16,6 +16,8 @@
             {% csrf_token %}
             {% if is_member %}
             <button class="btn-danger">Leave</button>
+            {% elif team.is_full %}
+            <button disabled="disabled" class="btn-disabled">Full</button>
             {% else %}
             <button>Join</button>
             {% endif %}

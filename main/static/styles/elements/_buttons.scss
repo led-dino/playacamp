@@ -23,3 +23,12 @@ button {
         background-color: $red-bright;
     }
 }
+
+.btn-disabled {
+    background-color: $gray-medium;
+    cursor: not-allowed;
+
+    &:hover {
+        background-color: $gray-medium;
+    }
+}

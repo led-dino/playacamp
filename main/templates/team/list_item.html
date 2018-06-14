@@ -18,6 +18,8 @@
         <input type="hidden" name="next" value="{% url 'team-list' %}" />
         {% if team.id in my_team_ids %}
         <button class="btn-danger">Leave</button>
+        {% elif team.is_full %}
+        <button disabled=disabled class="btn-disabled">Full</button>
         {% else %}
         <button>Join</button>
         {% endif %}

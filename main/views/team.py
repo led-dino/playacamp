@@ -1,5 +1,5 @@
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse, HttpRequest, Http404
+from django.http import HttpResponse, HttpRequest, Http404, HttpResponseBadRequest
 from django.shortcuts import render, redirect
 
 from main.models import Team, TeamMembership
@@ -27,7 +27,7 @@ def get(request: HttpRequest, team_id: int) -> HttpResponse:
 @login_required
 def list(request: HttpRequest) -> HttpResponse:
     teams = Team.objects.all()
-    my_team_ids = [t.id for t in request.user.teams.all()]
+    my_team_ids = [team.id for team in request.user.teams.all()]
     return render(request, 'team/list.html', context={
         'profile': request.user.profile,
         'my_team_ids': my_team_ids,
@@ -48,6 +48,8 @@ def toggle_membership(request: HttpRequest, team_id: int) -> HttpResponse:
         my_team = None
 
     if my_team is None:
+        if team.is_full:
+            return HttpResponseBadRequest('Sorry, {} team is full.'.format(team.name))
         membership = TeamMembership()
         membership.member = request.user
         membership.team = team
