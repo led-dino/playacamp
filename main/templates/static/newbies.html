@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% load sass_tags %}
+{% block title %}Newbies{% endblock %}
+{% block style %}
+    <link rel="stylesheet" type="text/css" href={% sass_src "styles/views/static/newbies.scss" %}>
+{% endblock %}
+{% block content %}
+    <div class='confetti-wrapper'>
+        {% for i in confetti_count %}
+            <div class="confetti-{{ i }}"></div>
+        {% endfor %}
+    </div>
+    <div class="body-wrapper card">
+        <h1>Newbie Guide</h1>
+        <h4>WELCOME TO LED DINO!</h4>
+        <p>We're so excited that you decided to take the leap and join us for this year's Burn... it's going to be a wild ride, so we put together a primer for you—everything you need to know.</p>
+        <p>
+
+        </p>
+    </div>
+{% endblock %}
