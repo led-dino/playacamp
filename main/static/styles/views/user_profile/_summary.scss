@@ -1,15 +1,14 @@
 @import '../../variables/index';
+@import '../../base';
 @import 'header';
 
 .user-profile-summary {
+    @include card;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: $small-spacing;
-    background: white;
-    box-shadow: $box-shadow;
-    border-radius: $border-radius;
     width: 400px;
+    padding: $small-spacing;
     margin: $small-spacing auto;
 
     &__picture {

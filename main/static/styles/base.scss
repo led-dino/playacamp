@@ -30,11 +30,14 @@ ul {
     }
 }
 
-.bold {
-    font-weight: bold;
-    font-size: inherit;
+@mixin card {
+    background: white;
+    margin: $large-spacing auto;
+    padding: $large-spacing;
+    border-radius: $border-radius;
+    box-shadow: $box-shadow;
 }
 
-a {
-    font-size: inherit;
+.card {
+    @include card;
 }

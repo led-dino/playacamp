@@ -1,13 +1,6 @@
 @import '../../variables/index';
 
 .team {
-    margin: $large-spacing auto;
-    background: white;
-    width: 400px;
-    padding: $large-spacing;
-    box-shadow: $box-shadow;
-    border-radius: $border-radius;
-
     &__membership-form {
         display: block;
         margin-top: $medium-spacing;

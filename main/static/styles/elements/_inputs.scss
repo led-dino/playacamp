@@ -1,3 +1,6 @@
+$input-height: 37px;
+$input-width: 148px;
+
 @mixin input {
     border: $border;
     border-radius: $border-radius;
@@ -16,6 +19,14 @@ input {
 textarea {
     @include input;
     resize: none;
+}
+
+select {
+    @include input;
+    background: white;
+    border: $border;
+    height: $input-height;
+    width: $input-width;
 }
 
 label {

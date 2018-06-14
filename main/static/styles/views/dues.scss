@@ -1,11 +1,6 @@
 @import '../variables/index';
 
 .dues {
-    background: white;
-    margin: $large-spacing auto;
-    padding: $large-spacing;
-    border-radius: $border-radius;
-    box-shadow: $box-shadow;
 
     &__details {
         text-align: left;
@@ -21,7 +16,7 @@
         margin: $small-spacing auto;
         list-style-type: disc;
 
-        &__elem {
+        &__item {
             text-align: left;
         }
     }

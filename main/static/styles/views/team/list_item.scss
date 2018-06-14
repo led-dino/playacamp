@@ -1,17 +1,13 @@
 @import '../../variables/index';
+@import '../../base';
 
 .team-list-item {
+    @include card;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: $medium-spacing;
-    background: white;
-    box-shadow: $box-shadow;
-    border-radius: $border-radius;
     width: 400px;
-    margin: $large-spacing auto;
     text-align: left;
-    position: relative;
 
     &__details {
         width: 60%;

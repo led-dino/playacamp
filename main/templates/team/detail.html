@@ -5,46 +5,44 @@
     <link rel="stylesheet" type="text/css" href={% sass_src "styles/views/team/detail.scss" %}>
 {% endblock %}
 {% block content %}
-    <div class="body-wrapper">
-        <div class="team">
-            <h1>{{ team.name }}</h1>
+    <div class="body-wrapper card">
+        <h1>{{ team.name }}</h1>
 
-            <div class="team__description">
-                {{ team.description }}
-            </div>
+        <div class="team__description">
+            {{ team.description }}
+        </div>
 
-            <form class="team__membership-form" method="POST" action="{% url 'join-leave-team' team.id %}">
-                {% csrf_token %}
-                {% if is_member %}
-                <button class="btn-danger">Leave</button>
-                {% else %}
-                <button>Join</button>
-                {% endif %}
-            </form>
+        <form class="team__membership-form" method="POST" action="{% url 'join-leave-team' team.id %}">
+            {% csrf_token %}
+            {% if is_member %}
+            <button class="btn-danger">Leave</button>
+            {% else %}
+            <button>Join</button>
+            {% endif %}
+        </form>
 
-            <h4>Leads</h4>
-            <div class="team__member-list">
-                {% if team.leads %}
-                {% for user in team.leads %}
-                    <a href="{% url 'user-profile' user.id %}">{{ user.profile.get_formatted_name }}</a>
-                {% endfor %}
-                {% else %}
-                    None
-                {% endif %}
-            </div>
-
-            {% if is_allowed_to_view_members %}
-            <h4>Members</h4>
-            <div class="team__member-list">
-                {% if team.non_leads %}
-                {% for user in team.non_leads %}
-                    <a href="{% url 'user-profile' user.id %}">{{ user.profile.get_formatted_name }}</a>
-                {% endfor %}
-                {% else %}
-                    None
-                {% endif %}
-            </div>
+        <h4>Leads</h4>
+        <div class="team__member-list">
+            {% if team.leads %}
+            {% for user in team.leads %}
+                <a href="{% url 'user-profile' user.id %}">{{ user.profile.get_formatted_name }}</a>
+            {% endfor %}
+            {% else %}
+                None
             {% endif %}
         </div>
+
+        {% if is_allowed_to_view_members %}
+        <h4>Members</h4>
+        <div class="team__member-list">
+            {% if team.non_leads %}
+            {% for user in team.non_leads %}
+                <a href="{% url 'user-profile' user.id %}">{{ user.profile.get_formatted_name }}</a>
+            {% endfor %}
+            {% else %}
+                None
+            {% endif %}
+        </div>
+        {% endif %}
     </div>
 {% endblock %}

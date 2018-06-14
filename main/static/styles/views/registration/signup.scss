@@ -2,32 +2,6 @@
 
 .g-recaptcha {
     display: inline-block;
-}
-
-.body-wrapper {
-    &__form {
-        &__field {
-            &__interested_team {
-                &__wrapper {
-                    height: 37px;
-                    width: 180px;
-                    background-color: white;
-                    margin: $small-spacing auto;
-                    border-radius: 5px;
-                    border: $border;
-
-                    select {
-                        background: transparent;
-                        border: none;
-                        font-size: $regular-font-size;
-                        -webkit-appearance: none;
-                        height: 37px;
-                        width: 180px;
-                        margin: 0;
-                        padding: $small-spacing;
-                    }
-                }
-            }
-        }
-    }
+    margin-top: $small-spacing;
+    margin-bottom: $medium-spacing;
 }
