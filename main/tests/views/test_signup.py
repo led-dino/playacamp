@@ -16,7 +16,7 @@ class TestSignupView(TestCase):
         self.user_profile.user = self.user
         self.user_profile.save()
 
-        self.team = Team(name='Kitchen', description='Cook stuff.')
+        self.team = Team(name='Kitchen', description='Cook stuff.', max_size=2)
         self.team.save()
 
         self.membership = TeamMembership(team=self.team,
