@@ -1,14 +1,16 @@
 @import '../../variables/index';
 
 .attendance {
+
+    &__checkbox {
+        margin: $small-spacing 0;
+    }
+
     table {
         margin-left: $small-spacing;
         margin-bottom: $small-spacing;
         td {
             padding-left: $small-spacing;
-            input {
-                margin: 0;
-            }
         }
     }
 }
