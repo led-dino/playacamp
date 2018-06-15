@@ -9,7 +9,7 @@
         <h1>{{ team.name }}</h1>
 
         <div class="team__description">
-            {{ team.description }}
+            {{ team.description|urlizetrunc:50|linebreaks }}
         </div>
 
         <form class="team__membership-form" method="POST" action="{% url 'join-leave-team' team.id %}">
