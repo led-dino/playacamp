@@ -67,17 +67,33 @@
                 </tr>
             </table>
 
-            <h4>Other Info</h4>
+            <h4>Transportation</h4>
             <table>
                 <tr>
-                    <td>{{ attendance_form.transportation_method.label_tag }}</td>
-                    <td>{{ attendance_form.transportation_method }}</td>
+                    <td>{{ attendance_form.to_transportation_method.label_tag }}</td>
+                    <td>{{ attendance_form.to_transportation_method }}</td>
                 </tr>
+                <tr>
+                    <td>{{ attendance_form.from_transportation_method.label_tag }}</td>
+                    <td>{{ attendance_form.from_transportation_method }}</td>
+                </tr>
+            </table>
+            <div class="attendance__transportation_description">
+                {{ attendance_form.to_transportation_method_description|urlizetrunc:50|linebreaks }}
+            </div>
+            <div class="attendance__transportation_description">
+                {{ attendance_form.from_transportation_method_description|urlizetrunc:50|linebreaks }}
+            </div>
+            <h4>Bicycle</h4>
+            <table>
                 <tr>
                     <td>{{ attendance_form.bicycle_status.label_tag }}</td>
                     <td>{{ attendance_form.bicycle_status }}</td>
                 </tr>
             </table>
+            <div class="attendance__bicycle_description">
+                {{ attendance_form.bicycle_description|urlizetrunc:50|linebreaks }}
+            </div>
             <button type="submit">Update</button>
         </form>
     {% else %}
@@ -125,12 +141,19 @@
             </tr>
         </table>
 
-        <h4>Other Info</h4>
+        <h4>Transportation</h4>
         <table>
             <tr>
-                <td>{{ attendance_form.transportation_method.label_tag }}</td>
-                <td>{{ attendance_form.instance.transportation_method|default:"Not Sure" }}</td>
+                <td>{{ attendance_form.to_transportation_method.label_tag }}</td>
+                <td>{{ attendance_form.instance.to_transportation_method|default:"Not Sure" }}</td>
             </tr>
+            <tr>
+                <td>{{ attendance_form.from_transportation_method.label_tag }}</td>
+                <td>{{ attendance_form.instance.from_transportation_method|default:"Not Sure" }}</td>
+            </tr>
+        </table>
+        <h4>Bicycle</h4>
+        <table>
             <tr>
                 <td>{{ attendance_form.bicycle_status.label_tag }}</td>
                 <td>{{ attendance_form.bicycle_status.get_bicycle_status|default:"Not Sure" }}</td>

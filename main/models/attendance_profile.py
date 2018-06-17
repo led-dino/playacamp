@@ -14,7 +14,14 @@ class AttendanceProfile(models.Model):
     year = models.IntegerField()
 
     housing_group = models.ForeignKey(HousingGroup, related_name='residents', null=True, blank=True)
-    transportation_method = models.ForeignKey(TransportationMethod, related_name='attendees', null=True, blank=True)
+    to_transportation_method = models.ForeignKey(TransportationMethod,
+                                                 related_name='to_attendees',
+                                                 null=True,
+                                                 blank=True)
+    from_transportation_method = models.ForeignKey(TransportationMethod,
+                                                   related_name='from_attendees',
+                                                   null=True,
+                                                   blank=True)
 
     arrival_date = models.CharField(
         max_length=16,
@@ -97,7 +104,8 @@ class AttendanceProfileForm(ModelForm):
         fields = [
             'arrival_date',
             'departure_date',
-            'transportation_method',
+            'to_transportation_method',
+            'from_transportation_method',
             'has_early_pass',
             'has_ticket',
             'has_vehicle_pass',
@@ -110,7 +118,8 @@ class AttendanceProfileForm(ModelForm):
         labels = {
             'arrival_date': 'What day do you plan to arrive?',
             'departure_date': 'What day do you plan to leave?',
-            'transportation_method': 'How are you planning on getting there?',
+            'to_transportation_method': 'How are you planning on getting there?',
+            'from_transportation_method': 'How are you planning on leaving?',
             'has_early_pass': 'Do you have any early passes?',
             'has_ticket': 'Do you have any tickets yet?',
             'has_vehicle_pass': 'Do you have a vehicle pass?',
@@ -123,3 +132,30 @@ class AttendanceProfileForm(ModelForm):
         widgets = {
             'job_preferences': CheckboxSelectMultiple(),
         }
+
+    def to_transportation_method_description(self) -> str:
+        if self.instance is None:
+            return ''
+        if not self.instance.to_transportation_method:
+            return ''
+        return self.instance.to_transportation_method.description
+
+    def from_transportation_method_description(self) -> str:
+        if self.instance is None:
+            return ''
+        if not self.instance.from_transportation_method:
+            return ''
+        if self.instance.from_transportation_method.description == self.to_transportation_method_description():
+            return ''
+        return self.instance.from_transportation_method.description
+
+    def bicycle_description(self) -> str:
+        if self.instance is None:
+            return ''
+        if not self.instance.bicycle_status:
+            return ''
+        if self.instance.bicycle_status == 'rent':
+            return '''Playa Bike Repair (PBR) is a great place to get your burner bike.
+
+            Reserve your bike at https://playabikerepair.com'''
+        return ''
