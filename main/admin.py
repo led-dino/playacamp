@@ -3,7 +3,6 @@ import datetime
 import io
 
 from django.contrib import admin
-from django.contrib.admin import SimpleListFilter
 from django.contrib.auth.models import User
 from django.http import HttpResponse
 from django.utils import timezone
@@ -33,8 +32,11 @@ class TeamMembershipInline(admin.TabularInline):
 
 @admin.register(Team)
 class TeamAdmin(admin.ModelAdmin):
-    list_display = ('name', 'description')
+    list_display = ('name', 'description', 'size', 'max_size', 'is_full')
     inlines = (TeamMembershipInline,)
+
+    def size(self, obj: Team) -> str:
+        return str(obj.members.count())
 
 
 class IsAttendingListFilter(admin.SimpleListFilter):
