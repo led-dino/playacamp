@@ -11,6 +11,16 @@
         margin-bottom: $small-spacing;
         td {
             padding-left: $small-spacing;
+
+            #id_job_preferences {
+                list-style: none;
+                padding: 0;
+                margin: 0;
+
+                li {
+                    margin: 0;
+                }
+            }
         }
     }
 }
