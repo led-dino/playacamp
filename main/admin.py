@@ -40,11 +40,10 @@ class TeamAdmin(admin.ModelAdmin):
 
 
 class IsAttendingListFilter(admin.SimpleListFilter):
-    title = 'Is Attending'
+    title = 'Attending'
     parameter_name = 'is_attending'
 
     def lookups(self, request, model_admin):
-        print(model_admin)
         return [
             ('yes', 'Yes'),
             ('no', 'No'),
@@ -53,13 +52,32 @@ class IsAttendingListFilter(admin.SimpleListFilter):
     def queryset(self, request, queryset):
         current_year = timezone.now().year
         attending_users = User.objects.filter(attendanceprofile__year=current_year)
-        print(attending_users)
-        print(queryset)
         if self.value() == 'yes':
             return queryset.filter(pk__in=[u.pk for u in attending_users])
 
         if self.value() == 'no':
             return queryset.exclude(pk__in=[u.pk for u in attending_users])
+
+
+class PaidDuesListFilter(admin.SimpleListFilter):
+    title = 'Paid Dues'
+    parameter_name = 'paid_dues'
+
+    def lookups(self, request, model_admin):
+        return [
+            ('yes', 'Yes'),
+            ('no', 'No'),
+        ]
+
+    def queryset(self, request, queryset):
+        if self.value() not in ('yes', 'no'):
+            return None
+
+        current_year = timezone.now().year
+        paid_dues = self.value() == 'yes'
+        users = User.objects.filter(attendanceprofile__year=current_year,
+                                    attendanceprofile__paid_dues=paid_dues)
+        return queryset.filter(pk__in=[u.pk for u in users])
 
 
 @admin.register(UserProfile)
@@ -71,10 +89,12 @@ class UserProfileAdmin(admin.ModelAdmin):
         'phone_number',
         'location',
         'is_attending',
+        'paid_dues',
         'is_verified_by_admin',
     )
     list_filter = (
         IsAttendingListFilter,
+        PaidDuesListFilter,
         'is_verified_by_admin',
     )
 

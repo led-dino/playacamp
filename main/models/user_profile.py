@@ -44,7 +44,7 @@ class UserProfile(models.Model):
     skills = models.ManyToManyField(Skill, blank=True)
     years_on_playa = models.IntegerField(blank=True, null=True)
     invited_by = models.CharField(max_length=64, null=True, blank=True)
-    is_verified_by_admin = models.NullBooleanField()
+    is_verified_by_admin = models.NullBooleanField('Verified')
 
     @property
     def username(self) -> str:
@@ -78,6 +78,13 @@ class UserProfile(models.Model):
     @property
     def is_attending(self) -> bool:
         return self.try_fetch_current_attendance() is not None
+
+    @property
+    def paid_dues(self) -> bool:
+        attendance = self.try_fetch_current_attendance()
+        if attendance is None:
+            return False
+        return attendance.paid_dues
 
     def profile_pic_url(self) -> str:
         if self.profile_picture:

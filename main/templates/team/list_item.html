@@ -1,7 +1,7 @@
 <div class="team-list-item">
     <div class="team-list-item__details">
         <a class="team-list-item__details__name" href="{% url 'team-detail' team.id %}">{{ team.name }}</a>
-        <div class="team-list-item__details__description">{{ team.description }}</div>
+        <div class="team-list-item__details__description">{{ team.description|urlizetrunc:50|linebreaks }}</div>
         <div class="team-list-item__leads">
         Leads:
         {% if team.leads %}
