@@ -10,7 +10,6 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from django.urls import reverse
 from django.utils import timezone
 
 from main.models import Skill, FoodRestriction, UserProfile, SocialMediaLink
@@ -23,15 +22,16 @@ from main.views.notification import Notification
 def list_profiles(request: HttpRequest) -> HttpResponse:
     search_query = request.GET.get('search')
     if search_query is None:
-        profiles = UserProfile.objects.all()
+        profiles = UserProfile.objects
     else:
         profiles = UserProfile.objects.filter(Q(playa_name__contains=search_query) |
                                               Q(user__email__contains=search_query) |
                                               Q(user__first_name__contains=search_query) |
                                               Q(user__last_name__contains=search_query))
+    profiles = profiles.filter(is_verified_by_admin=True)
     return render(request, 'user_profile/list.html', context={
         'profile': request.user.profile,
-        'profiles': profiles,
+        'profiles': profiles.all(),
         'search_query': search_query or '',
     })
 
