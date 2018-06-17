@@ -1,11 +1,15 @@
+{% load static %}
 <div class="notification-container">
     {% for notification in notifications %}
-    <div class="notification-container__notification">
-        <div class="notification-container__notification__{{ notification }}">
-            {% with "notifications/"|add:notification|add:".html" as template_name %}
-                {% include template_name %}
+    <div class="notification-container__notification notification-container__notification--{{ notification.name }}">
+        <div class="notification-container__notification__content notification-container__notification--{{ notification.name }}__content">
+            {% with "notifications/"|add:notification.name|add:".html" as template_name %}
+                {% include template_name with notification=notification %}
             {% endwith %}
         </div>
+        {% if notification.is_dismissible %}
+        <a class="notification-container__notification__dismiss" href="{{ notification.dismiss_url }}"></a>
+        {% endif %}
     </div>
     {% endfor %}
 </div>

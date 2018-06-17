@@ -10,11 +10,13 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.urls import reverse
 from django.utils import timezone
 
 from main.models import Skill, FoodRestriction, UserProfile, SocialMediaLink
 from main.models.attendance_profile import AttendanceProfile, AttendanceProfileForm
 from main.models.user_profile import requires_verified_by_admin
+from main.views.notification import Notification
 
 
 @requires_verified_by_admin
@@ -70,10 +72,12 @@ def get(request: HttpRequest, user_id: Optional[int]=None) -> HttpResponse:
     notifications = []
     if is_logged_in_user:
         if attendance_form.instance.pk and not attendance_form.instance.paid_dues:
-            notifications.append('pay_dues')
+            notifications.append(Notification('pay_dues', current_url=request.get_full_path()))
 
-        if user.profile.years_on_playa == 0:
-            notifications.append('newbie')
+        if user.profile.years_on_playa == 0 and not Notification.is_dismissed('newbie', request):
+            notifications.append(Notification('newbie',
+                                              current_url=request.get_full_path(),
+                                              is_dismissible=True))
 
     return render(request, 'user_profile/view.html', context={
         'profile': user.profile,

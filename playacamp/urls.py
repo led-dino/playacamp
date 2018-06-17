@@ -3,6 +3,7 @@ from django.contrib import admin, auth
 
 import main.views.index
 import main.views.login
+import main.views.notification
 import main.views.user_profile
 import main.views.team
 import main.views.signup
@@ -50,6 +51,8 @@ urlpatterns = [     # pylint: disable=invalid-name
     url(r'^dues/$', main.views.static.dues, name='dues'),
 
     url(r'^newbies/$', main.views.static.newbies, name='newbies'),
+
+    url(r'^notification/dismiss$', main.views.notification.dismiss_notification, name='dismiss-notification'),
 
     url(r'^admin/', include(admin.site.urls)),
 ]

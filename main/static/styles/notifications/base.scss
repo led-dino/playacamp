@@ -10,7 +10,25 @@
     width: 100%;
 
     &__notification {
+        display: flex;
+        align-items: center;
+        height: $xlarge-spacing;
 
+        &__content {
+            font-size: $large-font-size;
+            line-height: $xlarge-spacing;
+            margin: auto;
+
+            a {
+                font-weight: $bold-font-weight;
+            }
+        }
+        &__dismiss {
+            height: 30px;
+            width: 30px;
+            margin-right: $small-spacing;
+            background: url("/static/close-button.svg");
+        }
     }
 }
 
