@@ -30,11 +30,6 @@ class Migration(migrations.Migration):
             name='to_transportation_method',
             field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='to_attendees', to='main.TransportationMethod'),
         ),
-        migrations.RunPython(copy_transportation_method),
-        migrations.RemoveField(
-            model_name='attendanceprofile',
-            name='transportation_method',
-        ),
         migrations.AlterField(
             model_name='userprofile',
             name='is_verified_by_admin',
