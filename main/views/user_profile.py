@@ -5,6 +5,7 @@ import phonenumbers
 from django import forms
 from django.core.exceptions import PermissionDenied
 from django.db.models import Q
+from django.db.models.functions import Lower
 from django.http import Http404, HttpResponseBadRequest, HttpResponse, HttpRequest
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
@@ -28,7 +29,7 @@ def list_profiles(request: HttpRequest) -> HttpResponse:
                                               Q(user__email__contains=search_query) |
                                               Q(user__first_name__contains=search_query) |
                                               Q(user__last_name__contains=search_query))
-    profiles = profiles.filter(is_verified_by_admin=True)
+    profiles = profiles.filter(is_verified_by_admin=True).order_by(Lower('user__first_name'))
     return render(request, 'user_profile/list.html', context={
         'profile': request.user.profile,
         'profiles': profiles.all(),
