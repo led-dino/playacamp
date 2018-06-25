@@ -86,10 +86,18 @@ class TeamListFilter(admin.SimpleListFilter):
 
     def lookups(self, request, model_admin):
         teams = Team.objects.all()
-        return [(team.name, team.name) for team in teams]
+        results = [(team.name, team.name) for team in teams]
+        results.sort()
+        results.insert(0, ('None', 'None'))
+        return results
 
     def queryset(self, request, queryset):
         team_name = self.value()
+
+        if team_name == 'None':
+            teams = Team.objects.all()
+            users = User.objects.filter(memberships__team__pk__in=[team.pk for team in teams])
+            return queryset.exclude(pk__in=[u.pk for u in users])
 
         teams = Team.objects.filter(name=team_name).all()
         if not teams:
