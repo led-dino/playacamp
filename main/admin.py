@@ -80,6 +80,24 @@ class PaidDuesListFilter(admin.SimpleListFilter):
         return queryset.filter(pk__in=[u.pk for u in users])
 
 
+class TeamListFilter(admin.SimpleListFilter):
+    title = 'Teams'
+    parameter_name = 'teams'
+
+    def lookups(self, request, model_admin):
+        teams = Team.objects.all()
+        return [(team.name, team.name) for team in teams]
+
+    def queryset(self, request, queryset):
+        team_name = self.value()
+
+        teams = Team.objects.filter(name=team_name).all()
+        if not teams:
+            return None
+        users = User.objects.filter(memberships__team__pk__in=[team.pk for team in teams])
+        return queryset.filter(pk__in=[u.pk for u in users])
+
+
 @admin.register(UserProfile)
 class UserProfileAdmin(admin.ModelAdmin):
     list_display = (
@@ -88,6 +106,7 @@ class UserProfileAdmin(admin.ModelAdmin):
         'last_name',
         'phone_number',
         'location',
+        'teams',
         'is_attending',
         'paid_dues',
         'is_verified_by_admin',
@@ -96,6 +115,7 @@ class UserProfileAdmin(admin.ModelAdmin):
         IsAttendingListFilter,
         PaidDuesListFilter,
         'is_verified_by_admin',
+        TeamListFilter,
     )
 
     def export_csv(self, request, queryset):
@@ -120,6 +140,10 @@ class UserProfileAdmin(admin.ModelAdmin):
     def location(self, obj):
         return obj.city_and_state()
     location.short_description = 'Location'
+
+    def teams(self, obj: UserProfile) -> str:
+        return ', '.join([membership.team.name for membership in obj.user.memberships.all()])
+    teams.short_description = 'Teams'
 
 
 @admin.register(FoodRestriction)
