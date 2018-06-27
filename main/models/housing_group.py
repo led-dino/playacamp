@@ -10,7 +10,16 @@ class HousingGroup(models.Model):
     NEW_YURT = ('personalyurt', 'Personal Yurt')
     TENT = ('tent', 'Tent')
     OTHER = ('other', 'Other')
-    HOUSING_CHOICES = (CAMP_YURT, NEW_YURT, TENT, RECREATIONAL_VEHICLE, CONTAINER, OTHER, VAN, SHIFTPOD)
+    HOUSING_CHOICES = (
+        CAMP_YURT,
+        NEW_YURT,
+        TENT,
+        RECREATIONAL_VEHICLE,
+        CONTAINER,
+        VAN,
+        SHIFTPOD,
+        OTHER,
+    )
 
     housing_type = models.CharField(
         max_length=10,

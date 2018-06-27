@@ -84,6 +84,15 @@
             <div class="attendance__transportation_description">
                 {{ attendance_form.from_transportation_method_description|urlizetrunc:50|linebreaks }}
             </div>
+
+            <h4>Housing</h4>
+            <table>
+                <tr>
+                    <td>{{ attendance_form.housing_type_preference.label_tag }}</td>
+                    <td>{{ attendance_form.housing_type_preference }}</td>
+                </tr>
+            </table>
+
             <h4>Bicycle</h4>
             <table>
                 <tr>

@@ -13,6 +13,12 @@ class AttendanceProfile(models.Model):
     user = models.ForeignKey(User)
     year = models.IntegerField()
 
+    housing_type_preference = models.CharField(
+        max_length=10,
+        choices=HousingGroup.HOUSING_CHOICES,
+        blank=True,
+        null=True
+    )
     housing_group = models.ForeignKey(HousingGroup, related_name='residents', null=True, blank=True)
     to_transportation_method = models.ForeignKey(TransportationMethod,
                                                  related_name='to_attendees',
@@ -109,6 +115,7 @@ class AttendanceProfileForm(ModelForm):
             'has_early_pass',
             'has_ticket',
             'has_vehicle_pass',
+            'housing_type_preference',
             'bicycle_status',
             'job_preferences',
             'shift_time_preference',
@@ -123,6 +130,7 @@ class AttendanceProfileForm(ModelForm):
             'has_early_pass': 'Do you have any early passes?',
             'has_ticket': 'Do you have any tickets yet?',
             'has_vehicle_pass': 'Do you have a vehicle pass?',
+            'housing_type_preference': 'Where are you planning on sleeping?',
             'bicycle_status': 'What\'s your bicycle plan?',
             'job_preferences': 'Are there specific on-playa jobs you\'re interested in?',
             'shift_time_preference': 'Do you prefer daytime or evening shifts?',
