@@ -14,7 +14,7 @@ class AttendanceProfile(models.Model):
     year = models.IntegerField()
 
     housing_type_preference = models.CharField(
-        max_length=10,
+        max_length=HousingGroup.HOUSING_TYPE_LENGTH,
         choices=HousingGroup.HOUSING_CHOICES,
         blank=True,
         null=True

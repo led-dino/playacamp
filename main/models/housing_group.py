@@ -20,9 +20,10 @@ class HousingGroup(models.Model):
         SHIFTPOD,
         OTHER,
     )
+    HOUSING_TYPE_LENGTH = max(len(v) for v, _ in HOUSING_CHOICES)
 
     housing_type = models.CharField(
-        max_length=10,
+        max_length=HOUSING_TYPE_LENGTH,
         choices=HOUSING_CHOICES,
         blank=True,
         null=True
