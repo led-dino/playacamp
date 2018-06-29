@@ -42,20 +42,9 @@ def toggle_membership(request: HttpRequest, team_id: int) -> HttpResponse:
 
     next_url = request.POST.get('next')
     team = Team.objects.get(pk=team_id)
-    try:
-        my_team = request.user.teams.get(pk=team_id)
-    except Team.DoesNotExist:
-        my_team = None
-
-    if my_team is None:
-        if team.is_full:
-            return HttpResponseBadRequest('Sorry, {} team is full.'.format(team.name))
-        membership = TeamMembership()
-        membership.member = request.user
-        membership.team = team
-        membership.save()
-    else:
-        request.user.memberships.filter(team__id=team_id).delete()
+    successfully_toggled = team.toggle_membership(request.user)
+    if not successfully_toggled:
+        return HttpResponseBadRequest('Sorry, {} team is full.'.format(team.name))
 
     if next_url:
         return redirect(next_url)

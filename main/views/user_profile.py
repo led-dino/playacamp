@@ -13,7 +13,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.utils import timezone
 
-from main.models import Skill, FoodRestriction, UserProfile, SocialMediaLink
+from main.models import Skill, FoodRestriction, UserProfile, SocialMediaLink, Team, TeamMembership
 from main.models.attendance_profile import AttendanceProfile, AttendanceProfileForm
 from main.models.user_profile import requires_verified_by_admin
 from main.views.notification import Notification
@@ -200,11 +200,28 @@ def update_attendance_record(request: HttpRequest, attendance: AttendanceProfile
     form = AttendanceProfileForm(request.POST, instance=attendance)
     if form.is_valid():
         form.save()
+
+        ensure_early_crew(attendance.user, member=attendance.arrives_early)
+        ensure_late_crew(attendance.user, member=attendance.departs_late)
     else:
         for error in form.errors:
             messages.add_message(request, messages.ERROR, form.errors[error][0])
 
     return redirect('user-profile-me')
+
+
+def ensure_early_crew(user: User, member: bool) -> None:
+    team = Team.objects.filter(is_early_crew=True).first()
+    if team is None:
+        return
+    team.ensure_membership(user, member)
+
+
+def ensure_late_crew(user: User, member: bool) -> None:
+    team = Team.objects.filter(is_late_crew=True).first()
+    if team is None:
+        return
+    team.ensure_membership(user, member)
 
 
 @login_required

@@ -9,7 +9,8 @@ from django.urls import reverse
 from moto import mock_s3
 from moto import mock_s3_deprecated as mock_s3_b2
 
-from main.models import UserProfile, FoodRestriction, Skill
+from main.models import UserProfile, FoodRestriction, Skill, Team
+from main.models.attendance_profile import AttendanceProfileForm, AttendanceProfile
 from playacamp import settings
 
 
@@ -189,6 +190,19 @@ class TestUserProfileUpdateBasicsView(TestUserProfileView):
 
 
 class TestUserProfileChangeAttendingView(TestUserProfileView):
+    def setUp(self):
+        self.early_crew = Team(name='Early Crew',
+                               description='Build stuff',
+                               is_early_crew=True)
+        self.early_crew.save()
+
+        self.late_crew = Team(name='Late Crew',
+                              description='Tear stuff down',
+                              is_late_crew=True)
+        self.late_crew.save()
+
+        super(TestUserProfileChangeAttendingView, self).setUp()
+
     def test_change_attending_view(self) -> None:
         self.client.login(username='foobar', password='foobarbaz')
         expected_redirect_url = get_absolute_url_from_relative(reverse('user-profile-me'))
@@ -220,6 +234,98 @@ class TestUserProfileChangeAttendingView(TestUserProfileView):
         self.assertIsNotNone(attendance)
         self.assertFalse(attendance.deleted_at)
         self.assertEqual(len(list(self.user_profile.user.attendanceprofile_set.all())), 1)
+
+    def test_update_attendance_record(self) -> None:
+        self.client.login(username='foobar', password='foobarbaz')
+        self.client.post(reverse('changed-attending'), {
+            'is-attending': 'on',
+        }, follow=True, secure=True)
+        self.user_profile.refresh_from_db()
+        attendance = self.user_profile.try_fetch_current_attendance(include_soft_deleted=True)
+        self.assertIsNotNone(attendance)
+        self.assertFalse(attendance.deleted_at)
+        self.assertEqual(len(list(self.user_profile.user.attendanceprofile_set.all())), 1)
+
+        attendance_form = AttendanceProfileForm({
+            field: '' for field in AttendanceProfileForm.Meta.fields
+        }, instance=attendance)
+        self.assertTrue(attendance_form.is_valid())
+        data = {'is-attending': 'on'}
+        data.update(attendance_form.data)
+        self.client.post(reverse('changed-attending'), data, follow=True, secure=True)
+        self.user_profile.refresh_from_db()
+        attendance = self.user_profile.try_fetch_current_attendance(include_soft_deleted=True)
+        self.assertIsNotNone(attendance)
+        self.assertFalse(attendance.deleted_at)
+        self.assertEqual(len(list(self.user_profile.user.attendanceprofile_set.all())), 1)
+
+    def test_update_attendance_record_early_crew(self) -> None:
+        self.client.login(username='foobar', password='foobarbaz')
+        self.client.post(reverse('changed-attending'), {
+            'is-attending': 'on',
+        }, follow=True, secure=True)
+        self.user_profile.refresh_from_db()
+        attendance = self.user_profile.try_fetch_current_attendance(include_soft_deleted=True)
+        self.assertIsNotNone(attendance)
+        self.assertFalse(attendance.deleted_at)
+        self.assertEqual(len(list(self.user_profile.user.attendanceprofile_set.all())), 1)
+
+        attendance_form = AttendanceProfileForm({
+            field: '' for field in AttendanceProfileForm.Meta.fields
+        }, instance=attendance)
+        attendance_form.data['job_preferences'] = []
+        attendance_form.data['arrival_date'] = 'wednesday1'
+        self.assertTrue(attendance_form.is_valid())
+
+        data = {'is-attending': 'on'}
+        data.update(attendance_form.data)
+        self.assertEqual(len(list(self.user_profile.user.attendanceprofile_set.all())), 1)
+        self.client.post(reverse('changed-attending'), data, follow=True, secure=True)
+        self.assertEqual(len(list(self.user_profile.user.attendanceprofile_set.all())), 1)
+        early_crew = self.user_profile.user.teams.filter(pk=self.early_crew.pk).first()
+        self.assertIsNotNone(early_crew)
+
+        attendance_form.data['arrival_date'] = 'sunday'
+        self.assertTrue(attendance_form.is_valid())
+
+        data.update(attendance_form.data)
+        self.client.post(reverse('changed-attending'), data, follow=True, secure=True)
+        early_crew = self.user_profile.user.teams.filter(pk=self.early_crew.pk).first()
+        self.assertIsNone(early_crew)
+
+    def test_update_attendance_record_late_crew(self) -> None:
+        self.client.login(username='foobar', password='foobarbaz')
+        self.client.post(reverse('changed-attending'), {
+            'is-attending': 'on',
+        }, follow=True, secure=True)
+        self.user_profile.refresh_from_db()
+        attendance = self.user_profile.try_fetch_current_attendance(include_soft_deleted=True)
+        self.assertIsNotNone(attendance)
+        self.assertFalse(attendance.deleted_at)
+        self.assertEqual(len(list(self.user_profile.user.attendanceprofile_set.all())), 1)
+
+        attendance_form = AttendanceProfileForm({
+            field: '' for field in AttendanceProfileForm.Meta.fields
+        }, instance=attendance)
+        attendance_form.data['job_preferences'] = []
+        attendance_form.data['departure_date'] = 'monday'
+        self.assertTrue(attendance_form.is_valid())
+
+        data = {'is-attending': 'on'}
+        data.update(attendance_form.data)
+        self.assertEqual(len(list(self.user_profile.user.attendanceprofile_set.all())), 1)
+        self.client.post(reverse('changed-attending'), data, follow=True, secure=True)
+        self.assertEqual(len(list(self.user_profile.user.attendanceprofile_set.all())), 1)
+        late_crew = self.user_profile.user.teams.filter(pk=self.late_crew.pk).first()
+        self.assertIsNotNone(late_crew)
+
+        attendance_form.data['departure_date'] = 'sunday'
+        self.assertTrue(attendance_form.is_valid())
+
+        data.update(attendance_form.data)
+        self.client.post(reverse('changed-attending'), data, follow=True, secure=True)
+        late_crew = self.user_profile.user.teams.filter(pk=self.late_crew.pk).first()
+        self.assertIsNone(late_crew)
 
 
 class TestUpdatedSkillsView(TestUserProfileView):

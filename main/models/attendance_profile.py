@@ -29,34 +29,41 @@ class AttendanceProfile(models.Model):
                                                    null=True,
                                                    blank=True)
 
+    EARLY_ARRIVAL_CHOICES = (
+        ('wednesday1', 'Wednesday (Early)'),
+        ('thursday1', 'Thursday (Early)'),
+        ('friday1', 'Friday (Early)'),
+        ('saturday', 'Saturday (Early)'),
+    )
+    ARRIVAL_CHOICES = EARLY_ARRIVAL_CHOICES + (
+        ('sunday', 'Sunday'),
+        ('monday', 'Monday'),
+        ('tuesday', 'Tuesday'),
+        ('wednesday2', 'Wednesday'),
+        ('thursday2', 'Thursday'),
+        ('friday2', 'Friday'),
+    )
     arrival_date = models.CharField(
         max_length=16,
-        choices=(
-            ('wednesday1', 'Wednesday (Early)'),
-            ('thursday1', 'Thursday (Early)'),
-            ('friday1', 'Friday (Early)'),
-            ('saturday', 'Saturday (Early)'),
-            ('sunday', 'Sunday'),
-            ('monday', 'Monday'),
-            ('tuesday', 'Tuesday'),
-            ('wednesday2', 'Wednesday'),
-            ('thursday2', 'Thursday'),
-            ('friday2', 'Friday'),
-        ),
+        choices=ARRIVAL_CHOICES,
         blank=True,
         null=True
     )
+
+    LATE_DEPARTURE_CHOICES = (
+        ('monday', 'Monday (Late Crew)'),
+        ('tuesday', 'Tuesday (Late Crew)'),
+    )
+    DEPARTURE_CHOICES = (
+        ('wednesday', 'Wednesday'),
+        ('thursday', 'Thursday'),
+        ('friday', 'Friday'),
+        ('saturday', 'Saturday (Man Burn)'),
+        ('sunday', 'Sunday (Temple Burn)'),
+    ) + LATE_DEPARTURE_CHOICES
     departure_date = models.CharField(
         max_length=16,
-        choices=(
-            ('wednesday', 'Wednesday'),
-            ('thursday', 'Thursday'),
-            ('friday', 'Friday'),
-            ('saturday', 'Saturday (Man Burn)'),
-            ('sunday', 'Sunday (Temple Burn)'),
-            ('monday', 'Monday (Late Crew)'),
-            ('tuesday', 'Tuesday (Late Crew)'),
-        ),
+        choices=DEPARTURE_CHOICES,
         blank=True,
         null=True
     )
@@ -99,6 +106,14 @@ class AttendanceProfile(models.Model):
         null=True,
         blank=True
     )
+
+    @property
+    def arrives_early(self) -> bool:
+        return dict(AttendanceProfile.EARLY_ARRIVAL_CHOICES).get(self.arrival_date, False)
+
+    @property
+    def departs_late(self) -> bool:
+        return dict(AttendanceProfile.LATE_DEPARTURE_CHOICES).get(self.departure_date, False)
 
     def __str__(self):
         return '{}[{}]'.format(self.user, self.year)
