@@ -161,7 +161,37 @@ class FoodRestrictionAdmin(admin.ModelAdmin):
 
 @admin.register(AttendanceProfile)
 class AttendanceProfileAdmin(admin.ModelAdmin):
-    pass
+    search_fields = (
+        'user__first_name',
+        'user__last_name',
+        'user__email',
+    )
+
+    list_display = (
+        'first_name',
+        'last_name',
+        'email',
+        'to_transportation_method',
+        'from_transportation_method',
+        'arrival_date',
+        'departure_date',
+        'has_ticket',
+        'has_vehicle_pass',
+        'paid_dues',
+        'year',
+    )
+
+    def first_name(self, obj: AttendanceProfile) -> str:
+        return obj.user.first_name
+    first_name.short_description = 'First Name'
+
+    def last_name(self, obj: AttendanceProfile) -> str:
+        return obj.user.last_name
+    last_name.short_description = 'Last Name'
+
+    def email(self, obj: AttendanceProfile) -> str:
+        return obj.user.email
+    email.short_description = 'Email'
 
 
 @admin.register(HousingGroup)
