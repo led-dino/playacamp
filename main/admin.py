@@ -108,6 +108,12 @@ class TeamListFilter(admin.SimpleListFilter):
 
 @admin.register(UserProfile)
 class UserProfileAdmin(admin.ModelAdmin):
+    search_fields = (
+        'user__first_name',
+        'user__last_name',
+        'user__email',
+    )
+
     list_display = (
         'username',
         'first_name',
