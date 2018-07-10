@@ -45,6 +45,27 @@
                 None
             {% endif %}
         </div>
+
+        <h4>Email</h4>
+        <div class="team__member-list">
+            {% with team.members.all|join:";" as member_emails %}
+            {% if member_emails %}
+                {% comment %}
+                We want to avoid making the mailto URL too long, so
+                only generate a link if it will be under 1000 chars.
+                Otherwise just generate text that can be manually
+                copy-pasted.
+                {% endcomment %}
+                {% if member_emails|length < 1000 %}
+                <a href="mailto:{{ member_emails }}">Email the Team</a>
+                {% else %}
+                {{ member_emails }}
+                {% endif %}
+            {% else %}
+                None
+            {% endif %}
+            {% endwith %}
+        </div>
         {% endif %}
     </div>
 {% endblock %}
