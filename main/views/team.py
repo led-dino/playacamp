@@ -10,7 +10,7 @@ def get(request: HttpRequest, team_id: int) -> HttpResponse:
     is_allowed_to_view_members = request.user.profile.is_verified_by_admin
     team = Team.objects.get(pk=team_id)
     try:
-        my_team = request.user.teams.get(pk=team_id)
+        my_team = request.user.teams.filter(pk=team_id).first()
     except Team.DoesNotExist:
         my_team = None
 

@@ -2,7 +2,7 @@ from django.contrib.auth.models import User
 from django.test import TestCase
 from django.urls import reverse
 
-from main.models import Team, UserProfile
+from main.models import Team, UserProfile, TeamMembership
 
 
 class TestTeamView(TestCase):
@@ -20,6 +20,18 @@ class TestTeamView(TestCase):
 
 class TestTeamGetDetailView(TestTeamView):
     def test_get(self) -> None:
+        self.client.login(username='foobar', password='foobarbaz')
+
+        response = self.client.get(reverse('team-detail', args=[self.team.id]), secure=True)
+        self.assertEqual(response.status_code, 200)
+
+    def test_get_duplicate_membership(self) -> None:
+        membership1 = TeamMembership(team=self.team, member=self.user)
+        membership1.save()
+
+        membership2 = TeamMembership(team=self.team, member=self.user)
+        membership2.save()
+
         self.client.login(username='foobar', password='foobarbaz')
 
         response = self.client.get(reverse('team-detail', args=[self.team.id]), secure=True)
