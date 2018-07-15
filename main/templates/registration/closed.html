@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% load sass_tags %}
+{% block title %}Sign Up{% endblock %}
+{% block style %}
+    <link rel="stylesheet" type="text/css" href={% sass_src "styles/views/registration/signup.scss" %}>
+{% endblock %}
+{% block content %}
+    <div class="body-wrapper card">
+        <h1>Registration is Closed</h1>
+        <div>
+            Unfortunately the camp is currently full for this year :-(
+            While we would love to have you with us, we only have a limited amount of space.
+            If folks drop out of the camp then we may reopen registrations, so keep an eye out!
+        </div>
+    </div>
+{% endblock %}

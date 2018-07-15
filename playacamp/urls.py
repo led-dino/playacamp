@@ -33,6 +33,7 @@ urlpatterns = [     # pylint: disable=invalid-name
 
     url(r'^signup/$', main.views.signup.get, name='signup'),
     url(r'^signup/submit/$', main.views.signup.post, name='signup-submit'),
+    url(r'^signup/closed/$', main.views.signup.registration_closed, name='registration-closed'),
 
     url(r'^teams/$', main.views.team.list, name='team-list'),
     url(r'^team/(?P<team_id>\d+)$', main.views.team.get, name='team-detail'),

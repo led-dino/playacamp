@@ -14,6 +14,9 @@ from main.models import UserProfile, Team, TeamMembership
 
 # We only need a small subset of the fields (along with a recaptcha)
 # so this is a custom form just for the signup page.
+from playacamp import settings
+
+
 class SignUpForm(forms.Form):
     first_name = forms.CharField(label="What's your first name, little dino?", max_length=30)
     last_name = forms.CharField(label="And your last name?", max_length=30)
@@ -46,9 +49,15 @@ class SignUpForm(forms.Form):
         return UserProfile.parse_phone_number(self.cleaned_data['phone'])
 
 
+def registration_closed(request: HttpRequest) -> HttpResponse:
+    return render(request, 'registration/closed.html')
+
+
 def get(request: HttpRequest) -> HttpResponse:
     if request.user.is_authenticated:
         return redirect('user-profile-me')
+    if settings.REGISTRATION_CLOSED:
+        return redirect('registration-closed')
     form = SignUpForm()
     return render(request, 'registration/signup.html', context={
         'form': form,
@@ -58,6 +67,9 @@ def get(request: HttpRequest) -> HttpResponse:
 def post(request: HttpRequest) -> HttpResponse:
     if request.method != 'POST':
         return redirect('signup')
+
+    if settings.REGISTRATION_CLOSED:
+        return redirect('registration-closed')
 
     form = SignUpForm(data=request.POST)
     if not form.is_valid():
