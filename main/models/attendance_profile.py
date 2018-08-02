@@ -111,11 +111,11 @@ class AttendanceProfile(models.Model):
 
     @property
     def arrives_early(self) -> bool:
-        return self.arrival_date in AttendanceProfile.EARLY_ARRIVAL_CHOICES
+        return self.arrival_date in dict(AttendanceProfile.EARLY_ARRIVAL_CHOICES)
 
     @property
     def departs_late(self) -> bool:
-        return self.departure_date in AttendanceProfile.LATE_DEPARTURE_CHOICES
+        return self.departure_date in dict(AttendanceProfile.LATE_DEPARTURE_CHOICES)
 
     @property
     def pretty_arrival(self) -> Optional[str]:
