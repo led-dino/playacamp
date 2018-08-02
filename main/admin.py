@@ -142,7 +142,7 @@ class UserProfileAdmin(admin.ModelAdmin):
 
         csv_stream.seek(0)
         now = datetime.datetime.now().strftime("%Y-%m-%d-%H-%M-%S")
-        filename = 'playacamp-csv-export-{}'.format(now)
+        filename = 'playacamp-userprofile-csv-export-{}.csv'.format(now)
         response = HttpResponse(csv_stream, content_type='text/csv')
         response['Content-Disposition'] = 'attachment; filename={}'.format(filename)
         return response
@@ -198,6 +198,25 @@ class AttendanceProfileAdmin(admin.ModelAdmin):
     def email(self, obj: AttendanceProfile) -> str:
         return obj.user.email
     email.short_description = 'Email'
+
+    def export_csv(self, request, queryset):
+        csv_stream = io.StringIO()
+        writer = csv.writer(csv_stream)
+        writer.writerow(AttendanceProfile.csv_columns())
+
+        for profile in queryset:
+            writer.writerow(profile.to_csv())
+
+        csv_stream.seek(0)
+        now = datetime.datetime.now().strftime("%Y-%m-%d-%H-%M-%S")
+        filename = 'playacamp-attendanceprofile-csv-export-{}.csv'.format(now)
+        response = HttpResponse(csv_stream, content_type='text/csv')
+        response['Content-Disposition'] = 'attachment; filename={}'.format(filename)
+        return response
+
+    export_csv.short_description = "Export to CSV"
+
+    actions = [export_csv]
 
 
 @admin.register(HousingGroup)

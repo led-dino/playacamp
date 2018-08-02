@@ -1,3 +1,5 @@
+from typing import List, Optional
+
 from django.db import models
 from django.contrib.auth.models import User
 from django.forms import ModelForm, CheckboxSelectMultiple
@@ -109,14 +111,59 @@ class AttendanceProfile(models.Model):
 
     @property
     def arrives_early(self) -> bool:
-        return dict(AttendanceProfile.EARLY_ARRIVAL_CHOICES).get(self.arrival_date, False)
+        return self.arrival_date in AttendanceProfile.EARLY_ARRIVAL_CHOICES
 
     @property
     def departs_late(self) -> bool:
-        return dict(AttendanceProfile.LATE_DEPARTURE_CHOICES).get(self.departure_date, False)
+        return self.departure_date in AttendanceProfile.LATE_DEPARTURE_CHOICES
 
-    def __str__(self):
+    @property
+    def pretty_arrival(self) -> Optional[str]:
+        return dict(AttendanceProfile.ARRIVAL_CHOICES).get(self.arrival_date)
+
+    @property
+    def pretty_departure(self) -> Optional[str]:
+        return dict(AttendanceProfile.DEPARTURE_CHOICES).get(self.departure_date)
+
+    @property
+    def pretty_housing_type_preference(self) -> Optional[str]:
+        return dict(HousingGroup.HOUSING_CHOICES).get(self.housing_type_preference)
+
+    def __str__(self) -> str:
         return '{}[{}]'.format(self.user, self.year)
+
+    @classmethod
+    def csv_columns(cls) -> List[str]:
+        return [
+            "First Name",
+            "Last Name",
+            "Email",
+            "Has Early Pass",
+            "Has Ticket",
+            "Has Vehicle Pass",
+            "Paid Dues",
+            "Arrival Date",
+            "Departure Date",
+            "Housing Type Preference",
+            "To Transporation",
+            "From Transportation",
+        ]
+
+    def to_csv(self) -> List[str]:
+        return [
+            self.user.first_name,
+            self.user.last_name,
+            self.user.email,
+            'Unknown' if self.has_early_pass is None else self.has_early_pass,
+            'Unknown' if self.has_ticket is None else self.has_ticket,
+            'Unknown' if self.has_vehicle_pass is None else self.has_vehicle_pass,
+            'Unknown' if self.paid_dues is None else self.paid_dues,
+            self.pretty_arrival,
+            self.pretty_departure,
+            self.pretty_housing_type_preference,
+            self.to_transportation_method.name,
+            self.from_transportation_method.name,
+        ]
 
 
 class AttendanceProfileForm(ModelForm):

@@ -225,7 +225,7 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
 SECURE_SSL_REDIRECT = not DEBUG
 
-REGISTRATION_CLOSED = os.environ.get('REGISTRATION_CLOSED')
+REGISTRATION_CLOSED = os.environ.get('REGISTRATION_CLOSED') == '1'
 
 import django_heroku
 django_heroku.settings(locals(), test_runner=False)
