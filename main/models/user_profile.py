@@ -167,15 +167,26 @@ class UserProfile(models.Model):
             "Last Name",
             "Email",
             "Attending",
+            "Paid Dues",
             "Location",
+            "Food Restrictions",
+            "Skills",
+            "Years on Playa",
+            "Invited By"
         ]
 
     def to_csv(self) -> List[str]:
-        attendance = self.try_fetch_current_attendance()
+        food_restrictions = ','.join([fr.name for fr in self.food_restrictions.all()])
+        skills = ','.join([skill.name for skill in self.skills.all()])
         return [
             self.first_name,
             self.last_name,
             self.email,
-            attendance is not None,
+            self.is_attending,
+            self.paid_dues,
             self.city_and_state(),
+            food_restrictions,
+            skills,
+            self.years_on_playa,
+            self.invited_by
         ]
