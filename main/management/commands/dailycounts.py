@@ -17,9 +17,11 @@ class Command(BaseCommand):
         year = options['year']
         attendance_profiles = AttendanceProfile.objects.filter(year=year, deleted_at__isnull=True)
         count_by_day = defaultdict(int)  # type: Dict[str, int]
+        total_count = 0
         for attendance_profile in attendance_profiles:
             if attendance_profile.arrival_date is None or attendance_profile.departure_date is None:
                 continue
+            total_count += 1
             arrival_day = EVENT_DAY_BY_ARRIVAL_CHOICES[attendance_profile.arrival_date]
             departure_day = EVENT_DAY_BY_DEPARTURE_CHOICES[attendance_profile.departure_date]
 
@@ -29,3 +31,4 @@ class Command(BaseCommand):
         for day in EventDay:
             count = count_by_day.get(day.name, 0)
             self.stdout.write("{}: {}\n".format(day.name, count))
+        self.stdout.write("Total attendees: {}\n".format(total_count))
