@@ -6,7 +6,6 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.contrib.staticfiles.templatetags.staticfiles import static
 from django.urls import reverse
-from django.utils import timezone
 from django_resized import ResizedImageField
 
 import datetime
@@ -19,6 +18,7 @@ from uszipcode.searchengine import Zipcode
 from main.models import AttendanceProfile
 from main.models.food_restriction import FoodRestriction
 from main.models.skill import Skill
+from main.models.util import get_next_event_year
 from playacamp import settings
 
 
@@ -63,7 +63,7 @@ class UserProfile(models.Model):
         return self.user.email
 
     def try_fetch_current_attendance(self, include_soft_deleted=False) -> Optional[AttendanceProfile]:
-        current_year = timezone.now().year
+        current_year = get_next_event_year()
         try:
             if include_soft_deleted:
                 return AttendanceProfile.objects.get(user=self.user,

@@ -7,6 +7,7 @@ from django.contrib.auth.models import User
 from django.http import HttpResponse
 from django.utils import timezone
 
+from main.models.util import get_next_event_year
 from .models import (AttendanceProfile,
                      FoodRestriction,
                      HousingGroup,
@@ -50,7 +51,7 @@ class IsAttendingListFilter(admin.SimpleListFilter):
         ]
 
     def queryset(self, request, queryset):
-        current_year = timezone.now().year
+        current_year = get_next_event_year()
         attending_users = User.objects.filter(attendanceprofile__year=current_year)
         if self.value() == 'yes':
             return queryset.filter(pk__in=[u.pk for u in attending_users])
@@ -73,7 +74,7 @@ class PaidDuesListFilter(admin.SimpleListFilter):
         if self.value() not in ('yes', 'no'):
             return None
 
-        current_year = timezone.now().year
+        current_year = get_next_event_year()
         paid_dues = self.value() == 'yes'
         users = User.objects.filter(attendanceprofile__year=current_year,
                                     attendanceprofile__paid_dues=paid_dues)

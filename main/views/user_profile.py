@@ -1,4 +1,5 @@
 import sys
+from datetime import datetime, timedelta
 from typing import Dict, Optional
 
 import phonenumbers
@@ -16,6 +17,7 @@ from django.utils import timezone
 from main.models import Skill, FoodRestriction, UserProfile, SocialMediaLink, Team, TeamMembership
 from main.models.attendance_profile import AttendanceProfile, AttendanceProfileForm
 from main.models.user_profile import requires_verified_by_admin
+from main.models.util import find_labor_day_for_year, get_next_event_year
 from main.views.notification import Notification
 
 
@@ -160,7 +162,7 @@ def changed_attending(request: HttpRequest) -> HttpResponse:
 
     if is_attending:
         if attendance is None:
-            return create_attendance_record(request, timezone.now().year)
+            return create_attendance_record(request, get_next_event_year())
 
         if attendance.deleted_at is not None:
             attendance.deleted_at = None
