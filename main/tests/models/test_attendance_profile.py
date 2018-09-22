@@ -12,7 +12,6 @@ class AttendanceProfileTest(TestCase):
     def test_housing_types(self):
         for value, verbose in HousingGroup.HOUSING_CHOICES:
             attendance_profile = AttendanceProfile(user=self.alice,
-                                                   year=2018,
-                                                   housing_type_preference=value)
+                                                   year=2018)
             attendance_profile.full_clean()
             attendance_profile.save()

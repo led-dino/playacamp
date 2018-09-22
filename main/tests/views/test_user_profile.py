@@ -273,7 +273,6 @@ class TestUserProfileChangeAttendingView(TestUserProfileView):
         attendance_form = AttendanceProfileForm({
             field: '' for field in AttendanceProfileForm.Meta.fields
         }, instance=attendance)
-        attendance_form.data['job_preferences'] = []
         attendance_form.data['arrival_date'] = 'wednesday1'
         self.assertTrue(attendance_form.is_valid())
 
@@ -307,7 +306,6 @@ class TestUserProfileChangeAttendingView(TestUserProfileView):
         attendance_form = AttendanceProfileForm({
             field: '' for field in AttendanceProfileForm.Meta.fields
         }, instance=attendance)
-        attendance_form.data['job_preferences'] = []
         attendance_form.data['departure_date'] = 'monday'
         self.assertTrue(attendance_form.is_valid())
 

@@ -5,7 +5,6 @@ from django.contrib.auth.models import User
 from django.forms import ModelForm, CheckboxSelectMultiple
 
 from main.models.housing_group import HousingGroup
-from main.models.job import Job
 from main.models.transportation_method import TransportationMethod
 
 
@@ -80,29 +79,6 @@ class AttendanceProfile(models.Model):
         blank=True
     )
 
-    job_preferences = models.ManyToManyField(Job, blank=True)
-    shift_time_preference = models.CharField(
-        max_length=10,
-        choices=(
-            ('day', 'Day shifts'),
-            ('night', 'Evening shifts'),
-            ('nopref', 'No preference'),
-        ),
-        null=True,
-        blank=True
-    )
-    shift_day_preference = models.CharField(
-        max_length=10,
-        choices=(
-            ('sameday', 'All same day'),
-            ('b2b', 'Back to back days'),
-            ('spread', 'Spread out'),
-            ('nopref', 'No preference'),
-        ),
-        null=True,
-        blank=True
-    )
-
     @property
     def arrives_early(self) -> bool:
         return self.arrival_date in dict(AttendanceProfile.EARLY_ARRIVAL_CHOICES)
@@ -166,9 +142,6 @@ class AttendanceProfileForm(ModelForm):
             'has_ticket',
             'has_vehicle_pass',
             'bicycle_status',
-            'job_preferences',
-            'shift_time_preference',
-            'shift_day_preference',
         ]
 
         labels = {
@@ -180,13 +153,6 @@ class AttendanceProfileForm(ModelForm):
             'has_ticket': 'Do you have any tickets yet?',
             'has_vehicle_pass': 'Do you have a vehicle pass?',
             'bicycle_status': 'What\'s your bicycle plan?',
-            'job_preferences': 'Are there specific on-playa jobs you\'re interested in?',
-            'shift_time_preference': 'Do you prefer daytime or evening shifts?',
-            'shift_day_preference': 'How would you like to spread your shifts?',
-        }
-
-        widgets = {
-            'job_preferences': CheckboxSelectMultiple(),
         }
 
     def to_transportation_method_description(self) -> str:
