@@ -1,4 +1,3 @@
-from datetime import datetime, timezone, timedelta
 from typing import List, Optional
 
 from django.db import models
@@ -16,12 +15,6 @@ class AttendanceProfile(models.Model):
     user = models.ForeignKey(User)
     year = models.IntegerField()
 
-    housing_type_preference = models.CharField(
-        max_length=HousingGroup.HOUSING_TYPE_LENGTH,
-        choices=HousingGroup.HOUSING_CHOICES,
-        blank=True,
-        null=True
-    )
     housing_group = models.ForeignKey(HousingGroup, related_name='residents', null=True, blank=True)
     to_transportation_method = models.ForeignKey(TransportationMethod,
                                                  related_name='to_attendees',
@@ -126,10 +119,6 @@ class AttendanceProfile(models.Model):
     def pretty_departure(self) -> Optional[str]:
         return dict(AttendanceProfile.DEPARTURE_CHOICES).get(self.departure_date)
 
-    @property
-    def pretty_housing_type_preference(self) -> Optional[str]:
-        return dict(HousingGroup.HOUSING_CHOICES).get(self.housing_type_preference)
-
     def __str__(self) -> str:
         return '{}[{}]'.format(self.user, self.year)
 
@@ -145,7 +134,6 @@ class AttendanceProfile(models.Model):
             "Paid Dues",
             "Arrival Date",
             "Departure Date",
-            "Housing Type Preference",
             "To Transporation",
             "From Transportation",
         ]
@@ -161,7 +149,6 @@ class AttendanceProfile(models.Model):
             'Unknown' if self.paid_dues is None else self.paid_dues,
             self.pretty_arrival,
             self.pretty_departure,
-            self.pretty_housing_type_preference,
             self.to_transportation_method.name,
             self.from_transportation_method.name,
         ]
@@ -178,7 +165,6 @@ class AttendanceProfileForm(ModelForm):
             'has_early_pass',
             'has_ticket',
             'has_vehicle_pass',
-            'housing_type_preference',
             'bicycle_status',
             'job_preferences',
             'shift_time_preference',
@@ -193,7 +179,6 @@ class AttendanceProfileForm(ModelForm):
             'has_early_pass': 'Do you have any early passes?',
             'has_ticket': 'Do you have any tickets yet?',
             'has_vehicle_pass': 'Do you have a vehicle pass?',
-            'housing_type_preference': 'Where are you planning on sleeping?',
             'bicycle_status': 'What\'s your bicycle plan?',
             'job_preferences': 'Are there specific on-playa jobs you\'re interested in?',
             'shift_time_preference': 'Do you prefer daytime or evening shifts?',
