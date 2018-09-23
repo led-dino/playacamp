@@ -22,6 +22,9 @@
         <button disabled=disabled class="btn-disabled">Full</button>
         {% else %}
         <button>Join</button>
+        <div class="team-list-item__team__membership-form__member-count">
+            {{ team.members.count }}/{{ team.max_size }} dinos
+        </div>
         {% endif %}
     </form>
 </div>

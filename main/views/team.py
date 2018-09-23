@@ -2,7 +2,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpRequest, Http404, HttpResponseBadRequest
 from django.shortcuts import render, redirect
 
-from main.models import Team, TeamMembership
+from main.models import Team
 
 
 @login_required
@@ -26,7 +26,7 @@ def get(request: HttpRequest, team_id: int) -> HttpResponse:
 
 @login_required
 def list(request: HttpRequest) -> HttpResponse:
-    teams = Team.objects.all()
+    teams = Team.objects_ordered_by_remaining_space().all()
     my_team_ids = [team.id for team in request.user.teams.all()]
     return render(request, 'team/list.html', context={
         'profile': request.user.profile,

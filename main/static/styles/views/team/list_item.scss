@@ -27,5 +27,11 @@
         button {
             width: 75px;
         }
+
+        &__member-count {
+            text-align: center;
+            margin-top: $small-spacing;
+            color: lighten($gray-dark, 30%);
+        }
     }
 }

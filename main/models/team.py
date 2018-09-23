@@ -1,5 +1,9 @@
+from typing import Type
+
 from django.db import models
 from django.contrib.auth.models import User
+from django.db.models import QuerySet, Count, F
+
 
 
 class Team(models.Model):
@@ -63,6 +67,13 @@ class Team(models.Model):
         membership.save()
         return True
 
+    @classmethod
+    def objects_ordered_by_remaining_space(cls) -> QuerySet:
+        return cls.objects\
+            .annotate(num_members=Count('members'),
+                      needed_members=F('num_members')-F('max_size'))\
+            .order_by(F('needed_members'))
+
     def __str__(self):
-        return self.name
+        return '{} ({}/{})'.format(self.name, self.members.count(), self.max_size)
 

@@ -1,11 +1,10 @@
-import phonenumbers
 from captcha.fields import ReCaptchaField
 from django import forms
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django.db import IntegrityError, transaction
-from django.db.models import Count, F
+from django.db.models import F
 from django.http import HttpResponseBadRequest, HttpResponse, HttpRequest
 from django.shortcuts import render, redirect
 
@@ -23,7 +22,8 @@ class SignUpForm(forms.Form):
     years_on_playa = forms.IntegerField(label="Nice to meet you! So how many years have you gone to Burning Man?")
     interested_team = forms.ModelChoiceField(label='Which team are you interested in joining? '
                                                    '(you can always change it later)',
-                                             queryset=Team.objects.annotate(num_members=Count('members')).filter(num_members__lt=F('max_size')))
+                                             queryset=Team.objects_ordered_by_remaining_space().filter(num_members__lt=F('max_size'))
+)
     invited_by = forms.CharField(label="Who invited you to LED Dinosaur?", max_length=64)
     email = forms.EmailField(label="Cool! What's your email so we can keep you up to date?")
     password = forms.CharField(label="And a password so we can identify you!",
