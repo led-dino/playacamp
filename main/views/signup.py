@@ -20,10 +20,10 @@ class SignUpForm(forms.Form):
     first_name = forms.CharField(label="What's your first name, little dino?", max_length=30)
     last_name = forms.CharField(label="And your last name?", max_length=30)
     years_on_playa = forms.IntegerField(label="Nice to meet you! So how many years have you gone to Burning Man?")
-    interested_team = forms.ModelChoiceField(label='Which team are you interested in joining? '
-                                                   '(you can always change it later)',
-                                             queryset=Team.objects_ordered_by_remaining_space().filter(num_members__lt=F('max_size'))
-)
+    interested_teams = forms.ModelMultipleChoiceField(
+        label='Which teams are you interested in joining? (you can always change it later)',
+        widget=forms.CheckboxSelectMultiple,
+        queryset=Team.objects_ordered_by_remaining_space().filter(num_members__lt=F('max_size')))
     invited_by = forms.CharField(label="Who invited you to LED Dinosaur?", max_length=64)
     email = forms.EmailField(label="Cool! What's your email so we can keep you up to date?")
     password = forms.CharField(label="And a password so we can identify you!",
@@ -101,8 +101,9 @@ def post(request: HttpRequest) -> HttpResponse:
         user_profile.user = user
         user_profile.save()
 
-        membership = TeamMembership(member=user, team=form.cleaned_data['interested_team'])
-        membership.save()
+        for team in form.cleaned_data['interested_teams']:
+            membership = TeamMembership(member=user, team=team)
+            membership.save()
 
         login(request, user)
         return redirect(user_profile)
