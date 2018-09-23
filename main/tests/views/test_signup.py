@@ -35,7 +35,7 @@ class TestSignupView(TestCase):
             'phone': '555-555-5555',
             'zipcode': '12345',
             'g-recaptcha-response': 'PASSED',
-            'interested_team': self.team.id,
+            'interested_teams': [self.team.id],
         }
         os.environ['RECAPTCHA_TESTING'] = 'True'
         form = SignUpForm(data)
